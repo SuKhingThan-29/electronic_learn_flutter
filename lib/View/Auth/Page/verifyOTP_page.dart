@@ -1,12 +1,10 @@
 // ignore_for_file: file_names
-
-import 'dart:developer';
-import 'package:coursia/Auth/Page/resetPassword.dart';
+import 'package:coursia/View//Auth/Page/resetpassword.dart';
 import 'package:coursia/UIDesign/apptheme.dart';
 import 'package:coursia/UIDesign/button_design.dart';
 import 'package:coursia/UIDesign/coursia_top_image.dart';
 import 'package:coursia/UIDesign/function.dart';
-import 'package:coursia/UIDesign/otpInput.dart';
+import 'package:coursia/UIDesign/otpinput.dart';
 import 'package:coursia/UIDesign/text_design.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,13 +36,13 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Center(child: CoursiaTopImage()),
-            CustomFunction.customSpace(80),
+            CustomFunction.customSpace(height: 80),
             const CustomText(
               textAlign: TextAlign.left,
               text: 'Enter\nOTP',
               size: 30,
             ),
-            CustomFunction.customSpace(30),
+            CustomFunction.customSpace(height: 30),
             const CustomText(
               textAlign: TextAlign.left,
               text: 'A 5-digits code has been send to\na**********apple.com',
@@ -52,7 +50,7 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> {
               textColor: AppTheme.grey,
               fontWeight: FontWeight.bold,
             ),
-            CustomFunction.customSpace(30),
+            CustomFunction.customSpace(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -63,7 +61,7 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> {
                 OtpInput(_fieldFive, false)
               ],
             ),
-            CustomFunction.customSpace(30),
+            CustomFunction.customSpace(height: 30),
             CustomButton(
                 onTap: () {
                   FocusManager.instance.primaryFocus?.unfocus();
@@ -83,7 +81,7 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> {
                   }
                 },
                 text: 'Submit'),
-            CustomFunction.customSpace(30),
+            CustomFunction.customSpace(height: 30),
             Center(
               child: InkWell(
                 onTap: () {

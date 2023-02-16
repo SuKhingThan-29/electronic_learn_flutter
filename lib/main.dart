@@ -1,5 +1,5 @@
-import 'package:coursia/Auth/Page/splash_page.dart';
 import 'package:coursia/UIDesign/apptheme.dart';
+import 'package:coursia/View/Auth/Page/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // ignore: depend_on_referenced_packages

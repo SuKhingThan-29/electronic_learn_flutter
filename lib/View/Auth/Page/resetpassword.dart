@@ -1,25 +1,23 @@
-import 'package:coursia/Auth/Page/login_page.dart';
+// ignore_for_file: file_names
+
 import 'package:coursia/UIDesign/apptheme.dart';
 import 'package:coursia/UIDesign/button_design.dart';
 import 'package:coursia/UIDesign/coursia_top_image.dart';
 import 'package:coursia/UIDesign/function.dart';
 import 'package:coursia/UIDesign/text_design.dart';
 import 'package:coursia/UIDesign/textform_design.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class ResetPasswordPage extends StatefulWidget {
+  const ResetPasswordPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<ResetPasswordPage> createState() => _ResetPasswordPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _ResetPasswordPageState extends State<ResetPasswordPage> {
   final formKey = GlobalKey<FormState>();
-  final userNameController = TextEditingController();
-  final emailController = TextEditingController();
   final pwController = TextEditingController();
   final confirmPwController = TextEditingController();
   bool obscuretext = true;
@@ -51,31 +49,22 @@ class _SignUpPageState extends State<SignUpPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Center(child: CoursiaTopImage()),
-              CustomFunction.customSpace(60),
+              CustomFunction.customSpace(height: 80),
               const CustomText(
                 textAlign: TextAlign.left,
-                text: 'Sign Up',
+                text: 'Reset\nPasscode?',
                 size: 30,
               ),
-              CustomFunction.customSpace(30),
-              const CustomText(textAlign: TextAlign.left, text: 'Username'),
-              CustomFunction.customSpace(10),
-              CustomTextFormField(
-                controller: userNameController,
-                hinttext: 'Username',
-                isEmail: false,
+              CustomFunction.customSpace(height: 30),
+              const CustomText(
+                text: 'Enter new passcode.',
+                size: 12,
+                textColor: AppTheme.grey,
+                fontWeight: FontWeight.bold,
               ),
-              CustomFunction.customSpace(15),
-              const CustomText(textAlign: TextAlign.left, text: 'Email'),
-              CustomFunction.customSpace(10),
-              CustomTextFormField(
-                controller: emailController,
-                hinttext: 'Email',
-                isEmail: true,
-              ),
-              CustomFunction.customSpace(15),
+              CustomFunction.customSpace(height: 30),
               const CustomText(textAlign: TextAlign.left, text: 'Passcode'),
-              CustomFunction.customSpace(10),
+              CustomFunction.customSpace(height: 10),
               CustomTextFormField(
                 controller: pwController,
                 obscureText: obscuretext,
@@ -90,10 +79,10 @@ class _SignUpPageState extends State<SignUpPage> {
                   },
                 ),
               ),
-              CustomFunction.customSpace(15),
+              CustomFunction.customSpace(height: 15),
               const CustomText(
                   textAlign: TextAlign.left, text: 'Confirm Passcode'),
-              CustomFunction.customSpace(10),
+              CustomFunction.customSpace(height: 10),
               CustomTextFormField(
                 controller: confirmPwController,
                 obscureText: obscuretext1,
@@ -108,51 +97,23 @@ class _SignUpPageState extends State<SignUpPage> {
                   },
                 ),
               ),
-              CustomFunction.customSpace(40),
+              CustomFunction.customSpace(height: 30),
               CustomButton(
                   onTap: () {
                     FocusManager.instance.primaryFocus?.unfocus();
                     if (formKey.currentState!.validate()) {
-                      if (EmailValidator.validate(emailController.text)) {
-                        if (pwController.text == confirmPwController.text) {
-                          CustomFunction.navigatePage(
-                              const SignUpPage(), context);
-                        } else {
-                          CustomFunction.flushBar(
-                              'Your password and confirm password are not match!',
-                              context,
-                              msgColor: AppTheme.red);
-                        }
+                      if (pwController.text == confirmPwController.text) {
+                        // CustomFunction.navigatePage(
+                        //     const SignUpPage(), context);
                       } else {
                         CustomFunction.flushBar(
-                            'Your email address is wrong!', context,
+                            'Your password and confirm password are not match!',
+                            context,
                             msgColor: AppTheme.red);
                       }
                     }
                   },
-                  text: 'Create Account'),
-              CustomFunction.customSpace(15),
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const CustomText(
-                        text: 'Already have an account?',
-                        size: 12,
-                        textColor: AppTheme.grey),
-                    InkWell(
-                      onTap: () {
-                        CustomFunction.navigatePage(const LoginPage(), context);
-                      },
-                      child: const CustomText(
-                          text: ' Log in',
-                          size: 14,
-                          textColor: AppTheme.grey,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
+                  text: 'Confirm'),
             ],
           ),
         ),

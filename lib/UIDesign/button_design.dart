@@ -9,6 +9,7 @@ class CustomButton extends StatelessWidget {
   final double? width;
   final double? height;
   final double? borderRadius;
+  final double? fontSize;
   final Icon? postFixIcon;
   final void Function()? onTap;
 
@@ -20,6 +21,7 @@ class CustomButton extends StatelessWidget {
       this.width,
       this.height,
       this.borderRadius,
+      this.fontSize,
       this.postFixIcon,
       required this.onTap});
 
@@ -28,7 +30,7 @@ class CustomButton extends StatelessWidget {
     return InkWell(
         onTap: onTap,
         child: Container(
-          width: width ?? MediaQuery.of(context).size.width,
+          width: width ?? double.infinity,
           height: height ?? 40.h,
           decoration: BoxDecoration(
               color: bgcolor ?? AppTheme.orange,
@@ -39,7 +41,7 @@ class CustomButton extends StatelessWidget {
               style: TextStyle(
                   color: textColor ?? AppTheme.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 15.sp),
+                  fontSize: fontSize ?? 15.sp),
             ),
           ),
         ));

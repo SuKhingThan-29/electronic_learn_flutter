@@ -1,12 +1,12 @@
 // ignore_for_file: file_names
 
-import 'package:coursia/Auth/Page/verifyOTP_page.dart';
 import 'package:coursia/UIDesign/apptheme.dart';
 import 'package:coursia/UIDesign/button_design.dart';
 import 'package:coursia/UIDesign/coursia_top_image.dart';
 import 'package:coursia/UIDesign/function.dart';
 import 'package:coursia/UIDesign/text_design.dart';
 import 'package:coursia/UIDesign/textform_design.dart';
+import 'package:coursia/View/Auth/Page/verifyOTP_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -34,28 +34,28 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Center(child: CoursiaTopImage()),
-              CustomFunction.customSpace(80),
+              CustomFunction.customSpace(height: 80),
               const CustomText(
                 textAlign: TextAlign.left,
                 text: 'Forget\nPasscode?',
                 size: 30,
               ),
-              CustomFunction.customSpace(30),
+              CustomFunction.customSpace(height: 30),
               const CustomText(
                 text: 'Enter email to recover passcode.',
                 size: 12,
                 textColor: AppTheme.grey,
                 fontWeight: FontWeight.bold,
               ),
-              CustomFunction.customSpace(30),
+              CustomFunction.customSpace(height: 30),
               const CustomText(textAlign: TextAlign.left, text: 'Email'),
-              CustomFunction.customSpace(10),
+              CustomFunction.customSpace(height: 10),
               CustomTextFormField(
                 controller: emailController,
                 hinttext: 'Email',
                 isEmail: true,
               ),
-              CustomFunction.customSpace(30),
+              CustomFunction.customSpace(height: 30),
               CustomButton(
                   onTap: () {
                     FocusManager.instance.primaryFocus?.unfocus();

@@ -1,12 +1,12 @@
-import 'package:coursia/Auth/Page/forgetPassword_page.dart';
-import 'package:coursia/Auth/Page/signup_page.dart';
+import 'package:coursia/View/Auth/Page/forgetPassword_page.dart';
+import 'package:coursia/View//Auth/Page/signup_page.dart';
+import 'package:coursia/View//Home/Page/home_page.dart';
 import 'package:coursia/UIDesign/apptheme.dart';
 import 'package:coursia/UIDesign/button_design.dart';
 import 'package:coursia/UIDesign/coursia_top_image.dart';
 import 'package:coursia/UIDesign/function.dart';
 import 'package:coursia/UIDesign/text_design.dart';
 import 'package:coursia/UIDesign/textform_design.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -44,23 +44,23 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Center(child: CoursiaTopImage()),
-              CustomFunction.customSpace(80),
+              CustomFunction.customSpace(height: 80),
               const CustomText(
                 textAlign: TextAlign.left,
                 text: 'Login',
                 size: 30,
               ),
-              CustomFunction.customSpace(30),
+              CustomFunction.customSpace(height: 30),
               const CustomText(textAlign: TextAlign.left, text: 'Email'),
-              CustomFunction.customSpace(10),
+              CustomFunction.customSpace(height: 10),
               CustomTextFormField(
                 controller: emailController,
                 hinttext: 'Email',
                 isEmail: true,
               ),
-              CustomFunction.customSpace(15),
+              CustomFunction.customSpace(height: 15),
               const CustomText(textAlign: TextAlign.left, text: 'Passcode'),
-              CustomFunction.customSpace(10),
+              CustomFunction.customSpace(height: 10),
               CustomTextFormField(
                 controller: pwController,
                 obscureText: obscuretext,
@@ -75,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                   },
                 ),
               ),
-              CustomFunction.customSpace(15),
+              CustomFunction.customSpace(height: 15),
               InkWell(
                 onTap: () {
                   CustomFunction.navigatePage(
@@ -85,23 +85,24 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: Alignment.centerRight,
                     child: CustomText(text: 'Forget Passcode?', size: 12)),
               ),
-              CustomFunction.customSpace(15),
+              CustomFunction.customSpace(height: 15),
               CustomButton(
                   onTap: () {
                     FocusManager.instance.primaryFocus?.unfocus();
-                    if (formKey.currentState!.validate()) {
-                      if (EmailValidator.validate(emailController.text)) {
-                        CustomFunction.navigatePage(
-                            const SignUpPage(), context);
-                      } else {
-                        CustomFunction.flushBar(
-                            'Your email address is wrong!', context,
-                            msgColor: AppTheme.red);
-                      }
-                    }
+                    CustomFunction.navigatePage(const HomePage(), context);
+                    // if (formKey.currentState!.validate()) {
+                    //   if (EmailValidator.validate(emailController.text)) {
+                    //     CustomFunction.navigatePage(
+                    //         const SignUpPage(), context);
+                    //   } else {
+                    //     CustomFunction.flushBar(
+                    //         'Your email address is wrong!', context,
+                    //         msgColor: AppTheme.red);
+                    //   }
+                    // }
                   },
                   text: 'Log in'),
-              CustomFunction.customSpace(15),
+              CustomFunction.customSpace(height: 15),
               Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

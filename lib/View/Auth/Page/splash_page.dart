@@ -1,4 +1,4 @@
-import 'package:coursia/Auth/Page/login_page.dart';
+import 'package:coursia/View//Auth/Page/login_page.dart';
 import 'package:coursia/UIDesign/apptheme.dart';
 import 'package:coursia/UIDesign/button_design.dart';
 import 'package:coursia/UIDesign/function.dart';

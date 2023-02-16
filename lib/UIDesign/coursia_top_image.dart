@@ -9,7 +9,7 @@ class CoursiaTopImage extends StatelessWidget {
     return Image.asset(
       'images/CoursiaLogo.png',
       width: 150.w,
-      height: 30.h,
+      height: 40.h,
       fit: BoxFit.fill,
     );
   }

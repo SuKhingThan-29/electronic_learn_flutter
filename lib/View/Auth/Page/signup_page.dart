@@ -1,23 +1,25 @@
-// ignore_for_file: file_names
-
+import 'package:coursia/View//Auth/Page/login_page.dart';
 import 'package:coursia/UIDesign/apptheme.dart';
 import 'package:coursia/UIDesign/button_design.dart';
 import 'package:coursia/UIDesign/coursia_top_image.dart';
 import 'package:coursia/UIDesign/function.dart';
 import 'package:coursia/UIDesign/text_design.dart';
 import 'package:coursia/UIDesign/textform_design.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ResetPasswordPage extends StatefulWidget {
-  const ResetPasswordPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<ResetPasswordPage> createState() => _ResetPasswordPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _ResetPasswordPageState extends State<ResetPasswordPage> {
+class _SignUpPageState extends State<SignUpPage> {
   final formKey = GlobalKey<FormState>();
+  final userNameController = TextEditingController();
+  final emailController = TextEditingController();
   final pwController = TextEditingController();
   final confirmPwController = TextEditingController();
   bool obscuretext = true;
@@ -49,22 +51,31 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Center(child: CoursiaTopImage()),
-              CustomFunction.customSpace(80),
+              CustomFunction.customSpace(height: 60),
               const CustomText(
                 textAlign: TextAlign.left,
-                text: 'Reset\nPasscode?',
+                text: 'Sign Up',
                 size: 30,
               ),
-              CustomFunction.customSpace(30),
-              const CustomText(
-                text: 'Enter new passcode.',
-                size: 12,
-                textColor: AppTheme.grey,
-                fontWeight: FontWeight.bold,
+              CustomFunction.customSpace(height: 30),
+              const CustomText(textAlign: TextAlign.left, text: 'Username'),
+              CustomFunction.customSpace(height: 10),
+              CustomTextFormField(
+                controller: userNameController,
+                hinttext: 'Username',
+                isEmail: false,
               ),
-              CustomFunction.customSpace(30),
+              CustomFunction.customSpace(height: 15),
+              const CustomText(textAlign: TextAlign.left, text: 'Email'),
+              CustomFunction.customSpace(height: 10),
+              CustomTextFormField(
+                controller: emailController,
+                hinttext: 'Email',
+                isEmail: true,
+              ),
+              CustomFunction.customSpace(height: 15),
               const CustomText(textAlign: TextAlign.left, text: 'Passcode'),
-              CustomFunction.customSpace(10),
+              CustomFunction.customSpace(height: 10),
               CustomTextFormField(
                 controller: pwController,
                 obscureText: obscuretext,
@@ -79,10 +90,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   },
                 ),
               ),
-              CustomFunction.customSpace(15),
+              CustomFunction.customSpace(height: 15),
               const CustomText(
                   textAlign: TextAlign.left, text: 'Confirm Passcode'),
-              CustomFunction.customSpace(10),
+              CustomFunction.customSpace(height: 10),
               CustomTextFormField(
                 controller: confirmPwController,
                 obscureText: obscuretext1,
@@ -97,23 +108,51 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   },
                 ),
               ),
-              CustomFunction.customSpace(30),
+              CustomFunction.customSpace(height: 40),
               CustomButton(
                   onTap: () {
                     FocusManager.instance.primaryFocus?.unfocus();
                     if (formKey.currentState!.validate()) {
-                      if (pwController.text == confirmPwController.text) {
-                        // CustomFunction.navigatePage(
-                        //     const SignUpPage(), context);
+                      if (EmailValidator.validate(emailController.text)) {
+                        if (pwController.text == confirmPwController.text) {
+                          CustomFunction.navigatePage(
+                              const SignUpPage(), context);
+                        } else {
+                          CustomFunction.flushBar(
+                              'Your password and confirm password are not match!',
+                              context,
+                              msgColor: AppTheme.red);
+                        }
                       } else {
                         CustomFunction.flushBar(
-                            'Your password and confirm password are not match!',
-                            context,
+                            'Your email address is wrong!', context,
                             msgColor: AppTheme.red);
                       }
                     }
                   },
-                  text: 'Confirm'),
+                  text: 'Create Account'),
+              CustomFunction.customSpace(height: 15),
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const CustomText(
+                        text: 'Already have an account?',
+                        size: 12,
+                        textColor: AppTheme.grey),
+                    InkWell(
+                      onTap: () {
+                        CustomFunction.navigatePage(const LoginPage(), context);
+                      },
+                      child: const CustomText(
+                          text: ' Log in',
+                          size: 14,
+                          textColor: AppTheme.grey,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
