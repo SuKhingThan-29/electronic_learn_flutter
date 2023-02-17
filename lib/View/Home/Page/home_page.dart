@@ -4,6 +4,7 @@ import 'package:coursia/View//Home/Page/feature_page.dart';
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/function.dart';
 import 'package:coursia/View/Assessment/assessment_page.dart';
+import 'package:coursia/View/Courses/Page/courses_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -23,9 +24,9 @@ class _HomePageState extends State<HomePage> {
   ];
   List<Widget> destinations = <Widget>[
     const FeaturePage(),
-    const FeaturePage(),
+    CoursesPage(),
     const AssessmentPage(),
-    const FeaturePage()
+    Container()
   ];
   @override
   Widget build(BuildContext context) {
