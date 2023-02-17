@@ -1,11 +1,11 @@
 // ignore_for_file: file_names
-import 'package:coursia/View//Auth/Page/resetpassword.dart';
-import 'package:coursia/UIDesign/apptheme.dart';
-import 'package:coursia/UIDesign/button_design.dart';
+import 'package:coursia/View/Auth/Page/reset_password_page.dart';
+import 'package:coursia/UIDesign/app_theme.dart';
+import 'package:coursia/UIDesign/custom_button.dart';
 import 'package:coursia/UIDesign/coursia_top_image.dart';
 import 'package:coursia/UIDesign/function.dart';
-import 'package:coursia/UIDesign/otpinput.dart';
-import 'package:coursia/UIDesign/text_design.dart';
+import 'package:coursia/UIDesign/otp_input.dart';
+import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

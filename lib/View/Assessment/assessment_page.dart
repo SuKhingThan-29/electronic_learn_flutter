@@ -1,5 +1,5 @@
-import 'package:coursia/UIDesign/apptheme.dart';
-import 'package:coursia/UIDesign/assessmentcard.dart';
+import 'package:coursia/UIDesign/app_theme.dart';
+import 'package:coursia/UIDesign/assessment_card.dart';
 import 'package:coursia/UIDesign/function.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

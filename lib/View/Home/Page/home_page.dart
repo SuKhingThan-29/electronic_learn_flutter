@@ -1,9 +1,9 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:coursia/View//Home/Page/feature_page.dart';
-import 'package:coursia/UIDesign/apptheme.dart';
+import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/function.dart';
-import 'package:coursia/View/Assessment/assessment.dart';
+import 'package:coursia/View/Assessment/assessment_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
