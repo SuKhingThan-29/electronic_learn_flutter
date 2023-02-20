@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomFunction.appBar(username: 'Arkar'),
+      appBar: CustomFunction.appBar(username: 'Arkar', context),
       body: SafeArea(
         top: false,
         child: IndexedStack(

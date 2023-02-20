@@ -172,7 +172,7 @@ class CoursesPage extends StatelessWidget {
                       CustomTextFormField(
                           controller: topicController,
                           isEmail: false,
-                          hinttext: 'Topic'),
+                          hintText: 'Topic'),
                       CustomFunction.customSpace(height: 10.h),
                       const CustomText(
                           text: 'Cost', textColor: AppTheme.blackLight),
@@ -180,7 +180,7 @@ class CoursesPage extends StatelessWidget {
                       CustomTextFormField(
                           controller: topicController,
                           isEmail: false,
-                          hinttext: 'Cost'),
+                          hintText: 'Cost'),
                       CustomFunction.customSpace(height: 10.h),
                       const CustomText(
                           text: 'Level', textColor: AppTheme.blackLight),
@@ -188,7 +188,7 @@ class CoursesPage extends StatelessWidget {
                       CustomTextFormField(
                           controller: topicController,
                           isEmail: false,
-                          hinttext: 'Level'),
+                          hintText: 'Level'),
                       CustomFunction.customSpace(height: 20.h),
                       Center(
                         child: CustomButton(

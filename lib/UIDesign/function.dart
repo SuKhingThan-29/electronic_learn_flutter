@@ -1,6 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
+import 'package:coursia/View/Profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -26,7 +27,7 @@ class CustomFunction {
     )..show(context);
   }
 
-  static appBar({String? username}) {
+  static appBar(BuildContext context, {String? username}) {
     return AppBar(
       automaticallyImplyLeading: false,
       title: Column(
@@ -42,7 +43,12 @@ class CustomFunction {
           children: [
             Image.asset('images/Vector.png', width: 30.sp, height: 30.sp),
             SizedBox(width: 10.w),
-            Image.asset('images/boy.png', width: 40.sp, height: 40.sp),
+            InkWell(
+                child:
+                    Image.asset('images/boy.png', width: 40.sp, height: 40.sp),
+                onTap: () {
+                  navigatePage(const ProfilePage(), context);
+                }),
             SizedBox(width: 5.w),
           ],
         )
@@ -55,6 +61,36 @@ class CustomFunction {
           bottom: Radius.circular(30.0),
         ),
       ),
+    );
+  }
+
+  static customBody(BuildContext context,
+      {bool? isProfile, Padding? columnData}) {
+    return Stack(
+      children: [
+        Container(height: 700.h, color: AppTheme.black),
+        Positioned(
+          top: isProfile! ? 35.h : 10.h,
+          child: Container(
+            height: 700.h,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+                color: AppTheme.white,
+                borderRadius:
+                    BorderRadius.vertical(top: Radius.circular(30.r))),
+            child: columnData,
+          ),
+        ),
+        isProfile
+            ? Positioned.fill(
+                top: 10.h,
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Image.asset('images/boy.png',
+                      width: 60.sp, height: 60.sp),
+                ))
+            : Container(),
+      ],
     );
   }
 

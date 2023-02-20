@@ -55,18 +55,20 @@ class _LoginPageState extends State<LoginPage> {
               CustomFunction.customSpace(height: 10),
               CustomTextFormField(
                 controller: emailController,
-                hinttext: 'Email',
+                hintText: 'Email',
                 isEmail: true,
+                isProfile: false,
               ),
               CustomFunction.customSpace(height: 15),
               const CustomText(textAlign: TextAlign.left, text: 'Passcode'),
               CustomFunction.customSpace(height: 10),
               CustomTextFormField(
+                isProfile: false,
                 controller: pwController,
                 obscureText: obscuretext,
                 isEmail: false,
-                hinttext: 'Passcode',
-                suffixicon: IconButton(
+                hintText: 'Passcode',
+                suffixIcon: IconButton(
                   icon: obscuretext
                       ? const Icon(Icons.visibility_off, color: AppTheme.grey)
                       : const Icon(Icons.visibility, color: AppTheme.orange),

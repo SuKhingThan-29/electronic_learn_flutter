@@ -61,27 +61,30 @@ class _SignUpPageState extends State<SignUpPage> {
               const CustomText(textAlign: TextAlign.left, text: 'Username'),
               CustomFunction.customSpace(height: 10),
               CustomTextFormField(
+                isProfile: false,
                 controller: userNameController,
-                hinttext: 'Username',
+                hintText: 'Username',
                 isEmail: false,
               ),
               CustomFunction.customSpace(height: 15),
               const CustomText(textAlign: TextAlign.left, text: 'Email'),
               CustomFunction.customSpace(height: 10),
               CustomTextFormField(
+                isProfile: false,
                 controller: emailController,
-                hinttext: 'Email',
+                hintText: 'Email',
                 isEmail: true,
               ),
               CustomFunction.customSpace(height: 15),
               const CustomText(textAlign: TextAlign.left, text: 'Passcode'),
               CustomFunction.customSpace(height: 10),
               CustomTextFormField(
+                isProfile: false,
                 controller: pwController,
                 obscureText: obscuretext,
                 isEmail: false,
-                hinttext: 'Passcode',
-                suffixicon: IconButton(
+                hintText: 'Passcode',
+                suffixIcon: IconButton(
                   icon: obscuretext
                       ? const Icon(Icons.visibility_off, color: AppTheme.grey)
                       : const Icon(Icons.visibility, color: AppTheme.orange),
@@ -95,11 +98,12 @@ class _SignUpPageState extends State<SignUpPage> {
                   textAlign: TextAlign.left, text: 'Confirm Passcode'),
               CustomFunction.customSpace(height: 10),
               CustomTextFormField(
+                isProfile: false,
                 controller: confirmPwController,
                 obscureText: obscuretext1,
                 isEmail: false,
-                hinttext: 'Confirm Passcode',
-                suffixicon: IconButton(
+                hintText: 'Confirm Passcode',
+                suffixIcon: IconButton(
                   icon: obscuretext1
                       ? const Icon(Icons.visibility_off, color: AppTheme.grey)
                       : const Icon(Icons.visibility, color: AppTheme.orange),

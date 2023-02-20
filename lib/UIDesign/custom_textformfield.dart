@@ -6,23 +6,25 @@ import 'package:flutter/material.dart';
 class CustomTextFormField extends StatefulWidget {
   final TextEditingController? controller;
   bool? isEmail;
-  final String? hinttext;
-  IconButton? suffixicon;
+  final String? hintText;
+  IconButton? suffixIcon;
   final String? requiredText;
   final bool? obscureText;
   final void Function(String)? onChange;
   final void Function()? onPress;
+  final bool? isProfile;
 
   CustomTextFormField(
       {super.key,
       required this.controller,
       required this.isEmail,
-      required this.hinttext,
-      this.suffixicon,
+      required this.hintText,
+      this.suffixIcon,
       this.requiredText,
       this.obscureText,
       this.onChange,
-      this.onPress});
+      this.onPress,
+      this.isProfile});
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -39,37 +41,50 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         final bool isValid = EmailValidator.validate(value);
         if (isValid) {
           setState(() {
-            widget.suffixicon = IconButton(
+            widget.suffixIcon = IconButton(
                 onPressed: () {}, icon: const Icon(Icons.check_circle));
           });
         } else if (!isValid) {
           if (widget.isEmail!) {
             setState(() {
-              widget.suffixicon = IconButton(
+              widget.suffixIcon = IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.check_circle_outline));
             });
           }
         }
       },
-      style: const TextStyle(color: AppTheme.white),
+      style: const TextStyle(color: AppTheme.black),
       decoration: InputDecoration(
           errorStyle: const TextStyle(color: AppTheme.grey),
-          focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: AppTheme.orange, width: 2.0),
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-          enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: AppTheme.grey, width: 2.0),
-              borderRadius: BorderRadius.all(Radius.circular(10))),
+          focusedBorder: widget.isProfile!
+              ? const UnderlineInputBorder(
+                  borderSide: BorderSide(color: AppTheme.orange, width: 2.0))
+              : const OutlineInputBorder(
+                  borderSide: BorderSide(color: AppTheme.orange, width: 2.0),
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+          enabledBorder: widget.isProfile!
+              ? const UnderlineInputBorder(
+                  borderSide: BorderSide(color: AppTheme.grey, width: 2.0))
+              : const OutlineInputBorder(
+                  borderSide: BorderSide(color: AppTheme.grey, width: 2.0),
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
           focusedErrorBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: AppTheme.orange, width: 2.0),
               borderRadius: BorderRadius.all(Radius.circular(10))),
           errorBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: AppTheme.orange, width: 2.0),
               borderRadius: BorderRadius.all(Radius.circular(10))),
-          hintText: widget.hinttext,
+          hintText: widget.hintText,
           hintStyle: const TextStyle(color: AppTheme.grey),
-          suffixIcon: widget.suffixicon),
+          suffixIcon: widget.suffixIcon),
+      // decoration: InputDecoration(
+      //   hintText: widget.hintText,
+      //   focusedBorder: const UnderlineInputBorder(
+      //       borderSide: BorderSide(color: AppTheme.orange, width: 2.0)),
+      //   enabledBorder: const UnderlineInputBorder(
+      //       borderSide: BorderSide(color: AppTheme.orange, width: 2.0)),
+      // ),
       validator: (value) {
         if (value!.isEmpty) {
           return widget.requiredText ?? "This field is required.";

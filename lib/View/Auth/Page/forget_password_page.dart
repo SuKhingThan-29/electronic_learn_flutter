@@ -51,8 +51,9 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
               const CustomText(textAlign: TextAlign.left, text: 'Email'),
               CustomFunction.customSpace(height: 10),
               CustomTextFormField(
+                isProfile: false,
                 controller: emailController,
-                hinttext: 'Email',
+                hintText: 'Email',
                 isEmail: true,
               ),
               CustomFunction.customSpace(height: 30),

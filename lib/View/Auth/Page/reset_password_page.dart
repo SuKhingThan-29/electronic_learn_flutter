@@ -66,11 +66,12 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               const CustomText(textAlign: TextAlign.left, text: 'Passcode'),
               CustomFunction.customSpace(height: 10),
               CustomTextFormField(
+                isProfile: false,
                 controller: pwController,
                 obscureText: obscuretext,
                 isEmail: false,
-                hinttext: 'Passcode',
-                suffixicon: IconButton(
+                hintText: 'Passcode',
+                suffixIcon: IconButton(
                   icon: obscuretext
                       ? const Icon(Icons.visibility_off, color: AppTheme.grey)
                       : const Icon(Icons.visibility, color: AppTheme.orange),
@@ -84,11 +85,12 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   textAlign: TextAlign.left, text: 'Confirm Passcode'),
               CustomFunction.customSpace(height: 10),
               CustomTextFormField(
+                isProfile: false,
                 controller: confirmPwController,
                 obscureText: obscuretext1,
                 isEmail: false,
-                hinttext: 'Confirm Passcode',
-                suffixicon: IconButton(
+                hintText: 'Confirm Passcode',
+                suffixIcon: IconButton(
                   icon: obscuretext1
                       ? const Icon(Icons.visibility_off, color: AppTheme.grey)
                       : const Icon(Icons.visibility, color: AppTheme.orange),

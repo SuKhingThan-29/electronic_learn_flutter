@@ -19,6 +19,7 @@ class AppTheme {
   static const white = Colors.white;
   static const grey = Color(0xffC4C4C4);
   static const greyLight = Color.fromARGB(255, 243, 238, 238);
+  static const greyDark = Color.fromARGB(255, 115, 114, 114);
   static const blue = Colors.blue;
   static const red = Colors.red;
   static const green = Colors.green;
