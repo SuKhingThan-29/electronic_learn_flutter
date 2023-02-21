@@ -1,10 +1,12 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:coursia/UIDesign/custom_appbar.dart';
 import 'package:coursia/View//Home/Page/feature_page.dart';
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/function.dart';
-import 'package:coursia/View/Assessment/assessment_page.dart';
+import 'package:coursia/View/Assessment/Page/assessment_page.dart';
 import 'package:coursia/View/Courses/Page/courses_page.dart';
+import 'package:coursia/View/Profile/Page/profile_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -31,7 +33,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomFunction.appBar(username: 'Arkar', context),
+      appBar: CustomAppBar(
+        username: 'Arkar',
+        onTap: () {
+          CustomFunction.navigatePage(const ProfilePage(), context);
+        },
+      ),
       body: SafeArea(
         top: false,
         child: IndexedStack(

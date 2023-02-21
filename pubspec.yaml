@@ -36,6 +36,9 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.1.2
   flutter_screenutil: ^5.6.1
+  flutter_holo_date_picker: ^1.1.0
+  intl: ^0.18.0
+  dropdown_button2: ^1.9.3
 
 dev_dependencies:
   flutter_lints: ^2.0.0

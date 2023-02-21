@@ -123,6 +123,9 @@ class CoursesPage extends StatelessWidget {
                       itemCount: 5,
                       itemBuilder: (context, index) {
                         return const CustomCourseCard(
+                            isCart: false,
+                            isWishlist: false,
+                            isLearning: false,
                             image: 'images/pana1.png',
                             title: 'Data Visualization with R Language',
                             name: 'Joni Iskandar',

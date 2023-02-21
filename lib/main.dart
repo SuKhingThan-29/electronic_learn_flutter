@@ -1,7 +1,7 @@
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/View/Auth/Page/splash_page.dart';
 import 'package:coursia/View/Courses/bloc/courses_bloc.dart';
-import 'package:coursia/View/Home/Page/home_page.dart';
+import 'package:coursia/View/Profile/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<CoursesBloc>(create: (_) => CoursesBloc()),
+        BlocProvider<ProfileBloc>(create: (_) => ProfileBloc()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),

@@ -3,7 +3,9 @@ import 'package:coursia/UIDesign/custom_button.dart';
 import 'package:coursia/UIDesign/custom_profile_card.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/UIDesign/function.dart';
-import 'package:coursia/View/Profile/edit_profile_page.dart';
+import 'package:coursia/View/Profile/Page/cart_page.dart';
+import 'package:coursia/View/Profile/Page/edit_profile_page.dart';
+import 'package:coursia/View/Profile/Page/wishlist_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -55,13 +57,17 @@ class ProfilePage extends StatelessWidget {
           customCard('P U R C H A S E'),
           CustomFunction.customSpace(height: 15),
           CustomProfileCard(
-              onTap: () {},
+              onTap: () {
+                CustomFunction.navigatePage(const CartPage(), context);
+              },
               prefixIcon: Icons.shopping_cart,
               text: 'Cart',
               surffixIcon: Icons.keyboard_arrow_right_outlined),
           CustomFunction.customSpace(height: 15),
           CustomProfileCard(
-              onTap: () {},
+              onTap: () {
+                CustomFunction.navigatePage(const WishListPage(), context);
+              },
               prefixIcon: Icons.favorite,
               text: 'Wishlist',
               surffixIcon: Icons.keyboard_arrow_right_outlined),
@@ -111,6 +117,7 @@ class ProfilePage extends StatelessWidget {
               prefixIcon: Icons.logout,
               text: 'Sign Out',
               surffixIcon: Icons.keyboard_arrow_right_outlined),
+          CustomFunction.customSpace(height: 40)
         ],
       ),
     );

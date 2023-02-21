@@ -42,21 +42,25 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         if (isValid) {
           setState(() {
             widget.suffixIcon = IconButton(
-                onPressed: () {}, icon: const Icon(Icons.check_circle));
+                onPressed: () {},
+                icon: const Icon(Icons.check_circle, color: AppTheme.orange));
           });
         } else if (!isValid) {
           if (widget.isEmail!) {
             setState(() {
               widget.suffixIcon = IconButton(
                   onPressed: () {},
-                  icon: const Icon(Icons.check_circle_outline));
+                  icon: const Icon(Icons.check_circle_outline,
+                      color: AppTheme.orange));
             });
           }
         }
       },
       style: const TextStyle(color: AppTheme.black),
       decoration: InputDecoration(
-          errorStyle: const TextStyle(color: AppTheme.grey),
+          errorStyle: widget.isProfile!
+              ? const TextStyle(color: AppTheme.black)
+              : const TextStyle(color: AppTheme.grey),
           focusedBorder: widget.isProfile!
               ? const UnderlineInputBorder(
                   borderSide: BorderSide(color: AppTheme.orange, width: 2.0))
@@ -69,12 +73,18 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               : const OutlineInputBorder(
                   borderSide: BorderSide(color: AppTheme.grey, width: 2.0),
                   borderRadius: BorderRadius.all(Radius.circular(10))),
-          focusedErrorBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: AppTheme.orange, width: 2.0),
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-          errorBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: AppTheme.orange, width: 2.0),
-              borderRadius: BorderRadius.all(Radius.circular(10))),
+          focusedErrorBorder: widget.isProfile!
+              ? const UnderlineInputBorder(
+                  borderSide: BorderSide(color: AppTheme.orange, width: 2.0))
+              : const OutlineInputBorder(
+                  borderSide: BorderSide(color: AppTheme.orange, width: 2.0),
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+          errorBorder: widget.isProfile!
+              ? const UnderlineInputBorder(
+                  borderSide: BorderSide(color: AppTheme.orange, width: 2.0))
+              : const OutlineInputBorder(
+                  borderSide: BorderSide(color: AppTheme.orange, width: 2.0),
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
           hintText: widget.hintText,
           hintStyle: const TextStyle(color: AppTheme.grey),
           suffixIcon: widget.suffixIcon),

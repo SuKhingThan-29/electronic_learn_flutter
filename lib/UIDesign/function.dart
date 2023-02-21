@@ -1,7 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:coursia/UIDesign/app_theme.dart';
-import 'package:coursia/UIDesign/custom_text.dart';
-import 'package:coursia/View/Profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -27,52 +25,14 @@ class CustomFunction {
     )..show(context);
   }
 
-  static appBar(BuildContext context, {String? username}) {
-    return AppBar(
-      automaticallyImplyLeading: false,
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomText(text: 'Hello , $username', size: 20),
-          const SizedBox(height: 20),
-          const CustomText(text: 'What do you want to learn today?')
-        ],
-      ),
-      actions: [
-        Row(
-          children: [
-            Image.asset('images/Vector.png', width: 30.sp, height: 30.sp),
-            SizedBox(width: 10.w),
-            InkWell(
-                child:
-                    Image.asset('images/boy.png', width: 40.sp, height: 40.sp),
-                onTap: () {
-                  navigatePage(const ProfilePage(), context);
-                }),
-            SizedBox(width: 5.w),
-          ],
-        )
-      ],
-      toolbarHeight: 120.h,
-      backgroundColor: AppTheme.black,
-      elevation: 0,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          bottom: Radius.circular(30.0),
-        ),
-      ),
-    );
-  }
-
   static customBody(BuildContext context,
-      {bool? isProfile, Padding? columnData}) {
+      {bool? isProfile, Widget? columnData}) {
     return Stack(
       children: [
-        Container(height: 700.h, color: AppTheme.black),
+        Container(height: 1000.h, color: AppTheme.black),
         Positioned(
           top: isProfile! ? 35.h : 10.h,
           child: Container(
-            height: 700.h,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 color: AppTheme.white,
