@@ -9,11 +9,6 @@ class CoursesBloc extends Bloc<CoursesEvent, CoursesState> {
   }
 
   _onTapEvent(OnTapEvent event, Emitter<CoursesState> emit) {
-    emit(OnTapLoading());
-    try {
-      emit(OnTapSuccess(type: event.type!));
-    } catch (e) {
-      emit(OnTapFailed(message: e.toString()));
-    }
+    emit(OnTapSuccess(type: event.type!));
   }
 }

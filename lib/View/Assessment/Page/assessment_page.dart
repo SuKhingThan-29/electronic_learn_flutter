@@ -1,6 +1,7 @@
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/assessment_card.dart';
 import 'package:coursia/UIDesign/function.dart';
+import 'package:coursia/View/DISC/Page/disc_question_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -21,7 +22,9 @@ class AssessmentPage extends StatelessWidget {
               bodyText: 'Know your DiSC Type, Strength and\nWeakness',
               bgColor: const Color.fromARGB(255, 203, 231, 249),
               btnColor: const Color(0xff407BFF),
-              onTap: () {},
+              onTap: () {
+                CustomFunction.navigatePage(DISCQuestionPage(), context);
+              },
             ),
             CustomFunction.customSpace(height: 10.h),
             AssessmentCard(

@@ -11,20 +11,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   _getSelectedDate(GetSelectedDate event, Emitter<ProfileState> emit) {
-    emit(GetDateLoading());
-    try {
-      emit(GetDateSuccess(date: event.date));
-    } catch (e) {
-      emit(GetDateFailed(message: e.toString()));
-    }
+    emit(GetDateSuccess(date: event.date));
   }
 
   _getDropDownValue(GetDropDownValue event, Emitter<ProfileState> emit) {
-    emit(GetDropDownValueLoading());
-    try {
-      emit(GetDropDownValueSuccess(value: event.value));
-    } catch (e) {
-      emit(GetDropDownValueFailed(message: e.toString()));
-    }
+    emit(GetDropDownValueSuccess(value: event.value));
   }
 }

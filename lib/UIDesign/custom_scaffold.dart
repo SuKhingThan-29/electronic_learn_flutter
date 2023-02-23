@@ -15,9 +15,10 @@ class CusotmScaffold extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: 80.0,
         backgroundColor: AppTheme.black,
-        elevation: 0.0,
+        //elevation: 0.0,
         title: Text(text!),
         centerTitle: true,
+        // actions: const [Icon(Icons.contact_support)],
       ),
       body: Stack(
         children: [

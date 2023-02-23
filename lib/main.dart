@@ -1,6 +1,7 @@
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/View/Auth/Page/splash_page.dart';
 import 'package:coursia/View/Courses/bloc/courses_bloc.dart';
+import 'package:coursia/View/DISC/bloc/disc_bloc.dart';
 import 'package:coursia/View/Profile/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<CoursesBloc>(create: (_) => CoursesBloc()),
         BlocProvider<ProfileBloc>(create: (_) => ProfileBloc()),
+        BlocProvider<DiscBloc>(create: (_) => DiscBloc()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),

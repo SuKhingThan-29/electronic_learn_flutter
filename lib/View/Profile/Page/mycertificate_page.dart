@@ -4,12 +4,12 @@ import 'package:coursia/UIDesign/function.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class WishListPage extends StatelessWidget {
-  const WishListPage({super.key});
+class MyCertificatePage extends StatelessWidget {
+  const MyCertificatePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return CusotmScaffold(text: 'Wishlist', data: bodyData(context));
+    return CusotmScaffold(text: 'My Certificate', data: bodyData(context));
   }
 
   bodyData(BuildContext context) {
@@ -20,17 +20,18 @@ class WishListPage extends StatelessWidget {
           CustomFunction.customSpace(height: 20.h),
           Expanded(
             child: ListView.builder(
-              itemCount: 2,
+              itemCount: 1,
               itemBuilder: (context, index) {
                 return const CustomCourseCard(
                     isCart: false,
-                    isWishlist: true,
+                    isWishlist: false,
                     isLearning: false,
-                    isCertificate: false,
+                    isCertificate: true,
                     image: 'images/pana1.png',
                     title: 'Data Visualization with R Language',
+                    date: '8-Jul-2023',
                     name: 'Joni Iskandar',
-                    cost: '\$450',
+                    cost: '40%',
                     time: '1h 35m ',
                     lessons: '17 Lessons');
               },

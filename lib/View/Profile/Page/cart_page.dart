@@ -1,4 +1,4 @@
-import 'package:coursia/UIDesign/cusstom_scaffold.dart';
+import 'package:coursia/UIDesign/custom_scaffold.dart';
 import 'package:coursia/UIDesign/custom_courses_card.dart';
 import 'package:coursia/UIDesign/function.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +26,7 @@ class CartPage extends StatelessWidget {
                     isCart: true,
                     isWishlist: false,
                     isLearning: false,
+                    isCertificate: false,
                     image: 'images/pana1.png',
                     title: 'Data Visualization with R Language',
                     name: 'Joni Iskandar',

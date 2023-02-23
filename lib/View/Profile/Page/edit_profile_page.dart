@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:coursia/UIDesign/app_theme.dart';
-import 'package:coursia/UIDesign/cusstom_scaffold.dart';
+import 'package:coursia/UIDesign/custom_scaffold.dart';
 import 'package:coursia/UIDesign/custom_button.dart';
 import 'package:coursia/UIDesign/custom_date_picker.dart';
 import 'package:coursia/UIDesign/custom_dropdown.dart';

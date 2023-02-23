@@ -126,6 +126,7 @@ class CoursesPage extends StatelessWidget {
                             isCart: false,
                             isWishlist: false,
                             isLearning: false,
+                            isCertificate: false,
                             image: 'images/pana1.png',
                             title: 'Data Visualization with R Language',
                             name: 'Joni Iskandar',
