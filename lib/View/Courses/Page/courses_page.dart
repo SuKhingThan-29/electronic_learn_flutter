@@ -176,6 +176,7 @@ class CoursesPage extends StatelessWidget {
                       CustomTextFormField(
                           controller: topicController,
                           isEmail: false,
+                          isProfile: false,
                           hintText: 'Topic'),
                       CustomFunction.customSpace(height: 10.h),
                       const CustomText(
@@ -184,6 +185,7 @@ class CoursesPage extends StatelessWidget {
                       CustomTextFormField(
                           controller: topicController,
                           isEmail: false,
+                          isProfile: false,
                           hintText: 'Cost'),
                       CustomFunction.customSpace(height: 10.h),
                       const CustomText(
@@ -192,6 +194,7 @@ class CoursesPage extends StatelessWidget {
                       CustomTextFormField(
                           controller: topicController,
                           isEmail: false,
+                          isProfile: false,
                           hintText: 'Level'),
                       CustomFunction.customSpace(height: 20.h),
                       Center(

@@ -105,36 +105,4 @@ class DISCQuestionPage extends StatelessWidget {
       },
     );
   }
-
-  // InkWell customanswercontainer(BuildContext context, int index) {
-  //   return InkWell(
-  //     onTap: () {
-  //       context.read<DiscBloc>().add(OnTapEvent(onTapIndex: index));
-  //     },
-  //     child: Container(
-  //       height: 60.h,
-  //       decoration: BoxDecoration(
-  //           color: onTapIndex == index ? AppTheme.orange : AppTheme.greyLight,
-  //           borderRadius: BorderRadius.circular(5.r)),
-  //       child: Row(children: [
-  //         SizedBox(
-  //           width: 100.w,
-  //           child: onTapIndex == index
-  //               ? const Icon(
-  //                   Icons.album,
-  //                   color: AppTheme.white,
-  //                 )
-  //               : const Icon(
-  //                   Icons.circle_outlined,
-  //                   color: AppTheme.greyDark,
-  //                 ),
-  //         ),
-  //         CustomText(
-  //           text: customerRecontractReason[index]["name"],
-  //           textColor: onTapIndex == index ? AppTheme.white : AppTheme.greyDark,
-  //         )
-  //       ]),
-  //     ),
-  //   );
-  // }
 }

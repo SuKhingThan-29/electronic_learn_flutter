@@ -2,6 +2,7 @@ import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/assessment_card.dart';
 import 'package:coursia/UIDesign/function.dart';
 import 'package:coursia/View/DISC/Page/disc_question_page.dart';
+import 'package:coursia/View/Quiz/Page/quiz_main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -48,7 +49,9 @@ class AssessmentPage extends StatelessWidget {
               bodyText: 'Know your general knowledge for fun',
               bgColor: const Color.fromARGB(255, 247, 234, 219),
               btnColor: AppTheme.orange,
-              onTap: () {},
+              onTap: () {
+                CustomFunction.navigatePage(const QuizMainPage(), context);
+              },
             )
           ],
         ),
