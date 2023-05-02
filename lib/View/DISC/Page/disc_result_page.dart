@@ -61,9 +61,13 @@ class DISCResultPage extends StatelessWidget {
                 bgColor: AppTheme.yellow),
             CustomFunction.customSpace(height: 50.h),
             const CustomResultContainer(
-                isIcon: true,
-                postText: 'Your DiSC Test will be expired at 24-Nov-2022',
-                bgColor: AppTheme.orangeLight),
+              isIcon: true,
+              postText: 'Your DiSC Test will be expired at 24-Nov-2022',
+              bgColor: AppTheme.orangeLight,
+              textColor: AppTheme.orange,
+              borderColor: AppTheme.orange,
+              iconColor: AppTheme.orange,
+            ),
             CustomFunction.customSpace(height: 20.h),
             CustomButton(
               text: 'Share Result',

@@ -1,4 +1,4 @@
-package com.example.coursia
+package com.umg.coursia
 
 import io.flutter.embedding.android.FlutterActivity
 

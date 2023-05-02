@@ -1,7 +1,9 @@
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/assessment_card.dart';
 import 'package:coursia/UIDesign/function.dart';
+import 'package:coursia/View/Competency/Page/competency_question_page.dart';
 import 'package:coursia/View/DISC/Page/disc_question_page.dart';
+import 'package:coursia/View/IQ/Page/iq_question_page.dart';
 import 'package:coursia/View/Quiz/Page/quiz_main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,7 +35,9 @@ class AssessmentPage extends StatelessWidget {
               bodyText: 'Know your Skill of Level to work',
               bgColor: const Color.fromARGB(255, 233, 215, 249),
               btnColor: const Color(0xffB256FA),
-              onTap: () {},
+              onTap: () {
+                CustomFunction.navigatePage(CompetencyQuestionPage(), context);
+              },
             ),
             CustomFunction.customSpace(height: 10.h),
             AssessmentCard(
@@ -41,7 +45,9 @@ class AssessmentPage extends StatelessWidget {
               bodyText: 'Know your iQ level and brain perception',
               bgColor: const Color.fromARGB(255, 221, 242, 224),
               btnColor: const Color(0xff0BAF25),
-              onTap: () {},
+              onTap: () {
+                CustomFunction.navigatePage(IqQuestionPage(), context);
+              },
             ),
             CustomFunction.customSpace(height: 10.h),
             AssessmentCard(

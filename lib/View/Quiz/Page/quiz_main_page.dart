@@ -3,6 +3,7 @@ import 'package:coursia/UIDesign/custom_button.dart';
 import 'package:coursia/UIDesign/custom_scaffold.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/UIDesign/function.dart';
+import 'package:coursia/View/Quiz/Page/quiz_question_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -63,7 +64,10 @@ class QuizMainPage extends StatelessWidget {
                                       bgcolor: AppTheme.black,
                                       text: 'Test Now ->',
                                       fontSize: 12.sp,
-                                      onTap: () {},
+                                      onTap: () {
+                                        CustomFunction.navigatePage(
+                                            QuizQuestionPage(), context);
+                                      },
                                       width: 90.w,
                                       height: 25.h,
                                       textColor: AppTheme.white,

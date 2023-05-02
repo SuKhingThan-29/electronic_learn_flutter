@@ -57,6 +57,7 @@ class DISCQuestionPage extends StatelessWidget {
                           text: answerList[index]["name"],
                           index: index,
                           currentIndex: onTapIndex,
+                          boxColor: AppTheme.orange,
                           onTap: () {
                             context
                                 .read<DiscBloc>()

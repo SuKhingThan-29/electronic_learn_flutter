@@ -7,6 +7,9 @@ class CustomResultContainer extends StatelessWidget {
   final String? preText;
   final String? postText;
   final Color? bgColor;
+  final Color? borderColor;
+  final Color? textColor;
+  final Color? iconColor;
   final bool? isIcon;
   final void Function()? onTap;
   const CustomResultContainer(
@@ -14,6 +17,9 @@ class CustomResultContainer extends StatelessWidget {
       this.preText,
       this.postText,
       this.bgColor,
+      this.borderColor,
+      this.textColor,
+      this.iconColor,
       this.isIcon,
       this.onTap});
 
@@ -24,27 +30,29 @@ class CustomResultContainer extends StatelessWidget {
       child: Container(
         height: 40.h,
         decoration: BoxDecoration(
-          border: isIcon! ? Border.all(color: AppTheme.orange) : null,
+          border: isIcon! ? Border.all(color: borderColor!) : null,
           color: bgColor,
           borderRadius: BorderRadius.circular(10.r),
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.w),
-          child: Row(children: [
-            Expanded(
-              child: isIcon!
-                  ? const Icon(Icons.check_circle)
-                  : CustomText(
-                      text: preText,
-                      textAlign: TextAlign.left,
-                    ),
-            ),
-            CustomText(
-              text: postText,
-              size: 12.sp,
-              textColor: isIcon! ? AppTheme.orange : AppTheme.white,
-            ),
-          ]),
+          child: Row(
+              mainAxisAlignment: isIcon!
+                  ? MainAxisAlignment.center
+                  : MainAxisAlignment.spaceBetween,
+              children: [
+                isIcon!
+                    ? Icon(Icons.check_circle, color: iconColor)
+                    : CustomText(
+                        text: preText,
+                        textAlign: TextAlign.left,
+                      ),
+                CustomText(
+                  text: postText,
+                  size: 12.sp,
+                  textColor: isIcon! ? textColor : AppTheme.white,
+                ),
+              ]),
         ),
       ),
     );

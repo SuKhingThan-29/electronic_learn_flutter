@@ -127,7 +127,7 @@ class CustomCourseCard extends StatelessWidget {
                                     // animation: true,
                                     width: 200.w,
                                     lineHeight: 8.h,
-                                    percent: 0.9,
+                                    percent: 0.4,
                                     progressColor: AppTheme.orange,
                                   )
                                 : isCertificate!

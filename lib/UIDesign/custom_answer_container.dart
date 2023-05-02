@@ -9,12 +9,14 @@ class CustomAnswerContainer extends StatelessWidget {
   final String? text;
   final int? index;
   final int? currentIndex;
+  final Color? boxColor;
   final void Function()? onTap;
   const CustomAnswerContainer(
       {super.key,
       required this.text,
       this.index,
       this.currentIndex,
+      this.boxColor,
       this.onTap});
 
   @override
@@ -24,7 +26,7 @@ class CustomAnswerContainer extends StatelessWidget {
       child: Container(
         height: 60.h,
         decoration: BoxDecoration(
-            color: index == currentIndex ? AppTheme.orange : AppTheme.greyLight,
+            color: index == currentIndex ? boxColor : AppTheme.greyLight,
             borderRadius: BorderRadius.circular(5.r)),
         child: Row(children: [
           SizedBox(

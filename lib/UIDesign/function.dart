@@ -8,9 +8,8 @@ class CustomFunction {
     Navigator.push(context, MaterialPageRoute(builder: (context) => page!));
   }
 
-  static customSpace(
-      {double? width = double.infinity, double? height = double.infinity}) {
-    return SizedBox(height: height!.h, width: width!.w);
+  static customSpace({double? width, double? height}) {
+    return SizedBox(height: height ?? 0, width: width ?? 0);
   }
 
   static flushBar(String? message, BuildContext context,

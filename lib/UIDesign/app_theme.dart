@@ -23,8 +23,12 @@ class AppTheme {
   static const greyLight = Color.fromARGB(255, 243, 238, 238);
   static const greyDark = Color.fromARGB(255, 115, 114, 114);
   static const blue = Colors.blue;
+  static const blueLight = Color.fromARGB(255, 238, 242, 245);
   static const red = Colors.red;
   static const green = Colors.green;
+  static const greenLight = Color.fromARGB(255, 221, 240, 222);
   static const purple = Colors.purple;
-  static const purpleLight = Color(0xff7d69f5);
+  static const purpleLight = Color.fromARGB(255, 208, 105, 245);
+  static const navy = Color(0xff4527FF);
+  static const navyLight = Color(0xff7D69F5);
 }

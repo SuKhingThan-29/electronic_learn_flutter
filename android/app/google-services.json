@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "918157424611",
+    "project_id": "coursia-100c0",
+    "storage_bucket": "coursia-100c0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918157424611:android:fba1711cdb8a92be7f12d6",
+        "android_client_info": {
+          "package_name": "com.umg.coursia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "918157424611-voonfgsnibm10lrch09oulh7j59u4sv5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD185AFvVaqmTifKI2TzcHYaUMdWXVaVmI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "918157424611-voonfgsnibm10lrch09oulh7j59u4sv5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
