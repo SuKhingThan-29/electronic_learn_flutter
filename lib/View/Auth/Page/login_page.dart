@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:coursia/View/Auth/Page/forget_password_page.dart';
 import 'package:coursia/View//Auth/Page/signup_page.dart';
 import 'package:coursia/View//Home/Page/home_page.dart';
@@ -7,7 +9,9 @@ import 'package:coursia/UIDesign/coursia_top_image.dart';
 import 'package:coursia/UIDesign/function.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/UIDesign/custom_textformfield.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginPage extends StatefulWidget {
@@ -22,6 +26,29 @@ class _LoginPageState extends State<LoginPage> {
   final pwController = TextEditingController();
   bool obscuretext = true;
   final formKey = GlobalKey<FormState>();
+  String? token;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // getToken();
+  }
+
+  late AndroidNotificationChannel channel;
+  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  getToken() async {
+    FirebaseMessaging.instance.getToken().then(
+          (value) => setState(
+            () {
+              token = value;
+              log(token.toString());
+            },
+          ),
+        );
+
+    // FirebaseMessaging.onMessage.listen(showFlutterNotification);
+  }
 
   toggle() {
     setState(() {

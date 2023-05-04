@@ -40,6 +40,10 @@ dependencies:
   intl: ^0.18.0
   dropdown_button2: ^1.9.3
   percent_indicator: ^4.2.2
+  firebase_messaging: ^14.4.1
+  firebase_core: ^2.10.0
+  flutter_local_notifications: ^14.0.0+1
+  firebase_analytics: ^10.2.1
 
 dev_dependencies:
   flutter_lints: ^2.0.0

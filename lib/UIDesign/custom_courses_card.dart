@@ -2,6 +2,7 @@ import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/custom_button.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/UIDesign/function.dart';
+import 'package:coursia/View/Checkout/Page/checkout_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -104,7 +105,8 @@ class CustomCourseCard extends StatelessWidget {
                             text: 'Check Out',
                             fontSize: 12.sp,
                             onTap: () {
-                              // CustomFunction.navigatePage(EditProfilePage(), context);
+                              CustomFunction.navigatePage(
+                                  CheckoutDetailPage(), context);
                             },
                             width: 90.w,
                             height: 25.h,
