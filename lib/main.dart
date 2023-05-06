@@ -1,9 +1,13 @@
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/View/Auth/Page/splash_page.dart';
+import 'package:coursia/View/Checkout/bloc/checkout_bloc.dart';
 import 'package:coursia/View/Competency/bloc/competency_bloc.dart';
 import 'package:coursia/View/Courses/bloc/courses_bloc.dart';
 import 'package:coursia/View/DISC/bloc/disc_bloc.dart';
+import 'package:coursia/View/Evaluation/bloc/evaluation_bloc.dart';
+import 'package:coursia/View/Gift/bloc/gift_bloc.dart';
 import 'package:coursia/View/IQ/bloc/iq_bloc.dart';
+import 'package:coursia/View/Multiple_Choice/bloc/multiple_choice_bloc.dart';
 import 'package:coursia/View/Profile/bloc/profile_bloc.dart';
 import 'package:coursia/View/Quiz/bloc/quiz_bloc.dart';
 import 'package:coursia/firebase_options.dart';
@@ -26,7 +30,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await FirebaseMessaging.instance.getToken();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
     // print('Got a message whilst in the foreground!');
@@ -44,7 +48,7 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await setupFlutterNotifications();
   showFlutterNotification(message);
@@ -129,6 +133,10 @@ class MyApp extends StatelessWidget {
         BlocProvider<QuizBloc>(create: (_) => QuizBloc()),
         BlocProvider<IqBloc>(create: (_) => IqBloc()),
         BlocProvider<CompetencyBloc>(create: (_) => CompetencyBloc()),
+        BlocProvider<CheckoutBloc>(create: (_) => CheckoutBloc()),
+        BlocProvider<MultipleChoiceBloc>(create: (_) => MultipleChoiceBloc()),
+        BlocProvider<GiftBloc>(create: (_) => GiftBloc()),
+        BlocProvider<EvaluationBloc>(create: (_) => EvaluationBloc()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),

@@ -5,7 +5,6 @@ import 'package:coursia/UIDesign/custom_profile_card.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/UIDesign/function.dart';
 import 'package:coursia/View/Cart/Page/cart_page.dart';
-import 'package:coursia/View/Profile/Page/cart_page.dart';
 import 'package:coursia/View/Profile/Page/edit_profile_page.dart';
 import 'package:coursia/View/Profile/Page/myachievement_page.dart';
 import 'package:coursia/View/Profile/Page/mycertificate_page.dart';

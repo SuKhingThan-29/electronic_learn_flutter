@@ -9,7 +9,7 @@ class CustomFunction {
   }
 
   static customSpace({double? width, double? height}) {
-    return SizedBox(height: height ?? 0, width: width ?? 0);
+    return SizedBox(height: height?.h ?? 0, width: width?.w ?? 0);
   }
 
   static flushBar(String? message, BuildContext context,

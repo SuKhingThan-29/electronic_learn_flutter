@@ -4,7 +4,10 @@ import 'package:coursia/UIDesign/custom_courses_card.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/UIDesign/custom_textformfield.dart';
 import 'package:coursia/UIDesign/function.dart';
+import 'package:coursia/View/Assignment/Page/assignment_result_page.dart';
+import 'package:coursia/View/Case_Study/Page/case_study_question_page.dart';
 import 'package:coursia/View/Courses/bloc/courses_bloc.dart';
+import 'package:coursia/View/Evaluation/Page/evaluation_question_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -122,7 +125,17 @@ class CoursesPage extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: 5,
                       itemBuilder: (context, index) {
-                        return const CustomCourseCard(
+                        return CustomCourseCard(
+                            onTap: () {
+                              // CustomFunction.navigatePage(
+                              //     MultipleChoiceQuestionPage(), context);
+                              // CustomFunction.navigatePage(
+                              //     CaseStudyQuestionPage(), context);
+                              // CustomFunction.navigatePage(
+                              //     AssignmentResultPage(), context);
+                              CustomFunction.navigatePage(
+                                  EvaluationQuestionPage(), context);
+                            },
                             isCart: false,
                             isWishlist: false,
                             isLearning: false,

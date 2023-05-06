@@ -6,6 +6,8 @@ import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/function.dart';
 import 'package:coursia/View/Assessment/Page/assessment_page.dart';
 import 'package:coursia/View/Courses/Page/courses_page.dart';
+import 'package:coursia/View/Gift/Page/gift_empty_page.dart';
+import 'package:coursia/View/Gift/Page/gift_page.dart';
 import 'package:coursia/View/Profile/Page/profile_page.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +30,8 @@ class _HomePageState extends State<HomePage> {
     const FeaturePage(),
     CoursesPage(),
     const AssessmentPage(),
-    Container()
+    // GiftPage()
+    GiftEmptyPage()
   ];
   @override
   Widget build(BuildContext context) {
