@@ -87,8 +87,8 @@ class GiftPage extends StatelessWidget {
                                     text: 'Copy',
                                     fontSize: 12.sp,
                                     onTap: () {
-                                      CustomFunction.navigatePage(
-                                          GiftEmptyPage(), context);
+                                      // CustomFunction.navigatePage(
+                                      //   const  GiftEmptyPage(), context);
                                     },
                                     width: 90.w,
                                     height: 25.h,

@@ -1,4 +1,5 @@
 import 'package:coursia/UIDesign/app_theme.dart';
+import 'package:coursia/View/Assignment/bloc/assignment_bloc.dart';
 import 'package:coursia/View/Auth/Page/splash_page.dart';
 import 'package:coursia/View/Checkout/bloc/checkout_bloc.dart';
 import 'package:coursia/View/Competency/bloc/competency_bloc.dart';
@@ -137,6 +138,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<MultipleChoiceBloc>(create: (_) => MultipleChoiceBloc()),
         BlocProvider<GiftBloc>(create: (_) => GiftBloc()),
         BlocProvider<EvaluationBloc>(create: (_) => EvaluationBloc()),
+        BlocProvider<AssignmentBloc>(create: (_) => AssignmentBloc()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),
@@ -150,7 +152,7 @@ class MyApp extends StatelessWidget {
             home: child,
           );
         },
-        child: const SplashPage(),
+        child: SplashPage(),
       ),
     );
   }

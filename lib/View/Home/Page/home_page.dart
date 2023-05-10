@@ -30,8 +30,8 @@ class _HomePageState extends State<HomePage> {
     const FeaturePage(),
     CoursesPage(),
     const AssessmentPage(),
-    // GiftPage()
-    GiftEmptyPage()
+    GiftPage()
+    //const GiftEmptyPage()
   ];
   @override
   Widget build(BuildContext context) {

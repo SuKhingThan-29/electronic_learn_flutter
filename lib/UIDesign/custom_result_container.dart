@@ -47,12 +47,10 @@ class CustomResultContainer extends StatelessWidget {
                         text: preText,
                         textAlign: TextAlign.left,
                       ),
-                Expanded(
-                  child: CustomText(
-                    text: postText,
-                    size: 12.sp,
-                    textColor: isIcon! ? textColor : AppTheme.white,
-                  ),
+                CustomText(
+                  text: postText,
+                  size: 12.sp,
+                  textColor: isIcon! ? textColor : AppTheme.white,
                 ),
               ]),
         ),

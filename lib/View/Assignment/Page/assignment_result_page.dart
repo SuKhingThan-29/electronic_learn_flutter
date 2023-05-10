@@ -6,6 +6,7 @@ import 'package:coursia/UIDesign/custom_result_container.dart';
 import 'package:coursia/UIDesign/custom_scaffold.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/UIDesign/function.dart';
+import 'package:coursia/View/Assignment/Page/assignment_answer_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -72,7 +73,9 @@ class AssignmentResultPage extends StatelessWidget {
                 ? CustomFunction.customSpace(height: 50.h)
                 : CustomFunction.customSpace(height: 20.h),
             CustomButton(
-              onTap: () {},
+              onTap: () {
+                CustomFunction.navigatePage(AssignmentAnswerPage(), context);
+              },
               text: 'View Assignments',
               textColor: AppTheme.white,
               bgcolor: AppTheme.black,

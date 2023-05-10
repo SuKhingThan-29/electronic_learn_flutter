@@ -11,3 +11,13 @@ class OnTapEvent extends CoursesEvent {
   final String? type;
   const OnTapEvent({required this.type});
 }
+
+class IconTap extends CoursesEvent {
+  final bool? isIconTap;
+  const IconTap({required this.isIconTap});
+}
+
+class OnTapLessonReviewEvent extends CoursesEvent {
+  final String? lessonOrReview;
+  const OnTapLessonReviewEvent({required this.lessonOrReview});
+}

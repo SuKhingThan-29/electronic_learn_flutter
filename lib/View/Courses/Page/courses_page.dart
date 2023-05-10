@@ -4,10 +4,8 @@ import 'package:coursia/UIDesign/custom_courses_card.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/UIDesign/custom_textformfield.dart';
 import 'package:coursia/UIDesign/function.dart';
-import 'package:coursia/View/Assignment/Page/assignment_result_page.dart';
-import 'package:coursia/View/Case_Study/Page/case_study_question_page.dart';
+import 'package:coursia/View/Courses/Page/courses_detail_page.dart';
 import 'package:coursia/View/Courses/bloc/courses_bloc.dart';
-import 'package:coursia/View/Evaluation/Page/evaluation_question_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -134,7 +132,7 @@ class CoursesPage extends StatelessWidget {
                               // CustomFunction.navigatePage(
                               //     AssignmentResultPage(), context);
                               CustomFunction.navigatePage(
-                                  EvaluationQuestionPage(), context);
+                                  CourseDetialPage(), context);
                             },
                             isCart: false,
                             isWishlist: false,
@@ -160,69 +158,141 @@ class CoursesPage extends StatelessWidget {
   }
 
   showButtomSheet(BuildContext context) {
-    showModalBottomSheet(
-        isScrollControlled: true,
-        isDismissible: false,
-        enableDrag: false,
-        backgroundColor: Colors.transparent,
-        barrierColor: Colors.black.withOpacity(0.5),
-        elevation: 5,
-        context: context,
-        builder: (ctx) => WillPopScope(
-              onWillPop: () async => true,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(
-                      top: const Radius.circular(35).r, bottom: Radius.zero),
-                ),
-                height: 360.h,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 50.h),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const CustomText(
-                          text: 'Topic', textColor: AppTheme.blackLight),
-                      CustomFunction.customSpace(height: 5.h),
-                      CustomTextFormField(
-                          controller: topicController,
-                          isEmail: false,
-                          isProfile: false,
-                          hintText: 'Topic'),
-                      CustomFunction.customSpace(height: 10.h),
-                      const CustomText(
-                          text: 'Cost', textColor: AppTheme.blackLight),
-                      CustomFunction.customSpace(height: 5.h),
-                      CustomTextFormField(
-                          controller: topicController,
-                          isEmail: false,
-                          isProfile: false,
-                          hintText: 'Cost'),
-                      CustomFunction.customSpace(height: 10.h),
-                      const CustomText(
-                          text: 'Level', textColor: AppTheme.blackLight),
-                      CustomFunction.customSpace(height: 5.h),
-                      CustomTextFormField(
-                          controller: topicController,
-                          isEmail: false,
-                          isProfile: false,
-                          hintText: 'Level'),
-                      CustomFunction.customSpace(height: 20.h),
-                      Center(
-                        child: CustomButton(
-                            text: 'Apply Filter',
-                            onTap: () {
-                              Navigator.of(context).pop();
-                            },
-                            width: 150.w),
-                      )
-                    ],
-                  ),
+    // showModalBottomSheet(
+    //     isScrollControlled: true,
+    //     isDismissible: false,
+    //     enableDrag: false,
+    //     backgroundColor: Colors.transparent,
+    //     barrierColor: Colors.black.withOpacity(0.5),
+    //     elevation: 5,
+    //     context: context,
+    //     builder: (ctx) => WillPopScope(
+    //           onWillPop: () async => true,
+    //           child: Container(
+    //             decoration: BoxDecoration(
+    //               color: Colors.white,
+    //               borderRadius: BorderRadius.vertical(
+    //                   top: const Radius.circular(35).r, bottom: Radius.zero),
+    //             ),
+    //             height: 360.h,
+    //             child: SingleChildScrollView(
+    //               child: Padding(
+    //                 padding:
+    //                     EdgeInsets.only(left: 20.w, right: 20.w, top: 50.h),
+    //                 child: Column(
+    //                   mainAxisSize: MainAxisSize.min,
+    //                   crossAxisAlignment: CrossAxisAlignment.start,
+    //                   children: [
+    //                     const CustomText(
+    //                         text: 'Topic', textColor: AppTheme.blackLight),
+    //                     CustomFunction.customSpace(height: 5.h),
+    //                     CustomTextFormField(
+    //                         controller: topicController,
+    //                         isEmail: false,
+    //                         isProfile: false,
+    //                         hintText: 'Topic'),
+    //                     CustomFunction.customSpace(height: 10.h),
+    //                     const CustomText(
+    //                         text: 'Cost', textColor: AppTheme.blackLight),
+    //                     CustomFunction.customSpace(height: 5.h),
+    //                     CustomTextFormField(
+    //                         controller: costController,
+    //                         isEmail: false,
+    //                         isProfile: false,
+    //                         hintText: 'Cost'),
+    //                     CustomFunction.customSpace(height: 10.h),
+    //                     const CustomText(
+    //                         text: 'Level', textColor: AppTheme.blackLight),
+    //                     CustomFunction.customSpace(height: 5.h),
+    //                     CustomTextFormField(
+    //                         controller: levelController,
+    //                         isEmail: false,
+    //                         isProfile: false,
+    //                         hintText: 'Level'),
+    //                     CustomFunction.customSpace(height: 20.h),
+    //                     Center(
+    //                       child: CustomButton(
+    //                           text: 'Apply Filter',
+    //                           onTap: () {
+    //                             Navigator.of(context).pop();
+    //                           },
+    //                           width: 150.w),
+    //                     )
+    //                   ],
+    //                 ),
+    //               ),
+    //             ),
+    //           ),
+    //         ));
+
+    showModalBottomSheet<void>(
+      isScrollControlled: true,
+      isDismissible: false,
+      enableDrag: false,
+      elevation: 5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30.r), topRight: Radius.circular(30.r)),
+      ),
+      context: context,
+      builder: (BuildContext context) {
+        return WillPopScope(
+          onWillPop: () async => true,
+          child: SingleChildScrollView(
+            child: AnimatedPadding(
+              padding: MediaQuery.of(context).viewInsets,
+              duration: const Duration(milliseconds: 100),
+              curve: Curves.decelerate,
+              child: Padding(
+                padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 50.h),
+                // padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const CustomText(
+                        text: 'Topic', textColor: AppTheme.blackLight),
+                    CustomFunction.customSpace(height: 5.h),
+                    CustomTextFormField(
+                        controller: topicController,
+                        isEmail: false,
+                        isProfile: false,
+                        hintText: 'Topic'),
+                    CustomFunction.customSpace(height: 10.h),
+                    const CustomText(
+                        text: 'Cost', textColor: AppTheme.blackLight),
+                    CustomFunction.customSpace(height: 5.h),
+                    CustomTextFormField(
+                        controller: costController,
+                        isEmail: false,
+                        isProfile: false,
+                        hintText: 'Cost'),
+                    CustomFunction.customSpace(height: 10.h),
+                    const CustomText(
+                        text: 'Level', textColor: AppTheme.blackLight),
+                    CustomFunction.customSpace(height: 5.h),
+                    CustomTextFormField(
+                        controller: levelController,
+                        isEmail: false,
+                        isProfile: false,
+                        hintText: 'Level'),
+                    CustomFunction.customSpace(height: 20.h),
+                    Center(
+                      child: CustomButton(
+                          text: 'Apply Filter',
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          width: 150.w),
+                    )
+                  ],
                 ),
               ),
-            ));
+            ),
+          ),
+        );
+      },
+    );
   }
 }
 

@@ -45,6 +45,10 @@ dependencies:
   flutter_local_notifications: ^14.0.0+1
   firebase_analytics: ^10.2.1
   smooth_star_rating_null_safety: ^1.0.4+2
+  dotted_border: ^2.0.0+3
+  file_picker: any
+  video_player: ^2.6.1
+  flick_video_player: 0.5.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0

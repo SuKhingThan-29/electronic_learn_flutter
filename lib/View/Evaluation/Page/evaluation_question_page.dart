@@ -6,7 +6,6 @@ import 'package:coursia/UIDesign/custom_button.dart';
 import 'package:coursia/UIDesign/custom_scaffold.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/UIDesign/function.dart';
-import 'package:coursia/View/Competency/Page/competency_result_page.dart';
 import 'package:coursia/View/Evaluation/Page/evaluation_feedback_page.dart';
 import 'package:coursia/View/Evaluation/bloc/evaluation_bloc.dart';
 import 'package:flutter/material.dart';
