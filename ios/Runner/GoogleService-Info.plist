@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>918157424611-u69knl6n04k423efl156goq7218u6rdl.apps.googleusercontent.com</string>
+	<string>918157424611-tjuvk3ir1p9s0robmgegc1cac8tbipm1.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.918157424611-u69knl6n04k423efl156goq7218u6rdl</string>
+	<string>com.googleusercontent.apps.918157424611-tjuvk3ir1p9s0robmgegc1cac8tbipm1</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDTBZqsHCTVrZWqt7FDljc1cNQoF6nR-5I</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.coursia</string>
+	<string>com.umg.coursia</string>
 	<key>PROJECT_ID</key>
 	<string>coursia-100c0</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:918157424611:ios:1669bb37fecc399f7f12d6</string>
+	<string>1:918157424611:ios:bd9ed6284b6c99957f12d6</string>
 </dict>
 </plist>

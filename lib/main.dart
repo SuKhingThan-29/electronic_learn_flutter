@@ -27,7 +27,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   ///To open when use noti
-  /*await Firebase.initializeApp(
+  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await FirebaseMessaging.instance.getToken();
@@ -42,7 +42,7 @@ Future<void> main() async {
 
     await setupFlutterNotifications();
     showFlutterNotification(message);
-  });*/
+  });
 
   initialization();
   FlutterNativeSplash.remove();
