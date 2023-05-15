@@ -44,40 +44,42 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyApDGKWthrEmtG0ukM9y0wQyJy935CGRT0',
-    appId: '1:918157424611:web:489ab223b228d0387f12d6',
-    messagingSenderId: '918157424611',
-    projectId: 'coursia-100c0',
-    authDomain: 'coursia-100c0.firebaseapp.com',
-    storageBucket: 'coursia-100c0.appspot.com',
-    measurementId: 'G-6ZW299LJ1P',
+    apiKey: 'AIzaSyA0IiXGpAqPkSEeDIpie7_JGyrp-NLTP4g',
+    appId: '1:1091976809370:web:c0fe109678bba6ac534823',
+    messagingSenderId: '1091976809370',
+    projectId: 'alien-array-302809',
+    authDomain: 'alien-array-302809.firebaseapp.com',
+    storageBucket: 'alien-array-302809.appspot.com',
+    measurementId: 'G-K265GFZJ0T',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD185AFvVaqmTifKI2TzcHYaUMdWXVaVmI',
-    appId: '1:918157424611:android:fba1711cdb8a92be7f12d6',
-    messagingSenderId: '918157424611',
-    projectId: 'coursia-100c0',
-    storageBucket: 'coursia-100c0.appspot.com',
+    apiKey: 'AIzaSyBAU53dJRSSHn-RB3ZDx1XWd44F-wN_xAc',
+    appId: '1:1091976809370:android:f492378be89864af534823',
+    messagingSenderId: '1091976809370',
+    projectId: 'alien-array-302809',
+    storageBucket: 'alien-array-302809.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDTBZqsHCTVrZWqt7FDljc1cNQoF6nR-5I',
-    appId: '1:918157424611:ios:1669bb37fecc399f7f12d6',
-    messagingSenderId: '918157424611',
-    projectId: 'coursia-100c0',
-    storageBucket: 'coursia-100c0.appspot.com',
-    iosClientId: '918157424611-u69knl6n04k423efl156goq7218u6rdl.apps.googleusercontent.com',
-    iosBundleId: 'com.example.coursia',
+    apiKey: 'AIzaSyDcJX6sM9O6T2EpWeFOkeYyT_v_QDWEtM0',
+    appId: '1:1091976809370:ios:e192296ca94f3194534823',
+    messagingSenderId: '1091976809370',
+    projectId: 'alien-array-302809',
+    storageBucket: 'alien-array-302809.appspot.com',
+    androidClientId: '1091976809370-2t0ei5nj3d5qa7gov2ctkcdpjm2r2t6i.apps.googleusercontent.com',
+    iosClientId: '1091976809370-aefvl3bdgcovm0sie9kb5qn5eaimggko.apps.googleusercontent.com',
+    iosBundleId: 'com.umg.coursia',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDTBZqsHCTVrZWqt7FDljc1cNQoF6nR-5I',
-    appId: '1:918157424611:ios:1669bb37fecc399f7f12d6',
-    messagingSenderId: '918157424611',
-    projectId: 'coursia-100c0',
-    storageBucket: 'coursia-100c0.appspot.com',
-    iosClientId: '918157424611-u69knl6n04k423efl156goq7218u6rdl.apps.googleusercontent.com',
+    apiKey: 'AIzaSyDcJX6sM9O6T2EpWeFOkeYyT_v_QDWEtM0',
+    appId: '1:1091976809370:ios:69ad570f46feb1cc534823',
+    messagingSenderId: '1091976809370',
+    projectId: 'alien-array-302809',
+    storageBucket: 'alien-array-302809.appspot.com',
+    androidClientId: '1091976809370-2t0ei5nj3d5qa7gov2ctkcdpjm2r2t6i.apps.googleusercontent.com',
+    iosClientId: '1091976809370-v5rpmsrf4115vir21vta3db88a277o1c.apps.googleusercontent.com',
     iosBundleId: 'com.example.coursia',
   );
 }
