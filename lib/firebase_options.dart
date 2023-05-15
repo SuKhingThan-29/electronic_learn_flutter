@@ -67,8 +67,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1091976809370',
     projectId: 'alien-array-302809',
     storageBucket: 'alien-array-302809.appspot.com',
-    androidClientId: '1091976809370-2t0ei5nj3d5qa7gov2ctkcdpjm2r2t6i.apps.googleusercontent.com',
-    iosClientId: '1091976809370-aefvl3bdgcovm0sie9kb5qn5eaimggko.apps.googleusercontent.com',
+    androidClientId:
+        '1091976809370-2t0ei5nj3d5qa7gov2ctkcdpjm2r2t6i.apps.googleusercontent.com',
+    iosClientId:
+        '1091976809370-aefvl3bdgcovm0sie9kb5qn5eaimggko.apps.googleusercontent.com',
     iosBundleId: 'com.umg.coursia',
   );
 
@@ -78,8 +80,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1091976809370',
     projectId: 'alien-array-302809',
     storageBucket: 'alien-array-302809.appspot.com',
-    androidClientId: '1091976809370-2t0ei5nj3d5qa7gov2ctkcdpjm2r2t6i.apps.googleusercontent.com',
-    iosClientId: '1091976809370-v5rpmsrf4115vir21vta3db88a277o1c.apps.googleusercontent.com',
+    androidClientId:
+        '1091976809370-2t0ei5nj3d5qa7gov2ctkcdpjm2r2t6i.apps.googleusercontent.com',
+    iosClientId:
+        '1091976809370-v5rpmsrf4115vir21vta3db88a277o1c.apps.googleusercontent.com',
     iosBundleId: 'com.example.coursia',
   );
 }
