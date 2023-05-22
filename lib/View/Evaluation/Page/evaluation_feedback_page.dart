@@ -6,7 +6,6 @@ import 'package:coursia/UIDesign/custom_scaffold.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/UIDesign/function.dart';
 import 'package:coursia/View/Evaluation/Page/evaluation_rate_page.dart';
-import 'package:coursia/View/Evaluation/Page/evaluation_thanks_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

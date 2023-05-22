@@ -11,3 +11,11 @@ class OnTapEvent extends QuizEvent {
   final int? onTapIndex;
   const OnTapEvent({required this.onTapIndex});
 }
+
+class GetQuizTypeEvent extends QuizEvent {
+  const GetQuizTypeEvent();
+}
+
+class GetQuizQuestionListEvent extends QuizEvent {
+  const GetQuizQuestionListEvent();
+}

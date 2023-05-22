@@ -4,7 +4,6 @@ import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/custom_button.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/UIDesign/function.dart';
-import 'package:coursia/View/Gift/Page/gift_empty_page.dart';
 import 'package:coursia/View/Gift/bloc/gift_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

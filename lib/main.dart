@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/View/Assignment/bloc/assignment_bloc.dart';
 import 'package:coursia/View/Auth/Page/splash_page.dart';
@@ -19,7 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-// ignore: depend_on_referenced_packages
+
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 Future<void> main() async {
@@ -27,10 +29,12 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   ///To open when use noti
-  await Firebase.initializeApp(
+  /* await Firebase.initializeApp(
+    name: "coursia",
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await FirebaseMessaging.instance.getToken();
+  var token = await FirebaseMessaging.instance.getToken();
+  log(token.toString());
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
@@ -42,7 +46,7 @@ Future<void> main() async {
 
     await setupFlutterNotifications();
     showFlutterNotification(message);
-  });
+  });*/
 
   initialization();
   FlutterNativeSplash.remove();
@@ -130,7 +134,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<CoursesBloc>(create: (_) => CoursesBloc()),
         BlocProvider<ProfileBloc>(create: (_) => ProfileBloc()),
-        BlocProvider<DiscBloc>(create: (_) => DiscBloc()),
+        BlocProvider<DISCBloc>(create: (_) => DISCBloc()),
         BlocProvider<QuizBloc>(create: (_) => QuizBloc()),
         BlocProvider<IqBloc>(create: (_) => IqBloc()),
         BlocProvider<CompetencyBloc>(create: (_) => CompetencyBloc()),
@@ -152,7 +156,7 @@ class MyApp extends StatelessWidget {
             home: child,
           );
         },
-        child: SplashPage(),
+        child: const SplashPage(),
       ),
     );
   }

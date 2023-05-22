@@ -6,7 +6,6 @@ import 'package:coursia/View/Assignment/Page/assignment_question_page.dart';
 import 'package:coursia/View/Blog/Page/blog_detail_page.dart';
 import 'package:coursia/View/Case_Study/Page/case_study_question_page.dart';
 import 'package:coursia/View/Competency/Page/competency_question_page.dart';
-import 'package:coursia/View/Courses/Page/courses_detail_page.dart';
 import 'package:coursia/View/DISC/Page/disc_question_page.dart';
 import 'package:coursia/View/Evaluation/Page/evaluation_question_page.dart';
 import 'package:coursia/View/IQ/Page/iq_question_page.dart';

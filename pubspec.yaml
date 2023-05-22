@@ -49,6 +49,9 @@ dependencies:
   file_picker: any
   video_player: ^2.6.1
   flick_video_player: 0.5.0
+  dio: ^5.1.2
+  dio_cookie_manager: ^3.0.0
+
 
 dev_dependencies:
   flutter_lints: ^2.0.0

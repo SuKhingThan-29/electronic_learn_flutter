@@ -1,78 +1,41 @@
 {
   "project_info": {
-    "project_number": "1091976809370",
-    "project_id": "alien-array-302809",
-    "storage_bucket": "alien-array-302809.appspot.com"
+    "project_number": "918157424611",
+    "project_id": "coursia-100c0",
+    "storage_bucket": "coursia-100c0.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1091976809370:android:f492378be89864af534823",
+        "mobilesdk_app_id": "1:918157424611:android:fba1711cdb8a92be7f12d6",
         "android_client_info": {
           "package_name": "com.umg.coursia"
         }
       },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBAU53dJRSSHn-RB3ZDx1XWd44F-wN_xAc"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1091976809370-48m974lgm4dcvb2ai46mkchcu8e7gb39.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1091976809370:android:e0c6f521d50890b2534823",
-        "android_client_info": {
-          "package_name": "com.waddyimmersive.wish"
-        }
-      },
       "oauth_client": [
         {
-          "client_id": "1091976809370-2t0ei5nj3d5qa7gov2ctkcdpjm2r2t6i.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.waddyimmersive.wish",
-            "certificate_hash": "e093998a9601263fd09f6240288cde281fd59a2a"
-          }
-        },
-        {
-          "client_id": "1091976809370-enn6q85vk84ra7drch6gvml91vcujp49.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.waddyimmersive.wish",
-            "certificate_hash": "a4fb34fbe36d491b24d1f63acb02818024343a5e"
-          }
-        },
-        {
-          "client_id": "1091976809370-j8v0dv094mku963tromcu13vh5jod15r.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.waddyimmersive.wish",
-            "certificate_hash": "36b05b7241d67f15e8f2f856526e1072a431d956"
-          }
+          "client_id": "918157424611-voonfgsnibm10lrch09oulh7j59u4sv5.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBAU53dJRSSHn-RB3ZDx1XWd44F-wN_xAc"
+          "current_key": "AIzaSyD185AFvVaqmTifKI2TzcHYaUMdWXVaVmI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1091976809370-48m974lgm4dcvb2ai46mkchcu8e7gb39.apps.googleusercontent.com",
+              "client_id": "918157424611-voonfgsnibm10lrch09oulh7j59u4sv5.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "918157424611-tjuvk3ir1p9s0robmgegc1cac8tbipm1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.umg.coursia"
+              }
             }
           ]
         }

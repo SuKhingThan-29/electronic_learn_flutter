@@ -16,3 +16,39 @@ class OnTapSuccess extends QuizState {
   @override
   List<Object> get props => [onTapIndex!];
 }
+
+class GetQuizTypeLoading extends QuizState {}
+
+class GetQuizTypeSuccess extends QuizState {
+  final List<QuizTypeModel> quizTypeList;
+  const GetQuizTypeSuccess({required this.quizTypeList});
+
+  @override
+  List<Object> get props => [quizTypeList];
+}
+
+class GetQuizTypeFailed extends QuizState {
+  final String? message;
+  const GetQuizTypeFailed(this.message);
+
+  @override
+  List<Object> get props => [message!];
+}
+
+class GetQuizQuestionListLoading extends QuizState {}
+
+class GetQuizQuestionListSuccess extends QuizState {
+  final List<QuizQuestionModel> quizQuestionList;
+  const GetQuizQuestionListSuccess({required this.quizQuestionList});
+
+  @override
+  List<Object> get props => [quizQuestionList];
+}
+
+class GetQuizQuestionListFailed extends QuizState {
+  final String? message;
+  const GetQuizQuestionListFailed(this.message);
+
+  @override
+  List<Object> get props => [message!];
+}

@@ -11,3 +11,11 @@ class OnTapEvent extends CompetencyEvent {
   final int? onTapIndex;
   const OnTapEvent({required this.onTapIndex});
 }
+
+class GetCompetencyTypeEvent extends CompetencyEvent {
+  const GetCompetencyTypeEvent();
+}
+
+class GetCompetencyQuestionListEvent extends CompetencyEvent {
+  const GetCompetencyQuestionListEvent();
+}

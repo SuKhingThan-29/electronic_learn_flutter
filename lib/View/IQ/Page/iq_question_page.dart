@@ -27,7 +27,7 @@ class IqQuestionPage extends StatelessWidget {
   }
 
   bodyData(BuildContext context) {
-    return BlocConsumer<IqBloc, IqState>(
+    return BlocConsumer<IqBloc, IQState>(
       listener: (context, state) {},
       builder: (context, state) {
         if (state is OnTapSuccess) {

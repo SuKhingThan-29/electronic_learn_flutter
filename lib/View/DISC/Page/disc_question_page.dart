@@ -25,11 +25,12 @@ class DISCQuestionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<DISCBloc>().add(const GetDISCQuestionListEvent());
     return CusotmScaffold(text: 'DISC Test', data: bodyData(context));
   }
 
   bodyData(BuildContext context) {
-    return BlocConsumer<DiscBloc, DiscState>(
+    return BlocConsumer<DISCBloc, DISCState>(
       listener: (context, state) {},
       builder: (context, state) {
         if (state is OnTapSuccess) {
@@ -60,7 +61,7 @@ class DISCQuestionPage extends StatelessWidget {
                           boxColor: AppTheme.orange,
                           onTap: () {
                             context
-                                .read<DiscBloc>()
+                                .read<DISCBloc>()
                                 .add(OnTapEvent(onTapIndex: index));
                           },
                         ),

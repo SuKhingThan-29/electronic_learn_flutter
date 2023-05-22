@@ -6,7 +6,6 @@ import 'package:coursia/UIDesign/custom_button.dart';
 import 'package:coursia/UIDesign/custom_scaffold.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/UIDesign/function.dart';
-import 'package:coursia/View/Assignment/Page/assignment_answer_page.dart';
 import 'package:coursia/View/Assignment/Page/assignment_result_page.dart';
 import 'package:coursia/View/Assignment/bloc/assignment_bloc.dart';
 import 'package:dotted_border/dotted_border.dart';

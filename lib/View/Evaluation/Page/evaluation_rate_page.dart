@@ -82,7 +82,7 @@ class EvaluationRatePage extends StatelessWidget {
                       width: 150.w,
                       onTap: () {
                         CustomFunction.navigatePage(
-                            EvaluationThanksPage(), context);
+                            const EvaluationThanksPage(), context);
                       },
                       text: 'Submit',
                       textColor: AppTheme.white,
