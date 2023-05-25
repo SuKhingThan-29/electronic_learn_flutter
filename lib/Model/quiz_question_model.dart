@@ -9,6 +9,7 @@ class QuizQuestionModel {
   List<QuizAnswer>? quizAnswer;
   QuizTypeModel? quizType;
   ImageModel? image;
+  int? selectQuizAnswer;
 
   QuizQuestionModel(
       {this.id,
@@ -17,7 +18,8 @@ class QuizQuestionModel {
       this.mediableId,
       this.quizAnswer,
       this.quizType,
-      this.image});
+      this.image,
+      this.selectQuizAnswer});
 
   QuizQuestionModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

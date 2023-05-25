@@ -6,13 +6,15 @@ class CompetencyQuestionModel {
   String? level;
   String? question;
   CompetencyTypeModel? competencyType;
+  int? selectAnswer;
 
   CompetencyQuestionModel(
       {this.id,
       this.competencyTypeId,
       this.level,
       this.question,
-      this.competencyType});
+      this.competencyType,
+      this.selectAnswer});
 
   CompetencyQuestionModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

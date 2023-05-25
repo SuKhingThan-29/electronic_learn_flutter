@@ -1,19 +1,32 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:developer';
+
+import 'package:coursia/Model/competency_question_model.dart';
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/custom_answer_container.dart';
 import 'package:coursia/UIDesign/custom_button.dart';
 import 'package:coursia/UIDesign/custom_scaffold.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/UIDesign/function.dart';
-import 'package:coursia/View/Competency/Page/competency_result_page.dart';
 import 'package:coursia/View/Competency/bloc/competency_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CompetencyQuestionPage extends StatelessWidget {
-  CompetencyQuestionPage({super.key});
+  final List<CompetencyQuestionModel>? competencyQuestionList;
+  final CompetencyQuestionModel? competencyQuestionModel;
+  final int? index;
+  final int? listLength;
+  final int? tapIndex;
+  CompetencyQuestionPage(
+      {super.key,
+      this.competencyQuestionList,
+      required this.competencyQuestionModel,
+      required this.index,
+      required this.listLength,
+      required this.tapIndex});
   List answerList = [
     {"id": 0, "name": "Strongly Agree"},
     {"id": 1, "name": "Agree"},
@@ -22,12 +35,24 @@ class CompetencyQuestionPage extends StatelessWidget {
     {"id": 4, "name": "Strongly Disagree"}
   ];
   int? onTapIndex = -1;
+  int? selectIndex;
   @override
   Widget build(BuildContext context) {
     return CusotmScaffold(text: 'Competency Test', data: bodyData(context));
   }
 
+  checkSelectIndex(BuildContext context) {
+    if (competencyQuestionList![index!].selectAnswer == null) {
+      context.read<CompetencyBloc>().add(const OnTapEvent(onTapIndex: -1));
+    } else {
+      context.read<CompetencyBloc>().add(
+          OnTapEvent(onTapIndex: competencyQuestionList![index!].selectAnswer));
+    }
+  }
+
   bodyData(BuildContext context) {
+    int no = index! + 1;
+    checkSelectIndex(context);
     return BlocConsumer<CompetencyBloc, CompetencyState>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -40,15 +65,14 @@ class CompetencyQuestionPage extends StatelessWidget {
               shrinkWrap: true,
               physics: const ScrollPhysics(),
               children: [
-                const CustomText(
-                  text: 'Question 1/10',
+                CustomText(
+                  text: 'Question $no/$listLength',
                   textColor: AppTheme.orange,
                   textAlign: TextAlign.left,
                 ),
-
                 CustomFunction.customSpace(height: 20.h),
-                const CustomText(
-                  text: 'Who is first discovered Dynamite?',
+                CustomText(
+                  text: competencyQuestionModel?.question,
                   textColor: AppTheme.black,
                   textAlign: TextAlign.center,
                   size: 17,
@@ -59,12 +83,12 @@ class CompetencyQuestionPage extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const ScrollPhysics(),
                   itemCount: answerList.length,
-                  itemBuilder: (context, index) {
+                  itemBuilder: (context, j) {
                     return Column(
                       children: [
                         CustomAnswerContainer(
-                          text: answerList[index]["name"],
-                          index: index,
+                          text: answerList[j]["name"],
+                          index: j,
                           currentIndex: onTapIndex,
                           boxColor: onTapIndex == 0 || onTapIndex == 1
                               ? AppTheme.green
@@ -74,9 +98,10 @@ class CompetencyQuestionPage extends StatelessWidget {
                                       ? AppTheme.red
                                       : AppTheme.greyLight,
                           onTap: () {
+                            selectIndex = j;
                             context
                                 .read<CompetencyBloc>()
-                                .add(OnTapEvent(onTapIndex: index));
+                                .add(OnTapEvent(onTapIndex: j));
                           },
                         ),
                         CustomFunction.customSpace(height: 10.h)
@@ -85,37 +110,182 @@ class CompetencyQuestionPage extends StatelessWidget {
                   },
                 ),
                 CustomFunction.customSpace(height: 20.h),
-                // CustomButton(
-                //   onTap: () {},
-                //   text: 'Next',
-                //   textColor: AppTheme.white,
-                //   bgcolor:
-                //       onTapIndex != -1 ? AppTheme.black : AppTheme.greyDark,
-                // ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomButton(
-                      width: 150.w,
-                      onTap: () {},
-                      text: 'Previous',
-                      textColor: AppTheme.white,
-                      bgcolor:
-                          onTapIndex != -1 ? AppTheme.black : AppTheme.greyDark,
-                    ),
-                    CustomButton(
-                      width: 150.w,
-                      onTap: () {
-                        CustomFunction.navigatePage(
-                            const CompetencyResultPage(), context);
-                      },
-                      text: 'Next',
-                      textColor: AppTheme.white,
-                      bgcolor:
-                          onTapIndex != -1 ? AppTheme.black : AppTheme.greyDark,
-                    ),
-                  ],
-                ),
+                index == 0
+                    ? CustomButton(
+                        onTap: () {
+                          if (selectIndex == null &&
+                              competencyQuestionModel?.selectAnswer == null) {
+                            CustomFunction.flushBar(
+                                'Please select one of the answers!', context,
+                                msgColor: AppTheme.red);
+                          } else {
+                            selectIndex == null
+                                ? competencyQuestionModel?.selectAnswer =
+                                    competencyQuestionList![index!].selectAnswer
+                                : competencyQuestionModel?.selectAnswer =
+                                    selectIndex;
+
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        CompetencyQuestionPage(
+                                          competencyQuestionList:
+                                              competencyQuestionList,
+                                          competencyQuestionModel:
+                                              competencyQuestionList?[
+                                                  index! + 1],
+                                          index: index! + 1,
+                                          listLength: listLength,
+                                          tapIndex: onTapIndex,
+                                        )));
+                          }
+                        },
+                        text: 'Next',
+                        textColor: AppTheme.white,
+                        bgcolor: onTapIndex != -1
+                            ? AppTheme.black
+                            : AppTheme.greyDark,
+                      )
+                    : index == listLength! - 1
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CustomButton(
+                                width: 150.w,
+                                onTap: () {
+                                  selectIndex == null
+                                      ? competencyQuestionModel?.selectAnswer =
+                                          competencyQuestionList![index!]
+                                              .selectAnswer
+                                      : competencyQuestionModel?.selectAnswer =
+                                          selectIndex;
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              CompetencyQuestionPage(
+                                                competencyQuestionList:
+                                                    competencyQuestionList,
+                                                competencyQuestionModel:
+                                                    competencyQuestionList?[
+                                                        index! - 1],
+                                                index: index! - 1,
+                                                listLength: listLength,
+                                                tapIndex: onTapIndex,
+                                              )));
+                                },
+                                text: 'Previous',
+                                textColor: AppTheme.white,
+                                bgcolor: onTapIndex != -1
+                                    ? AppTheme.black
+                                    : AppTheme.greyDark,
+                              ),
+                              CustomButton(
+                                width: 150.w,
+                                onTap: () {
+                                  if (selectIndex == null &&
+                                      competencyQuestionModel?.selectAnswer ==
+                                          null) {
+                                    CustomFunction.flushBar(
+                                        'Please select one of the answers!',
+                                        context,
+                                        msgColor: AppTheme.red);
+                                  } else {
+                                    selectIndex == null
+                                        ? competencyQuestionModel
+                                                ?.selectAnswer =
+                                            competencyQuestionList![index!]
+                                                .selectAnswer
+                                        : competencyQuestionModel
+                                            ?.selectAnswer = selectIndex;
+                                    log(competencyQuestionList.toString());
+                                  }
+                                },
+                                text: 'Submit',
+                                textColor: AppTheme.white,
+                                bgcolor: onTapIndex != -1
+                                    ? AppTheme.black
+                                    : AppTheme.greyDark,
+                              ),
+                            ],
+                          )
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CustomButton(
+                                width: 150.w,
+                                onTap: () {
+                                  selectIndex == null
+                                      ? competencyQuestionModel?.selectAnswer =
+                                          competencyQuestionList![index!]
+                                              .selectAnswer
+                                      : competencyQuestionModel?.selectAnswer =
+                                          selectIndex;
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              CompetencyQuestionPage(
+                                                competencyQuestionList:
+                                                    competencyQuestionList,
+                                                competencyQuestionModel:
+                                                    competencyQuestionList?[
+                                                        index! - 1],
+                                                index: index! - 1,
+                                                listLength: listLength,
+                                                tapIndex: onTapIndex,
+                                              )));
+                                },
+                                text: 'Previous',
+                                textColor: AppTheme.white,
+                                bgcolor: onTapIndex != -1
+                                    ? AppTheme.black
+                                    : AppTheme.greyDark,
+                              ),
+                              CustomButton(
+                                width: 150.w,
+                                onTap: () {
+                                  if (selectIndex == null &&
+                                      competencyQuestionModel?.selectAnswer ==
+                                          null) {
+                                    CustomFunction.flushBar(
+                                        'Please select one of the answers!',
+                                        context,
+                                        msgColor: AppTheme.red);
+                                  } else {
+                                    selectIndex == null
+                                        ? competencyQuestionModel
+                                                ?.selectAnswer =
+                                            competencyQuestionList![index!]
+                                                .selectAnswer
+                                        : competencyQuestionModel
+                                            ?.selectAnswer = selectIndex;
+
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CompetencyQuestionPage(
+                                                  competencyQuestionList:
+                                                      competencyQuestionList,
+                                                  competencyQuestionModel:
+                                                      competencyQuestionList?[
+                                                          index! + 1],
+                                                  index: index! + 1,
+                                                  listLength: listLength,
+                                                  tapIndex: onTapIndex,
+                                                )));
+                                  }
+                                },
+                                text: 'Next',
+                                textColor: AppTheme.white,
+                                bgcolor: onTapIndex != -1
+                                    ? AppTheme.black
+                                    : AppTheme.greyDark,
+                              ),
+                            ],
+                          ),
               ],
             ));
       },

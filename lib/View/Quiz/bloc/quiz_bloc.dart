@@ -43,7 +43,8 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     } else {
       try {
         List<QuizQuestionModel> quizQuestionList;
-        quizQuestionList = await coursiaRepository.getQuizQuestionList();
+        quizQuestionList =
+            await coursiaRepository.getQuizQuestionList(event.quizTypeId);
         emit(GetQuizQuestionListSuccess(quizQuestionList: quizQuestionList));
       } catch (e) {
         emit(GetQuizQuestionListFailed(e.toString()));

@@ -1,5 +1,8 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:developer';
+
+import 'package:coursia/Model/quiz_question_model.dart';
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/custom_answer_container.dart';
 import 'package:coursia/UIDesign/custom_button.dart';
@@ -13,25 +16,51 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class QuizQuestionPage extends StatelessWidget {
-  QuizQuestionPage({super.key});
-  List answerList = [
-    {"id": 0, "name": "Alfred Nobel"},
-    {"id": 1, "name": "Albert Einstein"},
-    {"id": 2, "name": "Donna Strickland"},
-    {"id": 3, "name": "Isamu Akasaki"}
-  ];
+  final List<QuizQuestionModel>? quizQuestionList;
+  final QuizQuestionModel? quizQuestionModel;
+  final int? index;
+  final int? listLength;
+  final int? tapIndex;
+  QuizQuestionPage(
+      {super.key,
+      this.quizQuestionList,
+      required this.quizQuestionModel,
+      required this.index,
+      required this.listLength,
+      required this.tapIndex});
+
   int? onTapIndex = -1;
+  int? selectIndex;
   @override
   Widget build(BuildContext context) {
-    return CusotmScaffold(text: 'Animal Kingdom', data: bodyData(context));
+    return WillPopScope(
+      onWillPop: () async {
+        context.read<QuizBloc>().add(const GetQuizTypeEvent());
+        return true;
+      },
+      child: CusotmScaffold(
+          text: quizQuestionModel?.quizType?.name, data: bodyData(context)),
+    );
+  }
+
+  checkSelectIndex(BuildContext context) {
+    if (quizQuestionList![index!].selectQuizAnswer == null) {
+      context.read<QuizBloc>().add(const OnTapEvent(onTapIndex: -1));
+    } else {
+      context.read<QuizBloc>().add(
+          OnTapEvent(onTapIndex: quizQuestionList![index!].selectQuizAnswer));
+    }
   }
 
   bodyData(BuildContext context) {
+    int no = index! + 1;
+    checkSelectIndex(context);
     return BlocConsumer<QuizBloc, QuizState>(
       listener: (context, state) {},
       builder: (context, state) {
         if (state is OnTapSuccess) {
           onTapIndex = state.onTapIndex!;
+          // context.read<QuizBloc>().add(const GetQuizTypeEvent());
         }
         return Padding(
             padding: EdgeInsets.all(15.w),
@@ -39,8 +68,8 @@ class QuizQuestionPage extends StatelessWidget {
               shrinkWrap: true,
               physics: const ScrollPhysics(),
               children: [
-                const CustomText(
-                  text: 'Question 1/10',
+                CustomText(
+                  text: 'Question $no/$listLength',
                   textColor: AppTheme.orange,
                   textAlign: TextAlign.left,
                 ),
@@ -52,8 +81,8 @@ class QuizQuestionPage extends StatelessWidget {
                   //fit: BoxFit.fill,
                 ),
                 CustomFunction.customSpace(height: 20.h),
-                const CustomText(
-                  text: 'Who is Gary Vee?',
+                CustomText(
+                  text: quizQuestionModel?.questionName ?? "",
                   textColor: AppTheme.black,
                   textAlign: TextAlign.center,
                   size: 17,
@@ -63,19 +92,20 @@ class QuizQuestionPage extends StatelessWidget {
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const ScrollPhysics(),
-                  itemCount: answerList.length,
-                  itemBuilder: (context, index) {
+                  itemCount: quizQuestionModel?.quizAnswer?.length,
+                  itemBuilder: (context, j) {
                     return Column(
                       children: [
                         CustomAnswerContainer(
-                          text: answerList[index]["name"],
-                          index: index,
+                          text: quizQuestionModel?.quizAnswer?[j].answer,
+                          index: j,
                           currentIndex: onTapIndex,
                           boxColor: AppTheme.orange,
                           onTap: () {
+                            selectIndex = j;
                             context
                                 .read<QuizBloc>()
-                                .add(OnTapEvent(onTapIndex: index));
+                                .add(OnTapEvent(onTapIndex: j));
                           },
                         ),
                         CustomFunction.customSpace(height: 10)
@@ -84,37 +114,177 @@ class QuizQuestionPage extends StatelessWidget {
                   },
                 ),
                 CustomFunction.customSpace(height: 20.h),
-                // CustomButton(
-                //   onTap: () {},
-                //   text: 'Next',
-                //   textColor: AppTheme.white,
-                //   bgcolor:
-                //       onTapIndex != -1 ? AppTheme.black : AppTheme.greyDark,
-                // ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomButton(
-                      width: 150.w,
-                      onTap: () {},
-                      text: 'Previous',
-                      textColor: AppTheme.white,
-                      bgcolor:
-                          onTapIndex != -1 ? AppTheme.black : AppTheme.greyDark,
-                    ),
-                    CustomButton(
-                      width: 150.w,
-                      onTap: () {
-                        CustomFunction.navigatePage(
-                            const QuizResultPage(), context);
-                      },
-                      text: 'Next',
-                      textColor: AppTheme.white,
-                      bgcolor:
-                          onTapIndex != -1 ? AppTheme.black : AppTheme.greyDark,
-                    ),
-                  ],
-                ),
+                index == 0
+                    ? CustomButton(
+                        onTap: () {
+                          if (selectIndex == null &&
+                              quizQuestionModel?.selectQuizAnswer == null) {
+                            CustomFunction.flushBar(
+                                'Please select one of the answers!', context,
+                                msgColor: AppTheme.red);
+                          } else {
+                            selectIndex == null
+                                ? quizQuestionModel?.selectQuizAnswer =
+                                    quizQuestionList![index!].selectQuizAnswer
+                                : quizQuestionModel?.selectQuizAnswer =
+                                    selectIndex;
+
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => QuizQuestionPage(
+                                          quizQuestionList: quizQuestionList,
+                                          quizQuestionModel:
+                                              quizQuestionList?[index! + 1],
+                                          index: index! + 1,
+                                          listLength: listLength,
+                                          tapIndex: onTapIndex,
+                                        )));
+                          }
+                        },
+                        text: 'Next',
+                        textColor: AppTheme.white,
+                        bgcolor: onTapIndex != -1
+                            ? AppTheme.black
+                            : AppTheme.greyDark,
+                      )
+                    : index == listLength! - 1
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CustomButton(
+                                width: 150.w,
+                                onTap: () {
+                                  selectIndex == null
+                                      ? quizQuestionModel?.selectQuizAnswer =
+                                          quizQuestionList![index!]
+                                              .selectQuizAnswer
+                                      : quizQuestionModel?.selectQuizAnswer =
+                                          selectIndex;
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              QuizQuestionPage(
+                                                quizQuestionList:
+                                                    quizQuestionList,
+                                                quizQuestionModel:
+                                                    quizQuestionList?[
+                                                        index! - 1],
+                                                index: index! - 1,
+                                                listLength: listLength,
+                                                tapIndex: onTapIndex,
+                                              )));
+                                },
+                                text: 'Previous',
+                                textColor: AppTheme.white,
+                                bgcolor: onTapIndex != -1
+                                    ? AppTheme.black
+                                    : AppTheme.greyDark,
+                              ),
+                              CustomButton(
+                                width: 150.w,
+                                onTap: () {
+                                  if (selectIndex == null &&
+                                      quizQuestionModel?.selectQuizAnswer ==
+                                          null) {
+                                    CustomFunction.flushBar(
+                                        'Please select one of the answers!',
+                                        context,
+                                        msgColor: AppTheme.red);
+                                  } else {
+                                    selectIndex == null
+                                        ? quizQuestionModel?.selectQuizAnswer =
+                                            quizQuestionList![index!]
+                                                .selectQuizAnswer
+                                        : quizQuestionModel?.selectQuizAnswer =
+                                            selectIndex;
+                                    log(quizQuestionList.toString());
+                                  }
+                                },
+                                text: 'Submit',
+                                textColor: AppTheme.white,
+                                bgcolor: onTapIndex != -1
+                                    ? AppTheme.black
+                                    : AppTheme.greyDark,
+                              ),
+                            ],
+                          )
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CustomButton(
+                                width: 150.w,
+                                onTap: () {
+                                  selectIndex == null
+                                      ? quizQuestionModel?.selectQuizAnswer =
+                                          quizQuestionList![index!]
+                                              .selectQuizAnswer
+                                      : quizQuestionModel?.selectQuizAnswer =
+                                          selectIndex;
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              QuizQuestionPage(
+                                                quizQuestionList:
+                                                    quizQuestionList,
+                                                quizQuestionModel:
+                                                    quizQuestionList?[
+                                                        index! - 1],
+                                                index: index! - 1,
+                                                listLength: listLength,
+                                                tapIndex: onTapIndex,
+                                              )));
+                                },
+                                text: 'Previous',
+                                textColor: AppTheme.white,
+                                bgcolor: onTapIndex != -1
+                                    ? AppTheme.black
+                                    : AppTheme.greyDark,
+                              ),
+                              CustomButton(
+                                width: 150.w,
+                                onTap: () {
+                                  if (selectIndex == null &&
+                                      quizQuestionModel?.selectQuizAnswer ==
+                                          null) {
+                                    CustomFunction.flushBar(
+                                        'Please select one of the answers!',
+                                        context,
+                                        msgColor: AppTheme.red);
+                                  } else {
+                                    selectIndex == null
+                                        ? quizQuestionModel?.selectQuizAnswer =
+                                            quizQuestionList![index!]
+                                                .selectQuizAnswer
+                                        : quizQuestionModel?.selectQuizAnswer =
+                                            selectIndex;
+
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                QuizQuestionPage(
+                                                  quizQuestionList:
+                                                      quizQuestionList,
+                                                  quizQuestionModel:
+                                                      quizQuestionList?[
+                                                          index! + 1],
+                                                  index: index! + 1,
+                                                  listLength: listLength,
+                                                  tapIndex: onTapIndex,
+                                                )));
+                                  }
+                                },
+                                text: 'Next',
+                                textColor: AppTheme.white,
+                                bgcolor: onTapIndex != -1
+                                    ? AppTheme.black
+                                    : AppTheme.greyDark,
+                              ),
+                            ],
+                          ),
               ],
             ));
       },

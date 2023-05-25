@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   List<Widget> destinations = <Widget>[
     const FeaturePage(),
     CoursesPage(),
-    const AssessmentPage(),
+    AssessmentPage(),
     GiftPage()
     //const GiftEmptyPage()
   ];

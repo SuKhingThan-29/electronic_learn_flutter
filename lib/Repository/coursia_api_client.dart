@@ -159,15 +159,26 @@ class CoursiaApiClient {
     }
   }
 
-  Future<List<QuizQuestionModel>> getQuizQuestionList() async {
+  Future<List<QuizQuestionModel>> getQuizQuestionList(int? quizTypeId) async {
     try {
-      final response = await _dio.get('frontend/v1/quiz_test');
-      if (response.statusCode == 200) {
-        final quizQuestionList = response.data['data'] as List;
-        return quizQuestionList
-            .map((item) => QuizQuestionModel.fromJson(item))
-            .toList();
+      if (quizTypeId == null) {
+        final response = await _dio.get('frontend/v1/quiz_test');
+        if (response.statusCode == 200) {
+          final quizQuestionList = response.data['data'] as List;
+          return quizQuestionList
+              .map((item) => QuizQuestionModel.fromJson(item))
+              .toList();
+        }
+      } else {
+        final response = await _dio.get('frontend/v1/quiz_test/$quizTypeId');
+        if (response.statusCode == 200) {
+          final quizQuestionList = response.data['data'] as List;
+          return quizQuestionList
+              .map((item) => QuizQuestionModel.fromJson(item))
+              .toList();
+        }
       }
+
       throw BottomPlacedException(code: 'Something went wrong');
     } on DioError catch (e) {
       throw BottomPlacedException(

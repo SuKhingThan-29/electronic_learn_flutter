@@ -17,5 +17,6 @@ class GetQuizTypeEvent extends QuizEvent {
 }
 
 class GetQuizQuestionListEvent extends QuizEvent {
-  const GetQuizQuestionListEvent();
+  final int? quizTypeId;
+  const GetQuizQuestionListEvent({required this.quizTypeId});
 }

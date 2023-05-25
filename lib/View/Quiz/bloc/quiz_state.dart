@@ -5,6 +5,8 @@ abstract class QuizState extends Equatable {
 
   @override
   List<Object> get props => [];
+
+  List<QuizTypeModel> get quizTypeList => [];
 }
 
 class QuizInitial extends QuizState {}

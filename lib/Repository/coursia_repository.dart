@@ -39,7 +39,7 @@ class CoursiaRepository {
     return await coursiaApiClient.getCompetencyQuestionList();
   }
 
-  Future<List<QuizQuestionModel>> getQuizQuestionList() async {
-    return await coursiaApiClient.getQuizQuestionList();
+  Future<List<QuizQuestionModel>> getQuizQuestionList(int? quizTypeId) async {
+    return await coursiaApiClient.getQuizQuestionList(quizTypeId);
   }
 }

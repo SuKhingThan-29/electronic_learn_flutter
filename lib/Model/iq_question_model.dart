@@ -9,6 +9,8 @@ class IQQuestionModel {
   List<IqAnswer>? iqAnswer;
   IQTypeModel? iqType;
   ImageModel? image;
+  // IqAnswer? selectIqAnswer;
+  int? selectIqAnswer;
 
   IQQuestionModel(
       {this.id,
@@ -17,7 +19,8 @@ class IQQuestionModel {
       this.mediableId,
       this.iqAnswer,
       this.iqType,
-      this.image});
+      this.image,
+      this.selectIqAnswer});
 
   IQQuestionModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -78,3 +81,28 @@ class IqAnswer {
     return data;
   }
 }
+
+// class SelectIqAnswer {
+//   int? id;
+//   int? iQQuestionId;
+//   String? answer;
+//   int? correctStatus;
+
+//   SelectIqAnswer({this.id, this.iQQuestionId, this.answer, this.correctStatus});
+
+//   SelectIqAnswer.fromJson(Map<String, dynamic> json) {
+//     id = json['id'];
+//     iQQuestionId = json['i_q_question_id'];
+//     answer = json['answer'];
+//     correctStatus = json['correct_status'];
+//   }
+
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['id'] = id;
+//     data['i_q_question_id'] = iQQuestionId;
+//     data['answer'] = answer;
+//     data['correct_status'] = correctStatus;
+//     return data;
+//   }
+// }

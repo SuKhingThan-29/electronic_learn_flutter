@@ -1,48 +1,45 @@
 class DISCQuestionModel {
   int? id;
-  int? dISCTypeIdOne;
-  String? questionOne;
-  int? dISCTypeIdTwo;
-  String? questionTwo;
-  int? dISCTypeIdThree;
-  String? questionThree;
-  int? dISCTypeIdFour;
-  String? questionFour;
+  List<Questions>? questions;
+  int? selectQuestion;
 
-  DISCQuestionModel(
-      {this.id,
-      this.dISCTypeIdOne,
-      this.questionOne,
-      this.dISCTypeIdTwo,
-      this.questionTwo,
-      this.dISCTypeIdThree,
-      this.questionThree,
-      this.dISCTypeIdFour,
-      this.questionFour});
+  DISCQuestionModel({this.id, this.questions, this.selectQuestion});
 
   DISCQuestionModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    dISCTypeIdOne = json['d_i_s_c_type_id_one'];
-    questionOne = json['question_one'];
-    dISCTypeIdTwo = json['d_i_s_c_type_id_two'];
-    questionTwo = json['question_two'];
-    dISCTypeIdThree = json['d_i_s_c_type_id_three'];
-    questionThree = json['question_three'];
-    dISCTypeIdFour = json['d_i_s_c_type_id_four'];
-    questionFour = json['question_four'];
+    if (json['questions'] != null) {
+      questions = <Questions>[];
+      json['questions'].forEach((v) {
+        questions!.add(Questions.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    data['d_i_s_c_type_id_one'] = dISCTypeIdOne;
-    data['question_one'] = questionOne;
-    data['d_i_s_c_type_id_two'] = dISCTypeIdTwo;
-    data['question_two'] = questionTwo;
-    data['d_i_s_c_type_id_three'] = dISCTypeIdThree;
-    data['question_three'] = questionThree;
-    data['d_i_s_c_type_id_four'] = dISCTypeIdFour;
-    data['question_four'] = questionFour;
+    if (questions != null) {
+      data['questions'] = questions!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Questions {
+  int? typeId;
+  String? questionName;
+
+  Questions({this.typeId, this.questionName});
+
+  Questions.fromJson(Map<String, dynamic> json) {
+    typeId = json['type_id'];
+    questionName = json['question_name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['type_id'] = typeId;
+    data['question_name'] = questionName;
     return data;
   }
 }
