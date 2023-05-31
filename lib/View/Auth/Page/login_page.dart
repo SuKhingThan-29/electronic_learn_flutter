@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:developer';
 
 import 'package:coursia/View/Auth/Page/forget_password_page.dart';
@@ -9,51 +11,29 @@ import 'package:coursia/UIDesign/coursia_top_image.dart';
 import 'package:coursia/UIDesign/function.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/UIDesign/custom_textformfield.dart';
+import 'package:coursia/View/Auth/Page/sign_up_email_page.dart';
+import 'package:coursia/View/Auth/bloc/auth_bloc.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginPage extends StatelessWidget {
+  LoginPage({super.key});
 
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final pwController = TextEditingController();
   bool obscuretext = true;
   final formKey = GlobalKey<FormState>();
   String? token;
 
-  @override
-  void initState() {
-    super.initState();
-
-    // getToken();
-  }
-
   late AndroidNotificationChannel channel;
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   getToken() async {
-    FirebaseMessaging.instance.getToken().then(
-          (value) => setState(
-            () {
-              token = value;
-              log(token.toString());
-            },
-          ),
-        );
+    FirebaseMessaging.instance.getToken().then((value) => token = value);
 
     // FirebaseMessaging.onMessage.listen(showFlutterNotification);
-  }
-
-  toggle() {
-    setState(() {
-      obscuretext = !obscuretext;
-    });
   }
 
   @override
@@ -83,32 +63,46 @@ class _LoginPageState extends State<LoginPage> {
               CustomTextFormField(
                 controller: emailController,
                 hintText: 'Email',
+                textColor: AppTheme.white,
                 isEmail: true,
                 isProfile: false,
               ),
               CustomFunction.customSpace(height: 15),
               const CustomText(textAlign: TextAlign.left, text: 'Passcode'),
               CustomFunction.customSpace(height: 10),
-              CustomTextFormField(
-                isProfile: false,
-                controller: pwController,
-                obscureText: obscuretext,
-                isEmail: false,
-                hintText: 'Passcode',
-                suffixIcon: IconButton(
-                  icon: obscuretext
-                      ? const Icon(Icons.visibility_off, color: AppTheme.grey)
-                      : const Icon(Icons.visibility, color: AppTheme.orange),
-                  onPressed: () {
-                    toggle();
-                  },
-                ),
+              BlocConsumer<AuthBloc, AuthState>(
+                listener: (context, state) {},
+                builder: (context, state) {
+                  if (state is VisibilityOnOffSuccess) {
+                    obscuretext = state.obscureText!;
+                  }
+                  return CustomTextFormField(
+                    isProfile: false,
+                    controller: pwController,
+                    obscureText: obscuretext,
+                    isEmail: false,
+                    hintText: 'Passcode',
+                    textColor: AppTheme.white,
+                    suffixIcon: IconButton(
+                      icon: obscuretext
+                          ? const Icon(Icons.visibility_off,
+                              color: AppTheme.grey)
+                          : const Icon(Icons.visibility,
+                              color: AppTheme.orange),
+                      onPressed: () {
+                        context
+                            .read<AuthBloc>()
+                            .add(VisibilityOnOffEvent(!obscuretext));
+                        // toggle();
+                      },
+                    ),
+                  );
+                },
               ),
               CustomFunction.customSpace(height: 15),
               InkWell(
                 onTap: () {
-                  CustomFunction.navigatePage(
-                      const ForgetPasswordPage(), context);
+                  CustomFunction.navigatePage(ForgetPasswordPage(), context);
                 },
                 child: const Align(
                     alignment: Alignment.centerRight,
@@ -118,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
               CustomButton(
                   onTap: () {
                     FocusManager.instance.primaryFocus?.unfocus();
-                    CustomFunction.navigatePage(const HomePage(), context);
+                    CustomFunction.navigatePage(HomePage(), context);
                     // if (formKey.currentState!.validate()) {
                     //   if (EmailValidator.validate(emailController.text)) {
                     //     CustomFunction.navigatePage(
@@ -142,8 +136,8 @@ class _LoginPageState extends State<LoginPage> {
                         textColor: AppTheme.grey),
                     InkWell(
                       onTap: () {
-                        CustomFunction.navigatePage(
-                            const SignUpPage(), context);
+                        // CustomFunction.navigatePage(SignUpPage(), context);
+                        CustomFunction.navigatePage(SignUpEmailPage(), context);
                       },
                       child: const CustomText(
                           text: ' Sign Up',

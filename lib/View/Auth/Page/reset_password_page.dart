@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, must_be_immutable
 
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/custom_button.dart';
@@ -6,120 +6,127 @@ import 'package:coursia/UIDesign/coursia_top_image.dart';
 import 'package:coursia/UIDesign/function.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/UIDesign/custom_textformfield.dart';
+import 'package:coursia/View/Auth/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ResetPasswordPage extends StatefulWidget {
-  const ResetPasswordPage({super.key});
+class ResetPasswordPage extends StatelessWidget {
+  ResetPasswordPage({super.key});
 
-  @override
-  State<ResetPasswordPage> createState() => _ResetPasswordPageState();
-}
-
-class _ResetPasswordPageState extends State<ResetPasswordPage> {
   final formKey = GlobalKey<FormState>();
   final pwController = TextEditingController();
   final confirmPwController = TextEditingController();
   bool obscuretext = true;
   bool obscuretext1 = true;
 
-  toggle() {
-    setState(() {
-      obscuretext = !obscuretext;
-    });
-  }
-
-  toggle1() {
-    setState(() {
-      obscuretext1 = !obscuretext1;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(backgroundColor: AppTheme.black),
       backgroundColor: AppTheme.black,
-      body: SingleChildScrollView(
-          child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15).w,
-        child: Form(
-          key: formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Center(child: CoursiaTopImage()),
-              CustomFunction.customSpace(height: 80),
-              const CustomText(
-                textAlign: TextAlign.left,
-                text: 'Reset\nPasscode?',
-                size: 30,
+      body: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          if (state is VisibilityOnOffSuccess) {
+            obscuretext = state.obscureText!;
+          }
+          if (state is VisibilityOnOff1Success) {
+            obscuretext1 = state.obscureText1!;
+          }
+          return SingleChildScrollView(
+              child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15).w,
+            child: Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Center(child: CoursiaTopImage()),
+                  CustomFunction.customSpace(height: 80),
+                  const CustomText(
+                    textAlign: TextAlign.left,
+                    text: 'Reset\nPasscode?',
+                    size: 30,
+                  ),
+                  CustomFunction.customSpace(height: 30),
+                  const CustomText(
+                    text: 'Enter new passcode.',
+                    size: 12,
+                    textColor: AppTheme.grey,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  CustomFunction.customSpace(height: 30),
+                  const CustomText(textAlign: TextAlign.left, text: 'Passcode'),
+                  CustomFunction.customSpace(height: 10),
+                  CustomTextFormField(
+                    isProfile: false,
+                    controller: pwController,
+                    obscureText: obscuretext,
+                    isEmail: false,
+                    hintText: 'Passcode',
+                    textColor: AppTheme.white,
+                    suffixIcon: IconButton(
+                      icon: obscuretext
+                          ? const Icon(Icons.visibility_off,
+                              color: AppTheme.grey)
+                          : const Icon(Icons.visibility,
+                              color: AppTheme.orange),
+                      onPressed: () {
+                        context
+                            .read<AuthBloc>()
+                            .add(VisibilityOnOffEvent(!obscuretext));
+                        // toggle();
+                      },
+                    ),
+                  ),
+                  CustomFunction.customSpace(height: 15),
+                  const CustomText(
+                      textAlign: TextAlign.left, text: 'Confirm Passcode'),
+                  CustomFunction.customSpace(height: 10),
+                  CustomTextFormField(
+                    isProfile: false,
+                    controller: confirmPwController,
+                    obscureText: obscuretext1,
+                    isEmail: false,
+                    hintText: 'Confirm Passcode',
+                    textColor: AppTheme.white,
+                    suffixIcon: IconButton(
+                      icon: obscuretext1
+                          ? const Icon(Icons.visibility_off,
+                              color: AppTheme.grey)
+                          : const Icon(Icons.visibility,
+                              color: AppTheme.orange),
+                      onPressed: () {
+                        context
+                            .read<AuthBloc>()
+                            .add(VisibilityOnOff1Event(!obscuretext1));
+                      },
+                    ),
+                  ),
+                  CustomFunction.customSpace(height: 30),
+                  CustomButton(
+                      onTap: () {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        if (formKey.currentState!.validate()) {
+                          if (pwController.text == confirmPwController.text) {
+                            // CustomFunction.navigatePage(
+                            //     const SignUpPage(), context);
+                          } else {
+                            CustomFunction.flushBar(
+                                'Your password and confirm password are not match!',
+                                context,
+                                msgColor: AppTheme.red);
+                          }
+                        }
+                      },
+                      text: 'Confirm'),
+                ],
               ),
-              CustomFunction.customSpace(height: 30),
-              const CustomText(
-                text: 'Enter new passcode.',
-                size: 12,
-                textColor: AppTheme.grey,
-                fontWeight: FontWeight.bold,
-              ),
-              CustomFunction.customSpace(height: 30),
-              const CustomText(textAlign: TextAlign.left, text: 'Passcode'),
-              CustomFunction.customSpace(height: 10),
-              CustomTextFormField(
-                isProfile: false,
-                controller: pwController,
-                obscureText: obscuretext,
-                isEmail: false,
-                hintText: 'Passcode',
-                suffixIcon: IconButton(
-                  icon: obscuretext
-                      ? const Icon(Icons.visibility_off, color: AppTheme.grey)
-                      : const Icon(Icons.visibility, color: AppTheme.orange),
-                  onPressed: () {
-                    toggle();
-                  },
-                ),
-              ),
-              CustomFunction.customSpace(height: 15),
-              const CustomText(
-                  textAlign: TextAlign.left, text: 'Confirm Passcode'),
-              CustomFunction.customSpace(height: 10),
-              CustomTextFormField(
-                isProfile: false,
-                controller: confirmPwController,
-                obscureText: obscuretext1,
-                isEmail: false,
-                hintText: 'Confirm Passcode',
-                suffixIcon: IconButton(
-                  icon: obscuretext1
-                      ? const Icon(Icons.visibility_off, color: AppTheme.grey)
-                      : const Icon(Icons.visibility, color: AppTheme.orange),
-                  onPressed: () {
-                    toggle1();
-                  },
-                ),
-              ),
-              CustomFunction.customSpace(height: 30),
-              CustomButton(
-                  onTap: () {
-                    FocusManager.instance.primaryFocus?.unfocus();
-                    if (formKey.currentState!.validate()) {
-                      if (pwController.text == confirmPwController.text) {
-                        // CustomFunction.navigatePage(
-                        //     const SignUpPage(), context);
-                      } else {
-                        CustomFunction.flushBar(
-                            'Your password and confirm password are not match!',
-                            context,
-                            msgColor: AppTheme.red);
-                      }
-                    }
-                  },
-                  text: 'Confirm'),
-            ],
-          ),
-        ),
-      )),
+            ),
+          ));
+        },
+      ),
     );
   }
 }

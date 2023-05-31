@@ -16,3 +16,13 @@ class UploadFileSuccess extends AssignmentState {
   @override
   List<Object> get props => [fileObjectList!];
 }
+
+class UploadFileLoading extends AssignmentState {}
+
+class UploadFileFailed extends AssignmentState {
+  final String? message;
+  const UploadFileFailed(this.message);
+
+  @override
+  List<Object> get props => [message!];
+}

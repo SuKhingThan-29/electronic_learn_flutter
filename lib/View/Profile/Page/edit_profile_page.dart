@@ -121,9 +121,17 @@ class EditProfilePage extends StatelessWidget {
                   ),
                   CustomFunction.customSpace(height: 20),
                   CustomDatePicker(date: date),
-                  CustomDropDown(items: genderList, hintText: 'Gender'),
+                  CustomDropDown(
+                    items: genderList,
+                    hintText: 'Gender',
+                    isSignUp: false,
+                  ),
                   CustomFunction.customSpace(height: 20),
-                  CustomDropDown(items: genderList, hintText: 'Job Level'),
+                  CustomDropDown(
+                    items: genderList,
+                    hintText: 'Job Level',
+                    isSignUp: false,
+                  ),
                   CustomFunction.customSpace(height: 20),
                   CustomTextFormField(
                       isProfile: true,

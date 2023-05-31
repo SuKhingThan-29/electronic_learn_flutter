@@ -11,6 +11,7 @@ class AssignmentBloc extends Bloc<AssignmentEvent, AssignmentState> {
   }
 
   _onUploadFile(UploadFile event, Emitter<AssignmentState> emit) {
+    emit(UploadFileLoading());
     emit(UploadFileSuccess(fileObjectList: event.fileObjectList));
   }
 }

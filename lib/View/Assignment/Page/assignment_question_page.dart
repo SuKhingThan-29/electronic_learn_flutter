@@ -14,14 +14,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AssignmentQuestionPage extends StatefulWidget {
-  const AssignmentQuestionPage({super.key});
+class AssignmentQuestionPage extends StatelessWidget {
+  AssignmentQuestionPage({super.key});
 
-  @override
-  State<AssignmentQuestionPage> createState() => _AssignmentQuestionPageState();
-}
-
-class _AssignmentQuestionPageState extends State<AssignmentQuestionPage> {
   List<FileObject> filesList = [];
 
   @override
@@ -32,15 +27,12 @@ class _AssignmentQuestionPageState extends State<AssignmentQuestionPage> {
 
   bodyData(BuildContext context) {
     return BlocConsumer<AssignmentBloc, AssignmentState>(
-      listener: (context, state) {
-        // if (state is UploadFileSuccess) {
-        //   filesList = state.fileObjectList!;
-        // }
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         if (state is UploadFileSuccess) {
           filesList = state.fileObjectList!;
         }
+
         return Padding(
             padding: EdgeInsets.all(15.w),
             child: ListView(
@@ -89,9 +81,13 @@ class _AssignmentQuestionPageState extends State<AssignmentQuestionPage> {
                   child: InkWell(
                     child: const Icon(Icons.cancel),
                     onTap: () {
-                      setState(() {
-                        filesList.clear();
-                      });
+                      filesList.clear();
+                      context
+                          .read<AssignmentBloc>()
+                          .add(UploadFile(fileObjectList: filesList));
+                      // setState(() {
+                      //   filesList.clear();
+                      // });
                     },
                   ),
                 ),
@@ -116,12 +112,12 @@ class _AssignmentQuestionPageState extends State<AssignmentQuestionPage> {
 
                         filesList.add(fileObject);
                       }
-                      // context
-                      //     .read<AssignmentBloc>()
-                      //     .add(UploadFile(fileObjectList: filesList));
-                      setState(() {
-                        filesList = filesList;
-                      });
+                      context
+                          .read<AssignmentBloc>()
+                          .add(UploadFile(fileObjectList: filesList));
+                      // setState(() {
+                      //   filesList = filesList;
+                      // });
                     }
                   },
                   child: DottedBorder(

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/View/Profile/bloc/profile_bloc.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -8,37 +10,61 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CustomDropDown extends StatelessWidget {
   final String? hintText;
   final List<String> items;
+  final bool? isSignUp;
+  final void Function()? onChange;
   const CustomDropDown(
-      {super.key, required this.hintText, required this.items});
+      {super.key,
+      required this.hintText,
+      required this.items,
+      required this.isSignUp,
+      this.onChange});
 
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField2(
-      decoration: const InputDecoration(
-        errorStyle: TextStyle(color: AppTheme.black),
-        errorBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: AppTheme.orange)),
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.zero,
+        enabledBorder: isSignUp!
+            ? const OutlineInputBorder(
+                borderSide: BorderSide(color: AppTheme.grey, width: 2.0),
+                borderRadius: BorderRadius.all(Radius.circular(10)))
+            : const UnderlineInputBorder(
+                borderSide: BorderSide(color: AppTheme.grey, width: 2.0)),
+        errorStyle: isSignUp!
+            ? const TextStyle(color: AppTheme.grey)
+            : const TextStyle(color: AppTheme.black),
+        errorBorder: isSignUp!
+            ? const OutlineInputBorder(
+                borderSide: BorderSide(color: AppTheme.orange, width: 2.0),
+                borderRadius: BorderRadius.all(Radius.circular(10)))
+            : const UnderlineInputBorder(
+                borderSide: BorderSide(color: AppTheme.orange)),
         fillColor: Colors.white,
         isDense: true,
         // contentPadding: EdgeInsets.zero,
-        focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: AppTheme.orange)),
-        border: UnderlineInputBorder(
+        focusedBorder: isSignUp!
+            ? const OutlineInputBorder(
+                borderSide: BorderSide(color: AppTheme.grey, width: 2.0),
+                borderRadius: BorderRadius.all(Radius.circular(10)))
+            : const UnderlineInputBorder(
+                borderSide: BorderSide(color: AppTheme.orange)),
+        border: const UnderlineInputBorder(
             borderSide: BorderSide(color: AppTheme.greyDark)),
       ),
       //isExpanded: true,
       hint: Text(
         hintText!,
-        style: const TextStyle(color: AppTheme.grey),
+        style: TextStyle(color: isSignUp! ? AppTheme.white : AppTheme.grey),
       ),
       icon: const Icon(
         Icons.arrow_drop_down,
         color: AppTheme.greyDark,
       ),
       iconSize: 30,
-      buttonHeight: 30.h,
-      //buttonPadding: const EdgeInsets.only(left: 5, right: 5).w,
+      buttonHeight: isSignUp! ? 45.h : 30.h,
+      buttonPadding: const EdgeInsets.only(left: 5, right: 5).w,
       dropdownDecoration: BoxDecoration(
+        color: isSignUp! ? AppTheme.blackLight : AppTheme.white,
         borderRadius: BorderRadius.circular(15).r,
       ),
 
@@ -47,7 +73,8 @@ class CustomDropDown extends StatelessWidget {
                 value: item,
                 child: Text(
                   item,
-                  style: const TextStyle(color: AppTheme.black),
+                  style: TextStyle(
+                      color: isSignUp! ? AppTheme.white : AppTheme.black),
                 ),
               ))
           .toList(),
@@ -58,7 +85,9 @@ class CustomDropDown extends StatelessWidget {
         return null;
       },
       onChanged: (value) {
+        onChange;
         context.read<ProfileBloc>().add(GetDropDownValue(value: value!));
+        // log(value.toString());
       },
       onSaved: (value) {},
     );

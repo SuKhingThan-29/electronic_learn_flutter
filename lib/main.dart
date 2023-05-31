@@ -3,12 +3,14 @@
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/View/Assignment/bloc/assignment_bloc.dart';
 import 'package:coursia/View/Auth/Page/splash_page.dart';
+import 'package:coursia/View/Auth/bloc/auth_bloc.dart';
 import 'package:coursia/View/Checkout/bloc/checkout_bloc.dart';
 import 'package:coursia/View/Competency/bloc/competency_bloc.dart';
 import 'package:coursia/View/Courses/bloc/courses_bloc.dart';
 import 'package:coursia/View/DISC/bloc/disc_bloc.dart';
 import 'package:coursia/View/Evaluation/bloc/evaluation_bloc.dart';
 import 'package:coursia/View/Gift/bloc/gift_bloc.dart';
+import 'package:coursia/View/Home/bloc/home_bloc.dart';
 import 'package:coursia/View/IQ/bloc/iq_bloc.dart';
 import 'package:coursia/View/Multiple_Choice/bloc/multiple_choice_bloc.dart';
 import 'package:coursia/View/Profile/bloc/profile_bloc.dart';
@@ -143,6 +145,8 @@ class MyApp extends StatelessWidget {
         BlocProvider<GiftBloc>(create: (_) => GiftBloc()),
         BlocProvider<EvaluationBloc>(create: (_) => EvaluationBloc()),
         BlocProvider<AssignmentBloc>(create: (_) => AssignmentBloc()),
+        BlocProvider<HomeBloc>(create: (_) => HomeBloc()),
+        BlocProvider<AuthBloc>(create: (_) => AuthBloc()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),

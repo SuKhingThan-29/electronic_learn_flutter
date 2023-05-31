@@ -168,7 +168,7 @@ class AssessmentPage extends StatelessWidget {
                 fontSize: 12.sp,
                 onTap: () {
                   CustomFunction.navigatePage(
-                      const AssignmentQuestionPage(), context);
+                      AssignmentQuestionPage(), context);
                 },
                 width: 90.w,
                 height: 25.h,

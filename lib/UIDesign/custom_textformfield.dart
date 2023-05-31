@@ -13,6 +13,7 @@ class CustomTextFormField extends StatefulWidget {
   final void Function(String)? onChange;
   final void Function()? onPress;
   final bool? isProfile;
+  final Color? textColor;
 
   CustomTextFormField(
       {super.key,
@@ -24,7 +25,8 @@ class CustomTextFormField extends StatefulWidget {
       this.obscureText,
       this.onChange,
       this.onPress,
-      this.isProfile});
+      this.isProfile,
+      this.textColor = Colors.black});
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -56,7 +58,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           }
         }
       },
-      style: const TextStyle(color: AppTheme.black),
+      style: TextStyle(color: widget.textColor),
       decoration: InputDecoration(
           errorStyle: widget.isProfile!
               ? const TextStyle(color: AppTheme.black)

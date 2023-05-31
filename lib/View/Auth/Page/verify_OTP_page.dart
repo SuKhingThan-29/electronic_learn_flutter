@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, must_be_immutable
 import 'package:coursia/View/Auth/Page/reset_password_page.dart';
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/custom_button.dart';
@@ -6,24 +6,25 @@ import 'package:coursia/UIDesign/coursia_top_image.dart';
 import 'package:coursia/UIDesign/function.dart';
 import 'package:coursia/UIDesign/otp_input.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
+import 'package:coursia/View/Auth/Page/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class VerifyOTPPage extends StatefulWidget {
-  const VerifyOTPPage({super.key});
+class VerifyOTPPage extends StatelessWidget {
+  VerifyOTPPage({super.key});
 
-  @override
-  State<VerifyOTPPage> createState() => _VerifyOTPPageState();
-}
-
-class _VerifyOTPPageState extends State<VerifyOTPPage> {
   final TextEditingController _fieldOne = TextEditingController();
+
   final TextEditingController _fieldTwo = TextEditingController();
+
   final TextEditingController _fieldThree = TextEditingController();
+
   final TextEditingController _fieldFour = TextEditingController();
+
   final TextEditingController _fieldFive = TextEditingController();
 
   String? verifyCode;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,8 +73,8 @@ class _VerifyOTPPageState extends State<VerifyOTPPage> {
                       _fieldFive.text;
                   //log(verifyCode.toString());
                   if (verifyCode!.length >= 5) {
-                    CustomFunction.navigatePage(
-                        const ResetPasswordPage(), context);
+                    // CustomFunction.navigatePage(ResetPasswordPage(), context);
+                    CustomFunction.navigatePage(SignUpPage(), context);
                   } else {
                     CustomFunction.flushBar(
                         'Please enter completely verify code!', context,

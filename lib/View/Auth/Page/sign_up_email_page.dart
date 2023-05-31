@@ -10,8 +10,8 @@ import 'package:coursia/View/Auth/Page/verify_OTP_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ForgetPasswordPage extends StatelessWidget {
-  ForgetPasswordPage({super.key});
+class SignUpEmailPage extends StatelessWidget {
+  SignUpEmailPage({super.key});
 
   final emailController = TextEditingController();
 
@@ -34,12 +34,12 @@ class ForgetPasswordPage extends StatelessWidget {
               CustomFunction.customSpace(height: 80),
               const CustomText(
                 textAlign: TextAlign.left,
-                text: 'Forget\nPasscode?',
+                text: 'Sign Up\nwith your email\naddress',
                 size: 30,
               ),
               CustomFunction.customSpace(height: 30),
               const CustomText(
-                text: 'Enter email to recover passcode.',
+                text: 'Enter email to register your account.',
                 size: 12,
                 textColor: AppTheme.grey,
                 fontWeight: FontWeight.bold,
