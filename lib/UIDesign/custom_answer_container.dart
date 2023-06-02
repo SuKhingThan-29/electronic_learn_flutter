@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:coursia/Model/static_data.dart';
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:flutter/material.dart';

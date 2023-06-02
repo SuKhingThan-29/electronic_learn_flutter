@@ -4,12 +4,15 @@ import 'package:coursia/Model/competency_question_model.dart';
 import 'package:coursia/Model/competency_type_model.dart';
 import 'package:coursia/Model/disc_question_model.dart';
 import 'package:coursia/Model/disc_type_model.dart';
+import 'package:coursia/Model/email_verify_response_model.dart';
 import 'package:coursia/Model/iq_question_model.dart';
 import 'package:coursia/Model/iq_type_model.dart';
+import 'package:coursia/Model/job_level_model.dart';
+import 'package:coursia/Model/otp_verify_response_model.dart';
 import 'package:coursia/Model/quiz_question_model.dart';
 import 'package:coursia/Model/quiz_type_model.dart';
 import 'package:coursia/Utils/api_service.dart';
-import 'package:coursia/Utils/exception.dart';
+import 'package:coursia/Utils/customexception.dart';
 import 'package:dio/dio.dart';
 
 class CoursiaApiClient {
@@ -44,10 +47,9 @@ class CoursiaApiClient {
             .map((item) => DISCTypeModel.fromJson(item))
             .toList();
       }
-      throw BottomPlacedException(code: 'Something went wrong');
+      throw Exception('Something went wrong');
     } on DioError catch (e) {
-      throw BottomPlacedException(
-          code: e.response?.data?['message'] ?? e.message);
+      throw Exception(e.response?.data?['message'] ?? e.message);
     } catch (e) {
       throw UnimplementedError("Something went wrong");
     }
@@ -60,10 +62,9 @@ class CoursiaApiClient {
         final iqTypeList = response.data['data'] as List;
         return iqTypeList.map((item) => IQTypeModel.fromJson(item)).toList();
       }
-      throw BottomPlacedException(code: 'Something went wrong');
+      throw Exception('Something went wrong');
     } on DioError catch (e) {
-      throw BottomPlacedException(
-          code: e.response?.data?['message'] ?? e.message);
+      throw Exception(e.response?.data?['message'] ?? e.message);
     } catch (e) {
       throw UnimplementedError("Something went wrong");
     }
@@ -78,10 +79,9 @@ class CoursiaApiClient {
             .map((item) => CompetencyTypeModel.fromJson(item))
             .toList();
       }
-      throw BottomPlacedException(code: 'Something went wrong');
+      throw Exception('Something went wrong');
     } on DioError catch (e) {
-      throw BottomPlacedException(
-          code: e.response?.data?['message'] ?? e.message);
+      throw Exception(e.response?.data?['message'] ?? e.message);
     } catch (e) {
       throw UnimplementedError("Something went wrong");
     }
@@ -96,10 +96,9 @@ class CoursiaApiClient {
             .map((item) => QuizTypeModel.fromJson(item))
             .toList();
       }
-      throw BottomPlacedException(code: 'Something went wrong');
+      throw Exception('Something went wrong');
     } on DioError catch (e) {
-      throw BottomPlacedException(
-          code: e.response?.data?['message'] ?? e.message);
+      throw Exception(e.response?.data?['message'] ?? e.message);
     } catch (e) {
       throw UnimplementedError("Something went wrong");
     }
@@ -114,10 +113,9 @@ class CoursiaApiClient {
             .map((item) => DISCQuestionModel.fromJson(item))
             .toList();
       }
-      throw BottomPlacedException(code: 'Something went wrong');
+      throw Exception('Something went wrong');
     } on DioError catch (e) {
-      throw BottomPlacedException(
-          code: e.response?.data?['message'] ?? e.message);
+      throw Exception(e.response?.data?['message'] ?? e.message);
     } catch (e) {
       throw UnimplementedError("Something went wrong");
     }
@@ -132,10 +130,9 @@ class CoursiaApiClient {
             .map((item) => IQQuestionModel.fromJson(item))
             .toList();
       }
-      throw BottomPlacedException(code: 'Something went wrong');
+      throw Exception('Something went wrong');
     } on DioError catch (e) {
-      throw BottomPlacedException(
-          code: e.response?.data?['message'] ?? e.message);
+      throw Exception(e.response?.data?['message'] ?? e.message);
     } catch (e) {
       throw UnimplementedError("Something went wrong");
     }
@@ -150,10 +147,9 @@ class CoursiaApiClient {
             .map((item) => CompetencyQuestionModel.fromJson(item))
             .toList();
       }
-      throw BottomPlacedException(code: 'Something went wrong');
+      throw Exception('Something went wrong');
     } on DioError catch (e) {
-      throw BottomPlacedException(
-          code: e.response?.data?['message'] ?? e.message);
+      throw Exception(e.response?.data?['message'] ?? e.message);
     } catch (e) {
       throw UnimplementedError("Something went wrong");
     }
@@ -179,10 +175,108 @@ class CoursiaApiClient {
         }
       }
 
-      throw BottomPlacedException(code: 'Something went wrong');
+      throw Exception('Something went wrong');
     } on DioError catch (e) {
-      throw BottomPlacedException(
-          code: e.response?.data?['message'] ?? e.message);
+      throw Exception(e.response?.data?['message'] ?? e.message);
+    } catch (e) {
+      throw UnimplementedError("Something went wrong");
+    }
+  }
+
+  Future<List<JobLevelModel>> getJobLevelList() async {
+    try {
+      final response = await _dio.get('frontend/v1/joblevel');
+      if (response.statusCode == 200) {
+        final jobLevelList = response.data['data'] as List;
+        return jobLevelList
+            .map((item) => JobLevelModel.fromJson(item))
+            .toList();
+      }
+      throw Exception('Something went wrong');
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.badResponse) {
+        throw CustomException(
+            "Received invalid status code: ${e.response?.statusCode}");
+      }
+      throw Exception(e.response?.data?['message'] ?? e.message);
+    } catch (e) {
+      throw UnimplementedError("Something went wrong");
+    }
+  }
+
+  Future<EmailVerifyResponseModel> emailVerification(
+      String? userName, String? email) async {
+    try {
+      final data = FormData.fromMap({"name": userName, "email": email});
+      final response =
+          await _dio.post('frontend/v1/email-verification', data: data);
+      if (response.statusCode == 200 && response.data['success'] == true) {
+        return EmailVerifyResponseModel.fromJson(response.data);
+      } else if (response.statusCode == 200 &&
+          response.data['success'] == false) {
+        return EmailVerifyResponseModel.fromJson(response.data);
+      }
+
+      throw CustomException(response.data['message']);
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.badResponse) {
+        throw CustomException(
+            "Received invalid status code: ${e.response?.statusCode}");
+      }
+      throw CustomException(
+          e.response!.data['message'] ?? "Something went wrong");
+    } catch (e) {
+      throw UnimplementedError("Something went wrong");
+    }
+  }
+
+  Future<OTPVerifyResponseModel> sendOTP(
+      String? userName, String? email, String? otp) async {
+    try {
+      final data =
+          FormData.fromMap({"otp": otp, "name": userName, "email": email});
+      final response = await _dio.post('frontend/v1/checkotp', data: data);
+      if (response.statusCode == 200 && response.data['success'] == true) {
+        return OTPVerifyResponseModel.fromJson(response.data);
+      } else if (response.statusCode == 200 &&
+          response.data['success'] == false) {
+        return OTPVerifyResponseModel.fromJson(response.data);
+      }
+
+      throw CustomException(response.data['message']);
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.badResponse) {
+        throw CustomException(
+            "Received invalid status code: ${e.response?.statusCode}");
+      }
+      throw CustomException(
+          e.response!.data['message'] ?? "Something went wrong");
+    } catch (e) {
+      throw UnimplementedError("Something went wrong");
+    }
+  }
+
+  Future<OTPVerifyResponseModel> registerAccount(
+      String? userName, String? email, String? otp) async {
+    try {
+      final data =
+          FormData.fromMap({"otp": otp, "name": userName, "email": email});
+      final response = await _dio.post('frontend/v1/checkotp', data: data);
+      if (response.statusCode == 200 && response.data['success'] == true) {
+        return OTPVerifyResponseModel.fromJson(response.data);
+      } else if (response.statusCode == 200 &&
+          response.data['success'] == false) {
+        return OTPVerifyResponseModel.fromJson(response.data);
+      }
+
+      throw CustomException(response.data['message']);
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.badResponse) {
+        throw CustomException(
+            "Received invalid status code: ${e.response?.statusCode}");
+      }
+      throw CustomException(
+          e.response!.data['message'] ?? "Something went wrong");
     } catch (e) {
       throw UnimplementedError("Something went wrong");
     }

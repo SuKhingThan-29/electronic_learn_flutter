@@ -1,9 +1,6 @@
 // ignore_for_file: must_be_immutable
 
-import 'dart:developer';
-
 import 'package:coursia/View/Auth/Page/forget_password_page.dart';
-import 'package:coursia/View//Auth/Page/signup_page.dart';
 import 'package:coursia/View//Home/Page/home_page.dart';
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/custom_button.dart';

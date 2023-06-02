@@ -58,7 +58,7 @@ class ForgetPasswordPage extends StatelessWidget {
               CustomButton(
                   onTap: () {
                     FocusManager.instance.primaryFocus?.unfocus();
-                    CustomFunction.navigatePage(VerifyOTPPage(), context);
+                    // CustomFunction.navigatePage(VerifyOTPPage(), context);
                     // if (formKey.currentState!.validate()) {
                     // if (EmailValidator.validate(emailController.text)) {
                     //   CustomFunction.navigatePage(

@@ -1,3 +1,5 @@
+// ignore_for_file: annotate_overrides
+
 part of 'quiz_bloc.dart';
 
 abstract class QuizState extends Equatable {

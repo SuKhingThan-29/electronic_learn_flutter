@@ -49,7 +49,9 @@ class QuizMainPage extends StatelessWidget {
         if (state is GetQuizTypeLoading ||
             state is GetQuizQuestionListLoading) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              color: AppTheme.orange,
+            ),
           );
         }
 

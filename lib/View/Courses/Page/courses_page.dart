@@ -1,8 +1,8 @@
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/custom_button.dart';
 import 'package:coursia/UIDesign/custom_courses_card.dart';
+import 'package:coursia/UIDesign/custom_dropdown.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
-import 'package:coursia/UIDesign/custom_textformfield.dart';
 import 'package:coursia/UIDesign/function.dart';
 import 'package:coursia/View/Courses/Page/courses_detail_page.dart';
 import 'package:coursia/View/Courses/bloc/courses_bloc.dart';
@@ -10,12 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../Profile/bloc/profile_bloc.dart';
+
 class CoursesPage extends StatelessWidget {
   CoursesPage({super.key});
 
   final topicController = TextEditingController();
   final costController = TextEditingController();
   final levelController = TextEditingController();
+  final List<String> topicList = ['Manager', 'Non-Manager', 'GA', 'Admin'];
   @override
   Widget build(BuildContext context) {
     context.read<CoursesBloc>().add(const OnTapEvent(type: 'Technical'));
@@ -253,29 +256,56 @@ class CoursesPage extends StatelessWidget {
                     const CustomText(
                         text: 'Topic', textColor: AppTheme.blackLight),
                     CustomFunction.customSpace(height: 5.h),
-                    CustomTextFormField(
-                        controller: topicController,
-                        isEmail: false,
-                        isProfile: false,
-                        hintText: 'Topic'),
+                    BlocBuilder<ProfileBloc, ProfileState>(
+                      builder: (context, state) {
+                        if (state is GetDropDownValueSuccess) {
+                          // jobLevel = state.value;
+                          // log(jobLevel.toString());
+                        }
+                        return CustomDropDown(
+                          items: topicList,
+                          hintText: 'Topic',
+                          isSignUp: true,
+                          isCourses: true,
+                        );
+                      },
+                    ),
                     CustomFunction.customSpace(height: 10.h),
                     const CustomText(
                         text: 'Cost', textColor: AppTheme.blackLight),
                     CustomFunction.customSpace(height: 5.h),
-                    CustomTextFormField(
-                        controller: costController,
-                        isEmail: false,
-                        isProfile: false,
-                        hintText: 'Cost'),
+                    BlocBuilder<ProfileBloc, ProfileState>(
+                      builder: (context, state) {
+                        if (state is GetDropDownValueSuccess) {
+                          // jobLevel = state.value;
+                          // log(jobLevel.toString());
+                        }
+                        return CustomDropDown(
+                          items: topicList,
+                          hintText: 'Cost',
+                          isSignUp: true,
+                          isCourses: true,
+                        );
+                      },
+                    ),
                     CustomFunction.customSpace(height: 10.h),
                     const CustomText(
                         text: 'Level', textColor: AppTheme.blackLight),
                     CustomFunction.customSpace(height: 5.h),
-                    CustomTextFormField(
-                        controller: levelController,
-                        isEmail: false,
-                        isProfile: false,
-                        hintText: 'Level'),
+                    BlocBuilder<ProfileBloc, ProfileState>(
+                      builder: (context, state) {
+                        if (state is GetDropDownValueSuccess) {
+                          // jobLevel = state.value;
+                          // log(jobLevel.toString());
+                        }
+                        return CustomDropDown(
+                          items: topicList,
+                          hintText: 'Level',
+                          isSignUp: true,
+                          isCourses: true,
+                        );
+                      },
+                    ),
                     CustomFunction.customSpace(height: 20.h),
                     Center(
                       child: CustomButton(

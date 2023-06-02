@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable
 
-import 'dart:developer';
-
+import 'package:coursia/Model/job_level_model.dart';
 import 'package:coursia/UIDesign/custom_dropdown.dart';
 import 'package:coursia/View//Auth/Page/login_page.dart';
 import 'package:coursia/UIDesign/app_theme.dart';
@@ -34,12 +33,13 @@ class SignUpPage extends StatelessWidget {
   bool obscuretext = true;
 
   bool obscuretext1 = true;
+  List<JobLevelModel> jobLevelList = [];
 
-  final List<String> jobLevelList = ['Manager', 'Non-Manager', 'GA', 'Admin'];
   String? jobLevel;
 
   @override
   Widget build(BuildContext context) {
+    context.read<AuthBloc>().add(const GetJobLevel());
     return Scaffold(
       appBar: AppBar(backgroundColor: AppTheme.black),
       backgroundColor: AppTheme.black,
@@ -51,6 +51,37 @@ class SignUpPage extends StatelessWidget {
           }
           if (state is VisibilityOnOff1Success) {
             obscuretext1 = state.obscureText1!;
+          }
+          if (state is GetJobLevelLoading) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: AppTheme.orange,
+              ),
+            );
+          }
+          if (state is GetJobLevelSuccess) {
+            jobLevelList = state.jobLevelList!;
+          }
+          if (state is GetJobLevelFailed) {
+            return Center(
+              child: Column(
+                children: [
+                  CustomFunction.customSpace(height: 200.h),
+                  CustomText(
+                    text: state.message,
+                    textColor: AppTheme.white,
+                  ),
+                  CustomFunction.customSpace(height: 10.h),
+                  CustomButton(
+                    width: 100.w,
+                    text: 'Reload',
+                    onTap: () {
+                      context.read<AuthBloc>().add(const GetJobLevel());
+                    },
+                  ),
+                ],
+              ),
+            );
           }
           return SingleChildScrollView(
               child: Padding(
@@ -100,6 +131,7 @@ class SignUpPage extends StatelessWidget {
                       return CustomDropDown(
                         items: jobLevelList,
                         hintText: 'Job Level',
+                        isCourses: false,
                         isSignUp: true,
                       );
                     },
@@ -158,53 +190,63 @@ class SignUpPage extends StatelessWidget {
           ));
         },
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          CustomButton(
-              onTap: () {
-                FocusManager.instance.primaryFocus?.unfocus();
-                if (formKey.currentState!.validate()) {
-                  if (EmailValidator.validate(emailController.text)) {
-                    if (pwController.text == confirmPwController.text) {
-                      CustomFunction.navigatePage(SignUpPage(), context);
-                    } else {
-                      CustomFunction.flushBar(
-                          'Your password and confirm password are not match!',
-                          context,
-                          msgColor: AppTheme.red);
-                    }
-                  } else {
-                    CustomFunction.flushBar(
-                        'Your email address is wrong!', context,
-                        msgColor: AppTheme.red);
-                  }
-                }
-              },
-              text: 'Create Account'),
-          CustomFunction.customSpace(height: 15),
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const CustomText(
-                    text: 'Already have an account?',
-                    size: 12,
-                    textColor: AppTheme.grey),
-                InkWell(
+      bottomNavigationBar: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          if (state is GetJobLevelFailed) {
+            return const CustomText(
+              text: '',
+              textColor: AppTheme.white,
+            );
+          }
+          return Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+              CustomButton(
                   onTap: () {
-                    CustomFunction.navigatePage(LoginPage(), context);
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    if (formKey.currentState!.validate()) {
+                      if (EmailValidator.validate(emailController.text)) {
+                        if (pwController.text == confirmPwController.text) {
+                          CustomFunction.navigatePage(SignUpPage(), context);
+                        } else {
+                          CustomFunction.flushBar(
+                              'Your password and confirm password are not match!',
+                              context,
+                              msgColor: AppTheme.red);
+                        }
+                      } else {
+                        CustomFunction.flushBar(
+                            'Your email address is wrong!', context,
+                            msgColor: AppTheme.red);
+                      }
+                    }
                   },
-                  child: const CustomText(
-                      text: ' Log in',
-                      size: 14,
-                      textColor: AppTheme.grey,
-                      fontWeight: FontWeight.bold),
+                  text: 'Create Account'),
+              CustomFunction.customSpace(height: 15),
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const CustomText(
+                        text: 'Already have an account?',
+                        size: 12,
+                        textColor: AppTheme.grey),
+                    InkWell(
+                      onTap: () {
+                        CustomFunction.navigatePage(LoginPage(), context);
+                      },
+                      child: const CustomText(
+                          text: ' Log in',
+                          size: 14,
+                          textColor: AppTheme.grey,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-        ]),
+              ),
+            ]),
+          );
+        },
       ),
     );
   }

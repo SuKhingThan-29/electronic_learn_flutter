@@ -3,7 +3,6 @@
 import 'dart:developer';
 
 import 'package:coursia/Model/disc_question_model.dart';
-import 'package:coursia/Model/static_data.dart';
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/custom_answer_container.dart';
 import 'package:coursia/UIDesign/custom_button.dart';

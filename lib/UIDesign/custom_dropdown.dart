@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/View/Profile/bloc/profile_bloc.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -9,15 +7,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomDropDown extends StatelessWidget {
   final String? hintText;
-  final List<String> items;
+  final List<dynamic> items;
   final bool? isSignUp;
   final void Function()? onChange;
+  final bool? isCourses;
   const CustomDropDown(
       {super.key,
       required this.hintText,
       required this.items,
       required this.isSignUp,
-      this.onChange});
+      this.onChange,
+      this.isCourses});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,12 @@ class CustomDropDown extends StatelessWidget {
       //isExpanded: true,
       hint: Text(
         hintText!,
-        style: TextStyle(color: isSignUp! ? AppTheme.white : AppTheme.grey),
+        style: TextStyle(
+            color: isCourses! && isSignUp == true
+                ? AppTheme.black
+                : isSignUp!
+                    ? AppTheme.white
+                    : AppTheme.grey),
       ),
       icon: const Icon(
         Icons.arrow_drop_down,
@@ -64,17 +69,25 @@ class CustomDropDown extends StatelessWidget {
       buttonHeight: isSignUp! ? 45.h : 30.h,
       buttonPadding: const EdgeInsets.only(left: 5, right: 5).w,
       dropdownDecoration: BoxDecoration(
-        color: isSignUp! ? AppTheme.blackLight : AppTheme.white,
+        color: isCourses! && isSignUp == true
+            ? AppTheme.white
+            : isSignUp!
+                ? AppTheme.blackLight
+                : AppTheme.white,
         borderRadius: BorderRadius.circular(15).r,
       ),
 
       items: items
-          .map((item) => DropdownMenuItem<String>(
+          .map((item) => DropdownMenuItem<dynamic>(
                 value: item,
                 child: Text(
-                  item,
+                  item.name,
                   style: TextStyle(
-                      color: isSignUp! ? AppTheme.white : AppTheme.black),
+                      color: isCourses! && isSignUp == true
+                          ? AppTheme.black
+                          : isSignUp!
+                              ? AppTheme.white
+                              : AppTheme.grey),
                 ),
               ))
           .toList(),
