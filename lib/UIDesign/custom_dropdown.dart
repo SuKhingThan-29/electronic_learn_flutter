@@ -98,8 +98,8 @@ class CustomDropDown extends StatelessWidget {
         return null;
       },
       onChanged: (value) {
-        onChange;
-        context.read<ProfileBloc>().add(GetDropDownValue(value: value!));
+        // onChange;
+        context.read<ProfileBloc>().add(GetDropDownValue(value: value!.name));
         // log(value.toString());
       },
       onSaved: (value) {},

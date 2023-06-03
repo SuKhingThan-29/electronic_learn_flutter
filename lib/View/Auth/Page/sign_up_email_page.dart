@@ -31,6 +31,7 @@ class SignUpEmailPage extends StatelessWidget {
             if (state.emailVerifyResponseModel!.success == true) {
               CustomFunction.navigatePage(
                   VerifyOTPPage(
+                    isFromForget: false,
                     userName: usernameController.text,
                     email: emailController.text,
                   ),

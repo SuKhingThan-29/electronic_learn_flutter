@@ -14,7 +14,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     emit(GetDateSuccess(date: event.date));
   }
 
-  _getDropDownValue(GetDropDownValue event, Emitter<ProfileState> emit) {
+  _getDropDownValue(GetDropDownValue event, Emitter<ProfileState> emit) async {
+    emit(GetDropDownValueLoading());
     emit(GetDropDownValueSuccess(value: event.value));
   }
 }

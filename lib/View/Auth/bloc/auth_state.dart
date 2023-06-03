@@ -82,3 +82,75 @@ class SendOTPFailed extends AuthState {
   @override
   List<Object> get props => [message!];
 }
+
+class RegisterAccountLoading extends AuthState {}
+
+class RegisterAccountSuccess extends AuthState {
+  final RegisterAccountModel? registerAccountModel;
+  const RegisterAccountSuccess({this.registerAccountModel});
+
+  @override
+  List<Object> get props => [registerAccountModel!];
+}
+
+class RegisterAccountFailed extends AuthState {
+  final String? message;
+  const RegisterAccountFailed(this.message);
+
+  @override
+  List<Object> get props => [message!];
+}
+
+class EmailVerificationFromForgetLoading extends AuthState {}
+
+class EmailVerificationFromForgetSuccess extends AuthState {
+  final EmailVerifyResponseModel? emailVerifyResponseModel;
+  const EmailVerificationFromForgetSuccess({this.emailVerifyResponseModel});
+
+  @override
+  List<Object> get props => [emailVerifyResponseModel!];
+}
+
+class EmailVerificationFromForgetFailed extends AuthState {
+  final String? message;
+  const EmailVerificationFromForgetFailed(this.message);
+
+  @override
+  List<Object> get props => [message!];
+}
+
+class SendOTPFromForgetLoading extends AuthState {}
+
+class SendOTPFromForgetSuccess extends AuthState {
+  final OTPVerifyResponseModel? otpVerifyResponseModel;
+  const SendOTPFromForgetSuccess({this.otpVerifyResponseModel});
+
+  @override
+  List<Object> get props => [otpVerifyResponseModel!];
+}
+
+class SendOTPFromForgetFailed extends AuthState {
+  final String? message;
+  const SendOTPFromForgetFailed(this.message);
+
+  @override
+  List<Object> get props => [message!];
+}
+
+class ResetPasswordLoading extends AuthState {}
+
+class ResetPasswordSuccess extends AuthState {
+  final ResetPasswordResponseModel? resetPasswordResponseModel;
+  const ResetPasswordSuccess({this.resetPasswordResponseModel});
+
+  @override
+  List<Object> get props => [resetPasswordResponseModel!];
+}
+
+class ResetPasswordFailed extends AuthState {
+  final String? message;
+  const ResetPasswordFailed(this.message);
+
+  @override
+  List<Object> get props => [message!];
+}

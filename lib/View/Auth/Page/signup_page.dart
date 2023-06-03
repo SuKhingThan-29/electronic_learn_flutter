@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:developer';
+
 import 'package:coursia/Model/job_level_model.dart';
 import 'package:coursia/UIDesign/custom_dropdown.dart';
 import 'package:coursia/View//Auth/Page/login_page.dart';
@@ -18,7 +20,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../Profile/bloc/profile_bloc.dart';
 
 class SignUpPage extends StatelessWidget {
-  SignUpPage({super.key});
+  String? name;
+  String? email;
+  SignUpPage({super.key, required this.name, required this.email});
 
   final formKey = GlobalKey<FormState>();
 
@@ -39,12 +43,30 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    userNameController.text = name!;
+    emailController.text = email!;
+
     context.read<AuthBloc>().add(const GetJobLevel());
     return Scaffold(
       appBar: AppBar(backgroundColor: AppTheme.black),
       backgroundColor: AppTheme.black,
       body: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is RegisterAccountSuccess) {
+            if (state.registerAccountModel?.success == true) {
+              CustomFunction.navigatePage(LoginPage(), context);
+            }
+            if (state.registerAccountModel?.success == false) {
+              CustomFunction.flushBar(
+                  state.registerAccountModel?.message, context,
+                  msgColor: AppTheme.red);
+            }
+          }
+          if (state is RegisterAccountFailed) {
+            CustomFunction.flushBar(state.message, context,
+                msgColor: AppTheme.red);
+          }
+        },
         builder: (context, state) {
           if (state is VisibilityOnOffSuccess) {
             obscuretext = state.obscureText!;
@@ -83,6 +105,12 @@ class SignUpPage extends StatelessWidget {
               ),
             );
           }
+          if (state is RegisterAccountLoading) {
+            return const Center(
+              child: CircularProgressIndicator(color: AppTheme.orange),
+            );
+          }
+
           return SingleChildScrollView(
               child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15).w,
@@ -102,6 +130,7 @@ class SignUpPage extends StatelessWidget {
                   const CustomText(textAlign: TextAlign.left, text: 'Username'),
                   CustomFunction.customSpace(height: 10),
                   CustomTextFormField(
+                    readonly: true,
                     isProfile: false,
                     controller: userNameController,
                     hintText: 'Username',
@@ -112,6 +141,7 @@ class SignUpPage extends StatelessWidget {
                   const CustomText(textAlign: TextAlign.left, text: 'Email'),
                   CustomFunction.customSpace(height: 10),
                   CustomTextFormField(
+                    readonly: true,
                     isProfile: false,
                     controller: emailController,
                     hintText: 'Email',
@@ -122,11 +152,24 @@ class SignUpPage extends StatelessWidget {
                   const CustomText(
                       textAlign: TextAlign.left, text: 'Job Level'),
                   CustomFunction.customSpace(height: 10),
-                  BlocBuilder<ProfileBloc, ProfileState>(
-                    builder: (context, state) {
+                  BlocConsumer<ProfileBloc, ProfileState>(
+                    listener: (context, state) {
                       if (state is GetDropDownValueSuccess) {
                         jobLevel = state.value;
-                        // log(jobLevel.toString());
+                        log(jobLevel.toString());
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is GetDropDownValueLoading) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: AppTheme.orange,
+                          ),
+                        );
+                      }
+                      if (state is GetDropDownValueSuccess) {
+                        jobLevel = state.value;
+                        log(jobLevel.toString());
                       }
                       return CustomDropDown(
                         items: jobLevelList,
@@ -198,6 +241,7 @@ class SignUpPage extends StatelessWidget {
               textColor: AppTheme.white,
             );
           }
+
           return Padding(
             padding: const EdgeInsets.all(20),
             child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -207,7 +251,13 @@ class SignUpPage extends StatelessWidget {
                     if (formKey.currentState!.validate()) {
                       if (EmailValidator.validate(emailController.text)) {
                         if (pwController.text == confirmPwController.text) {
-                          CustomFunction.navigatePage(SignUpPage(), context);
+                          // CustomFunction.navigatePage(SignUpPage(), context);
+                          context.read<AuthBloc>().add(RegisterAccount(
+                              name: name,
+                              email: email,
+                              password: pwController.text,
+                              confirmPassword: confirmPwController.text,
+                              joblevel: jobLevel));
                         } else {
                           CustomFunction.flushBar(
                               'Your password and confirm password are not match!',

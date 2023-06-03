@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'package:coursia/Model/account_register_model.dart';
 import 'package:coursia/Model/competency_question_model.dart';
 import 'package:coursia/Model/competency_type_model.dart';
 import 'package:coursia/Model/disc_question_model.dart';
@@ -11,8 +12,10 @@ import 'package:coursia/Model/job_level_model.dart';
 import 'package:coursia/Model/otp_verify_response_model.dart';
 import 'package:coursia/Model/quiz_question_model.dart';
 import 'package:coursia/Model/quiz_type_model.dart';
+import 'package:coursia/Model/reset_password_response_model.dart';
 import 'package:coursia/Utils/api_service.dart';
 import 'package:coursia/Utils/customexception.dart';
+import 'package:coursia/View/Auth/Page/reset_password_page.dart';
 import 'package:dio/dio.dart';
 
 class CoursiaApiClient {
@@ -256,17 +259,104 @@ class CoursiaApiClient {
     }
   }
 
-  Future<OTPVerifyResponseModel> registerAccount(
-      String? userName, String? email, String? otp) async {
+  Future<RegisterAccountModel> registerAccount(String? name, String? email,
+      String? password, String? confirmPassword, String? joblevel) async {
     try {
-      final data =
-          FormData.fromMap({"otp": otp, "name": userName, "email": email});
-      final response = await _dio.post('frontend/v1/checkotp', data: data);
+      final data = FormData.fromMap({
+        "name": name,
+        "email": email,
+        "password": password,
+        "password_confirmation": confirmPassword,
+        "job_level": joblevel
+      });
+      final response = await _dio.post('frontend/v1/register', data: data);
+      if (response.statusCode == 200 && response.data['success'] == true) {
+        return RegisterAccountModel.fromJson(response.data);
+      } else if (response.statusCode == 200 &&
+          response.data['success'] == false) {
+        return RegisterAccountModel.fromJson(response.data);
+      }
+
+      throw CustomException(response.data['message']);
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.badResponse) {
+        throw CustomException(
+            "Received invalid status code: ${e.response?.statusCode}");
+      }
+      throw CustomException(
+          e.response!.data['message'] ?? "Something went wrong");
+    } catch (e) {
+      throw UnimplementedError("Something went wrong");
+    }
+  }
+
+  Future<EmailVerifyResponseModel> emailVerificationFromForget(
+      String? email) async {
+    try {
+      final data = FormData.fromMap({"email": email});
+      final response = await _dio
+          .post('frontend/v1/forget_password_email_verificaion', data: data);
+      if (response.statusCode == 200 && response.data['success'] == true) {
+        return EmailVerifyResponseModel.fromJson(response.data);
+      } else if (response.statusCode == 200 &&
+          response.data['success'] == false) {
+        return EmailVerifyResponseModel.fromJson(response.data);
+      }
+
+      throw CustomException(response.data['message']);
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.badResponse) {
+        throw CustomException(
+            "Received invalid status code: ${e.response?.statusCode}");
+      }
+      throw CustomException(
+          e.response!.data['message'] ?? "Something went wrong");
+    } catch (e) {
+      throw UnimplementedError("Something went wrong");
+    }
+  }
+
+  Future<OTPVerifyResponseModel> sendOTPFromForget(
+      String? email, String? otp) async {
+    try {
+      final data = FormData.fromMap({"email": email, "otp": otp});
+      final response =
+          await _dio.post('frontend/v1/forget_password_check_otp', data: data);
       if (response.statusCode == 200 && response.data['success'] == true) {
         return OTPVerifyResponseModel.fromJson(response.data);
       } else if (response.statusCode == 200 &&
           response.data['success'] == false) {
         return OTPVerifyResponseModel.fromJson(response.data);
+      }
+
+      throw CustomException(response.data['message']);
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.badResponse) {
+        throw CustomException(
+            "Received invalid status code: ${e.response?.statusCode}");
+      }
+      throw CustomException(
+          e.response!.data['message'] ?? "Something went wrong");
+    } catch (e) {
+      throw UnimplementedError("Something went wrong");
+    }
+  }
+
+  Future<ResetPasswordResponseModel> resetPassword(
+      String? email, String? password, String? confirmPassword) async {
+    try {
+      final data = FormData.fromMap({
+        "email": email,
+        "password": password,
+        "password_confirmation": confirmPassword
+      });
+      final response =
+          await _dio.post('frontend/v1/reset_password', data: data);
+      if (response.statusCode == 200 && response.data['success'] == true) {
+        return ResetPasswordResponseModel.fromJson(response.data);
+      } else if (response.statusCode == 200 &&
+          response.data['success'] == false) {
+        return ResetPasswordResponseModel.fromJson(response.data);
       }
 
       throw CustomException(response.data['message']);

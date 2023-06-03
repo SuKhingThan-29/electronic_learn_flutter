@@ -48,3 +48,48 @@ class SendOTP extends AuthEvent {
   @override
   List<Object> get props => [name!, email!, otp!];
 }
+
+class RegisterAccount extends AuthEvent {
+  final String? name;
+  final String? email;
+  final String? password;
+  final String? confirmPassword;
+  final String? joblevel;
+  const RegisterAccount(
+      {this.name,
+      this.email,
+      this.password,
+      this.confirmPassword,
+      this.joblevel});
+
+  @override
+  List<Object> get props =>
+      [name!, email!, password!, confirmPassword!, joblevel!];
+}
+
+class EmailVerificationFromForget extends AuthEvent {
+  final String? email;
+  const EmailVerificationFromForget({this.email});
+
+  @override
+  List<Object> get props => [email!];
+}
+
+class SendOTPFromForget extends AuthEvent {
+  final String? email;
+  final String? otp;
+  const SendOTPFromForget({this.email, this.otp});
+
+  @override
+  List<Object> get props => [email!, otp!];
+}
+
+class ResetPassword extends AuthEvent {
+  final String? email;
+  final String? password;
+  final String? confirmPassword;
+  const ResetPassword({this.email, this.password, this.confirmPassword});
+
+  @override
+  List<Object> get props => [email!, password!, confirmPassword!];
+}

@@ -6,6 +6,7 @@ import 'package:coursia/UIDesign/coursia_top_image.dart';
 import 'package:coursia/UIDesign/function.dart';
 import 'package:coursia/UIDesign/otp_input.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
+import 'package:coursia/View/Auth/Page/reset_password_page.dart';
 import 'package:coursia/View/Auth/Page/signup_page.dart';
 import 'package:coursia/View/Auth/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +15,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:timer_count_down/timer_count_down.dart';
 
 class VerifyOTPPage extends StatelessWidget {
+  bool? isFromForget;
   String? userName;
   String? email;
-  VerifyOTPPage({super.key, required this.userName, required this.email});
+  VerifyOTPPage(
+      {super.key,
+      required this.isFromForget,
+      this.userName,
+      required this.email});
 
   final TextEditingController _fieldOne = TextEditingController();
 
@@ -41,7 +47,12 @@ class VerifyOTPPage extends StatelessWidget {
           if (state is SendOTPSuccess) {
             if (state.otpVerifyResponseModel!.success == true) {
               FocusManager.instance.primaryFocus?.unfocus();
-              CustomFunction.navigatePage(SignUpPage(), context);
+              isTimeOut = false;
+              CustomFunction.navigatePage(
+                  SignUpPage(
+                      name: state.otpVerifyResponseModel?.data?.name,
+                      email: state.otpVerifyResponseModel?.data?.email),
+                  context);
             } else if (state.otpVerifyResponseModel!.success == false) {
               CustomFunction.flushBar(
                   state.otpVerifyResponseModel!.message, context,
@@ -54,8 +65,10 @@ class VerifyOTPPage extends StatelessWidget {
           }
           if (state is EmailVerificationSuccess) {
             if (state.emailVerifyResponseModel!.success == true) {
+              isTimeOut = false;
               CustomFunction.navigatePage(
                   VerifyOTPPage(
+                    isFromForget: isFromForget,
                     userName: userName,
                     email: email,
                   ),
@@ -71,14 +84,60 @@ class VerifyOTPPage extends StatelessWidget {
             CustomFunction.flushBar(state.message, context,
                 msgColor: AppTheme.red);
           }
+
+          if (state is SendOTPFromForgetSuccess) {
+            if (state.otpVerifyResponseModel!.success == true) {
+              FocusManager.instance.primaryFocus?.unfocus();
+              isTimeOut = false;
+              CustomFunction.navigatePage(
+                  ResetPasswordPage(email: email), context);
+            } else if (state.otpVerifyResponseModel!.success == false) {
+              CustomFunction.flushBar(
+                  state.otpVerifyResponseModel!.message, context,
+                  msgColor: AppTheme.red);
+            }
+          }
+          if (state is SendOTPFromForgetFailed) {
+            CustomFunction.flushBar(state.message, context,
+                msgColor: AppTheme.red);
+          }
+          if (state is EmailVerificationFromForgetSuccess) {
+            if (state.emailVerifyResponseModel?.success == true) {
+              isTimeOut = false;
+              CustomFunction.navigatePage(
+                  VerifyOTPPage(
+                    isFromForget: isFromForget,
+                    email: email,
+                  ),
+                  context);
+            }
+            if (state.emailVerifyResponseModel?.success == false) {
+              CustomFunction.flushBar(
+                  state.emailVerifyResponseModel?.message, context,
+                  msgColor: AppTheme.red);
+            }
+          }
+          if (state is EmailVerificationFromForgetFailed) {
+            CustomFunction.flushBar(state.message, context,
+                msgColor: AppTheme.red);
+          }
         },
         builder: (context, state) {
-          if (state is SendOTPLoading || state is EmailVerificationLoading) {
+          if (state is SendOTPLoading ||
+              state is EmailVerificationLoading ||
+              state is SendOTPFromForgetLoading ||
+              state is EmailVerificationFromForgetLoading) {
             return const Center(
               child: CircularProgressIndicator(
                 color: AppTheme.orange,
               ),
             );
+          }
+          if (state is SendOTPFromForgetSuccess ||
+              state is SendOTPFromForgetSuccess ||
+              state is EmailVerificationSuccess ||
+              state is EmailVerificationFromForgetSuccess) {
+            isTimeOut = false;
           }
 
           return SingleChildScrollView(
@@ -151,18 +210,23 @@ class VerifyOTPPage extends StatelessWidget {
                           _fieldFour.text +
                           _fieldFive.text;
                       if (verifyCode!.length >= 5) {
-                        // CustomFunction.navigatePage(ResetPasswordPage(), context);
-                        // CustomFunction.navigatePage(SignUpPage(), context);
                         isTimeOut!
                             ? CustomFunction.flushBar(
                                 'Time Out! \nPlease click resend code.',
                                 context,
                                 msgColor: AppTheme.red)
-                            : context.read<AuthBloc>().add(SendOTP(
-                                name: userName, email: email, otp: verifyCode));
+                            : isFromForget!
+                                ? context.read<AuthBloc>().add(
+                                    SendOTPFromForget(
+                                        email: email, otp: verifyCode))
+                                : context.read<AuthBloc>().add(SendOTP(
+                                    name: userName,
+                                    email: email,
+                                    otp: verifyCode));
                       } else {
-                        context.read<AuthBloc>().add(
-                            EmailVerification(name: userName, email: email));
+                        CustomFunction.flushBar(
+                            'Please fill your code completely!', context,
+                            msgColor: AppTheme.red);
                       }
                     },
                     text: 'Submit'),
@@ -171,8 +235,12 @@ class VerifyOTPPage extends StatelessWidget {
                   child: InkWell(
                     onTap: () {
                       if (isTimeOut == true) {
-                        context.read<AuthBloc>().add(
-                            EmailVerification(name: userName, email: email));
+                        isFromForget!
+                            ? context
+                                .read<AuthBloc>()
+                                .add(EmailVerificationFromForget(email: email))
+                            : context.read<AuthBloc>().add(EmailVerification(
+                                name: userName, email: email));
                       } else {
                         CustomFunction.flushBar(
                             'Your OTP code is valid. Please fill your code carefully.',

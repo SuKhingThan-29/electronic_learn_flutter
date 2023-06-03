@@ -1,3 +1,4 @@
+import 'package:coursia/Model/account_register_model.dart';
 import 'package:coursia/Model/competency_question_model.dart';
 import 'package:coursia/Model/competency_type_model.dart';
 import 'package:coursia/Model/disc_question_model.dart';
@@ -9,6 +10,7 @@ import 'package:coursia/Model/otp_verify_response_model.dart';
 import 'package:coursia/Model/quiz_question_model.dart';
 import 'package:coursia/Model/quiz_type_model.dart';
 import 'package:coursia/Model/email_verify_response_model.dart';
+import 'package:coursia/Model/reset_password_response_model.dart';
 import 'package:coursia/Repository/coursia_api_client.dart';
 
 class CoursiaRepository {
@@ -58,5 +60,27 @@ class CoursiaRepository {
   Future<OTPVerifyResponseModel> sendOTP(
       String? userName, String? email, String? otp) async {
     return await coursiaApiClient.sendOTP(userName, email, otp);
+  }
+
+  Future<RegisterAccountModel> registerAccount(String? name, String? email,
+      String? password, String? confirmPassword, String? joblevel) async {
+    return await coursiaApiClient.registerAccount(
+        name, email, password, confirmPassword, joblevel);
+  }
+
+  Future<EmailVerifyResponseModel> emailVerificationFromForget(
+      String? email) async {
+    return await coursiaApiClient.emailVerificationFromForget(email);
+  }
+
+  Future<OTPVerifyResponseModel> sendOTPFromForget(
+      String? email, String? otp) async {
+    return await coursiaApiClient.sendOTPFromForget(email, otp);
+  }
+
+  Future<ResetPasswordResponseModel> resetPassword(
+      String? email, String? password, String? confirmPassword) async {
+    return await coursiaApiClient.resetPassword(
+        email, password, confirmPassword);
   }
 }

@@ -1,8 +1,6 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:equatable/equatable.dart';
-
-class JobLevelModel extends Equatable {
+class JobLevelModel {
   int? id;
   String? name;
 
@@ -19,7 +17,4 @@ class JobLevelModel extends Equatable {
     data['name'] = name;
     return data;
   }
-
-  @override
-  List<Object?> get props => [id, name];
 }

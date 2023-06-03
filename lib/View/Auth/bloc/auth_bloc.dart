@@ -1,6 +1,8 @@
+import 'package:coursia/Model/account_register_model.dart';
 import 'package:coursia/Model/email_verify_response_model.dart';
 import 'package:coursia/Model/job_level_model.dart';
 import 'package:coursia/Model/otp_verify_response_model.dart';
+import 'package:coursia/Model/reset_password_response_model.dart';
 import 'package:coursia/Repository/coursia_repository.dart';
 import 'package:coursia/Utils/functions.dart';
 import 'package:equatable/equatable.dart';
@@ -17,6 +19,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<GetJobLevel>(_getJobLevel);
     on<EmailVerification>(_emailVerification);
     on<SendOTP>(_sendOTP);
+    on<RegisterAccount>(_registerAccount);
+    on<EmailVerificationFromForget>(_emailVerificationFromForget);
+    on<SendOTPFromForget>(_sendOTPFromForget);
+    on<ResetPassword>(_resetPassword);
   }
 
   _visibilityOnOffEvent(VisibilityOnOffEvent event, Emitter<AuthState> emit) {
@@ -73,6 +79,79 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(SendOTPSuccess(otpVerifyResponseModel: otpVerifyResponseModel));
       } catch (e) {
         emit(SendOTPFailed(e.toString()));
+      }
+    }
+  }
+
+  _registerAccount(RegisterAccount event, Emitter<AuthState> emit) async {
+    emit(RegisterAccountLoading());
+    if (!await Functions.getNetworkStatus()) {
+      emit(const RegisterAccountFailed("No Network Connection!"));
+    } else {
+      try {
+        RegisterAccountModel registerAccountModel;
+        registerAccountModel = await coursiaRepository.registerAccount(
+            event.name,
+            event.email,
+            event.password,
+            event.confirmPassword,
+            event.joblevel);
+        emit(
+            RegisterAccountSuccess(registerAccountModel: registerAccountModel));
+      } catch (e) {
+        emit(RegisterAccountFailed(e.toString()));
+      }
+    }
+  }
+
+  _emailVerificationFromForget(
+      EmailVerificationFromForget event, Emitter<AuthState> emit) async {
+    emit(EmailVerificationFromForgetLoading());
+    if (!await Functions.getNetworkStatus()) {
+      emit(const EmailVerificationFromForgetFailed("No Network Connection!"));
+    } else {
+      try {
+        EmailVerifyResponseModel emailVerifyResponseModel;
+        emailVerifyResponseModel =
+            await coursiaRepository.emailVerificationFromForget(event.email);
+        emit(EmailVerificationFromForgetSuccess(
+            emailVerifyResponseModel: emailVerifyResponseModel));
+      } catch (e) {
+        emit(EmailVerificationFromForgetFailed(e.toString()));
+      }
+    }
+  }
+
+  _sendOTPFromForget(SendOTPFromForget event, Emitter<AuthState> emit) async {
+    emit(SendOTPFromForgetLoading());
+    if (!await Functions.getNetworkStatus()) {
+      emit(const SendOTPFromForgetFailed("No Network Connection!"));
+    } else {
+      try {
+        OTPVerifyResponseModel otpVerifyResponseModel;
+        otpVerifyResponseModel =
+            await coursiaRepository.sendOTPFromForget(event.email, event.otp);
+        emit(SendOTPFromForgetSuccess(
+            otpVerifyResponseModel: otpVerifyResponseModel));
+      } catch (e) {
+        emit(SendOTPFromForgetFailed(e.toString()));
+      }
+    }
+  }
+
+  _resetPassword(ResetPassword event, Emitter<AuthState> emit) async {
+    emit(ResetPasswordLoading());
+    if (!await Functions.getNetworkStatus()) {
+      emit(const ResetPasswordFailed("No Network Connection!"));
+    } else {
+      try {
+        ResetPasswordResponseModel resetPasswordResponseModel;
+        resetPasswordResponseModel = await coursiaRepository.resetPassword(
+            event.email, event.password, event.confirmPassword);
+        emit(ResetPasswordSuccess(
+            resetPasswordResponseModel: resetPasswordResponseModel));
+      } catch (e) {
+        emit(ResetPasswordFailed(e.toString()));
       }
     }
   }

@@ -9,6 +9,7 @@ import 'package:coursia/UIDesign/function.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/UIDesign/custom_textformfield.dart';
 import 'package:coursia/View/Auth/Page/sign_up_email_page.dart';
+import 'package:coursia/View/Auth/Page/signup_page.dart';
 import 'package:coursia/View/Auth/bloc/auth_bloc.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -133,7 +134,12 @@ class LoginPage extends StatelessWidget {
                         textColor: AppTheme.grey),
                     InkWell(
                       onTap: () {
-                        // CustomFunction.navigatePage(SignUpPage(), context);
+                        // CustomFunction.navigatePage(
+                        //     SignUpPage(
+                        //       name: 'Ym',
+                        //       email: 'yinyinmon6@gmail.com',
+                        //     ),
+                        //     context);
                         CustomFunction.navigatePage(SignUpEmailPage(), context);
                       },
                       child: const CustomText(

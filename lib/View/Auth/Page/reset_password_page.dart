@@ -1,18 +1,22 @@
 // ignore_for_file: file_names, must_be_immutable
 
+import 'dart:developer';
+
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/custom_button.dart';
 import 'package:coursia/UIDesign/coursia_top_image.dart';
 import 'package:coursia/UIDesign/function.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/UIDesign/custom_textformfield.dart';
+import 'package:coursia/View/Auth/Page/login_page.dart';
 import 'package:coursia/View/Auth/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ResetPasswordPage extends StatelessWidget {
-  ResetPasswordPage({super.key});
+  String? email;
+  ResetPasswordPage({super.key, required this.email});
 
   final formKey = GlobalKey<FormState>();
   final pwController = TextEditingController();
@@ -22,17 +26,31 @@ class ResetPasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log(email.toString());
     return Scaffold(
       appBar: AppBar(backgroundColor: AppTheme.black),
       backgroundColor: AppTheme.black,
       body: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is ResetPasswordSuccess) {
+            CustomFunction.navigatePage(LoginPage(), context);
+          }
+          if (state is ResetPasswordFailed) {
+            CustomFunction.flushBar(state.message, context,
+                msgColor: AppTheme.red);
+          }
+        },
         builder: (context, state) {
           if (state is VisibilityOnOffSuccess) {
             obscuretext = state.obscureText!;
           }
           if (state is VisibilityOnOff1Success) {
             obscuretext1 = state.obscureText1!;
+          }
+          if (state is ResetPasswordLoading) {
+            return const Center(
+              child: CircularProgressIndicator(color: AppTheme.orange),
+            );
           }
           return SingleChildScrollView(
               child: Padding(
@@ -112,6 +130,10 @@ class ResetPasswordPage extends StatelessWidget {
                           if (pwController.text == confirmPwController.text) {
                             // CustomFunction.navigatePage(
                             //     const SignUpPage(), context);
+                            context.read<AuthBloc>().add(ResetPassword(
+                                email: email,
+                                password: pwController.text,
+                                confirmPassword: confirmPwController.text));
                           } else {
                             CustomFunction.flushBar(
                                 'Your password and confirm password are not match!',

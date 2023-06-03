@@ -17,6 +17,8 @@ class GetDateSuccess extends ProfileState {
   List<Object> get props => [date];
 }
 
+class GetDropDownValueLoading extends ProfileState {}
+
 class GetDropDownValueSuccess extends ProfileState {
   final String value;
   const GetDropDownValueSuccess({required this.value});

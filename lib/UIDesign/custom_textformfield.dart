@@ -14,6 +14,7 @@ class CustomTextFormField extends StatefulWidget {
   final void Function()? onPress;
   final bool? isProfile;
   final Color? textColor;
+  final bool? readonly;
 
   CustomTextFormField(
       {super.key,
@@ -26,7 +27,8 @@ class CustomTextFormField extends StatefulWidget {
       this.onChange,
       this.onPress,
       this.isProfile,
-      this.textColor = Colors.black});
+      this.textColor = Colors.black,
+      this.readonly});
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -36,6 +38,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: widget.readonly ?? false,
       autofocus: false,
       controller: widget.controller,
       obscureText: widget.obscureText ?? false,
