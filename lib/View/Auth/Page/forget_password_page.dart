@@ -6,7 +6,6 @@ import 'package:coursia/UIDesign/coursia_top_image.dart';
 import 'package:coursia/UIDesign/function.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/UIDesign/custom_textformfield.dart';
-import 'package:coursia/View/Auth/Page/reset_password_page.dart';
 import 'package:coursia/View/Auth/Page/verify_OTP_page.dart';
 import 'package:coursia/View/Auth/bloc/auth_bloc.dart';
 import 'package:email_validator/email_validator.dart';

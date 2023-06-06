@@ -1,15 +1,18 @@
+import 'package:coursia/Model/disc_question_model.dart';
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/custom_button.dart';
 import 'package:coursia/UIDesign/custom_result_container.dart';
 import 'package:coursia/UIDesign/custom_scaffold.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/UIDesign/function.dart';
-import 'package:coursia/View/DISC/Page/disc_result_detail_page.dart';
+import 'package:coursia/View/Home/Page/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 class DISCResultPage extends StatelessWidget {
-  const DISCResultPage({super.key});
+  final Result? result;
+  const DISCResultPage({super.key, required this.result});
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +20,9 @@ class DISCResultPage extends StatelessWidget {
   }
 
   bodyData(BuildContext context) {
+    String? expDate = result?.expiredDate;
+    DateTime? date = DateTime.parse(expDate ?? "");
+    String expireDate = DateFormat('dd-MMM-yyyy').format(date);
     return Padding(
       padding: EdgeInsets.all(15.w),
       child: SingleChildScrollView(
@@ -34,35 +40,68 @@ class DISCResultPage extends StatelessWidget {
             CustomFunction.customSpace(height: 20.h),
             CustomResultContainer(
                 onTap: () {
-                  CustomFunction.navigatePage(
-                      const DISCResultDetailPage(), context);
+                  // CustomFunction.navigatePage(
+                  //     const DISCResultDetailPage(), context);
                 },
                 isIcon: false,
-                preText: 'D, dominance',
-                postText: '80%',
+                preText: '${result?.result1?[0].discType}',
+                postText: '${result?.result1?[0].score}%',
                 bgColor: AppTheme.green),
             CustomFunction.customSpace(height: 10.h),
-            const CustomResultContainer(
+            CustomResultContainer(
                 isIcon: false,
-                preText: 'i, influence',
-                postText: '10%',
+                preText: result?.result1?[1].discType ?? "",
+                postText: '${result?.result1?[1].score}%',
                 bgColor: AppTheme.red),
             CustomFunction.customSpace(height: 10.h),
-            const CustomResultContainer(
+            CustomResultContainer(
                 isIcon: false,
-                preText: 'S, Steadiness',
-                postText: '7%',
+                preText: result?.result1?[2].discType ?? "",
+                postText: '${result?.result1?[2].score}%',
                 bgColor: AppTheme.purpleLight),
             CustomFunction.customSpace(height: 10.h),
-            const CustomResultContainer(
+            CustomResultContainer(
                 isIcon: false,
-                preText: 'C, Conscientiousness',
-                postText: '3%',
+                preText: result?.result1?[3].discType ?? "",
+                postText: '${result?.result1?[3].score}%',
                 bgColor: AppTheme.yellow),
+            CustomFunction.customSpace(height: 40.h),
+            // CustomFunction.assetImage(
+            //     image: 'images/di.png', width: 150.w, height: 130.h),
+            CircleAvatar(
+              radius: 50.r,
+              child: CustomText(
+                text: result?.discType?.name ?? "",
+                textColor: AppTheme.black,
+                size: 40,
+              ),
+            ),
+            CustomFunction.customSpace(height: 20.h),
+            CustomText(
+              text: 'The ${result?.discType?.name} Style ',
+              size: 20.sp,
+              textColor: AppTheme.black,
+            ),
+            CustomFunction.customSpace(height: 20.h),
+            CustomText(
+              text: result?.discType?.description ?? "",
+              size: 13.sp,
+              textAlign: TextAlign.left,
+              textColor: AppTheme.black,
+            ),
+            CustomFunction.customSpace(height: 20.h),
+            // Align(
+            //   alignment: Alignment.bottomRight,
+            //   child: CustomText(
+            //     size: 12.sp,
+            //     text: 'See more...',
+            //     textColor: AppTheme.orange,
+            //   ),
+            // ),
             CustomFunction.customSpace(height: 50.h),
-            const CustomResultContainer(
+            CustomResultContainer(
               isIcon: true,
-              postText: 'Your DiSC Test will be expired at 24-Nov-2022',
+              postText: 'Your DiSC Test will be expired at $expireDate',
               bgColor: AppTheme.orangeLight,
               textColor: AppTheme.orange,
               borderColor: AppTheme.orange,
@@ -71,7 +110,9 @@ class DISCResultPage extends StatelessWidget {
             CustomFunction.customSpace(height: 20.h),
             CustomButton(
               text: 'Share Result',
-              onTap: () {},
+              onTap: () {
+                CustomFunction.navigatePage(HomePage(), context);
+              },
               bgcolor: AppTheme.black,
             )
           ],

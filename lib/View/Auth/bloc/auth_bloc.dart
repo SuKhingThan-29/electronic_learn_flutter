@@ -1,6 +1,7 @@
 import 'package:coursia/Model/account_register_model.dart';
 import 'package:coursia/Model/email_verify_response_model.dart';
 import 'package:coursia/Model/job_level_model.dart';
+import 'package:coursia/Model/login_response_model.dart';
 import 'package:coursia/Model/otp_verify_response_model.dart';
 import 'package:coursia/Model/reset_password_response_model.dart';
 import 'package:coursia/Repository/coursia_repository.dart';
@@ -23,6 +24,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<EmailVerificationFromForget>(_emailVerificationFromForget);
     on<SendOTPFromForget>(_sendOTPFromForget);
     on<ResetPassword>(_resetPassword);
+    on<Login>(_login);
   }
 
   _visibilityOnOffEvent(VisibilityOnOffEvent event, Emitter<AuthState> emit) {
@@ -152,6 +154,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             resetPasswordResponseModel: resetPasswordResponseModel));
       } catch (e) {
         emit(ResetPasswordFailed(e.toString()));
+      }
+    }
+  }
+
+  _login(Login event, Emitter<AuthState> emit) async {
+    emit(LoginLoading());
+    if (!await Functions.getNetworkStatus()) {
+      emit(const LoginFailed("No Network Connection!"));
+    } else {
+      try {
+        LoginResponseModel loginResponseModel;
+        loginResponseModel =
+            await coursiaRepository.login(event.email, event.password);
+
+        emit(LoginSuccess(loginResponseModel: loginResponseModel));
+      } catch (e) {
+        emit(LoginFailed(e.toString()));
       }
     }
   }

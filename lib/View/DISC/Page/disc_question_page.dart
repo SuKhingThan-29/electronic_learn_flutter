@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable
 
 import 'dart:developer';
-
 import 'package:coursia/Model/disc_question_model.dart';
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/custom_answer_container.dart';
@@ -9,20 +8,22 @@ import 'package:coursia/UIDesign/custom_button.dart';
 import 'package:coursia/UIDesign/custom_scaffold.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/UIDesign/function.dart';
+import 'package:coursia/View/DISC/Page/disc_result_page.dart';
 import 'package:coursia/View/DISC/bloc/disc_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DISCQuestionPage extends StatelessWidget {
-  final List<DISCQuestionModel>? discQuestionList;
-  final DISCQuestionModel? discQuestionModel;
+  final List<DiscQuestion>? discQuestionList;
+  final DiscQuestion? discQuestionModel;
   final int? index;
   final int? listLength;
   final int? tapIndex;
+  List<String> answerList = [];
   DISCQuestionPage(
       {super.key,
-      this.discQuestionList,
+      required this.discQuestionList,
       required this.discQuestionModel,
       required this.index,
       required this.listLength,
@@ -36,11 +37,12 @@ class DISCQuestionPage extends StatelessWidget {
   }
 
   checkSelectIndex(BuildContext context) {
-    if (discQuestionList![index!].selectQuestion == null) {
+    if (discQuestionList?[index!].selectIndex == null) {
       context.read<DISCBloc>().add(const OnTapEvent(onTapIndex: -1));
     } else {
-      context.read<DISCBloc>().add(
-          OnTapEvent(onTapIndex: discQuestionList![index!].selectQuestion));
+      context
+          .read<DISCBloc>()
+          .add(OnTapEvent(onTapIndex: discQuestionList?[index!].selectIndex));
     }
   }
 
@@ -50,10 +52,24 @@ class DISCQuestionPage extends StatelessWidget {
     int no = index! + 1;
     checkSelectIndex(context);
     return BlocConsumer<DISCBloc, DISCState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is SendDISCAnswerListSuccess) {
+          CustomFunction.navigatePage(
+              DISCResultPage(result: state.result), context);
+        }
+        if (state is SendDISCAnswerListFailed) {
+          CustomFunction.flushBar(state.message, context,
+              msgColor: AppTheme.red);
+        }
+      },
       builder: (context, state) {
         if (state is OnTapSuccess) {
           onTapIndex = state.onTapIndex!;
+        }
+        if (state is SendDISCAnswerListLoading) {
+          return const Center(
+            child: CircularProgressIndicator(color: AppTheme.orange),
+          );
         }
         return Padding(
           padding: EdgeInsets.all(15.w),
@@ -75,7 +91,7 @@ class DISCQuestionPage extends StatelessWidget {
                       children: [
                         CustomAnswerContainer(
                           text: discQuestionList?[index!]
-                                  .questions![j]
+                                  .questions?[j]
                                   .questionName ??
                               "",
                           index: j,
@@ -99,27 +115,36 @@ class DISCQuestionPage extends StatelessWidget {
                   ? CustomButton(
                       onTap: () {
                         if (selectIndex == null &&
-                            discQuestionModel?.selectQuestion == null) {
+                            discQuestionList?[index!].selectIndex == null) {
                           CustomFunction.flushBar(
                               'Please select one of the answers!', context,
                               msgColor: AppTheme.red);
                         } else {
                           selectIndex == null
-                              ? discQuestionModel?.selectQuestion =
-                                  discQuestionList![index!].selectQuestion
-                              : discQuestionModel?.selectQuestion = selectIndex;
+                              ? discQuestionModel?.selectIndex =
+                                  discQuestionList![index!].selectIndex
+                              : discQuestionModel?.selectIndex = selectIndex;
 
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => DISCQuestionPage(
-                                        discQuestionList: discQuestionList,
-                                        discQuestionModel:
-                                            discQuestionList?[index! + 1],
-                                        index: index! + 1,
-                                        listLength: listLength,
-                                        tapIndex: onTapIndex,
-                                      )));
+                                builder: (context) => DISCQuestionPage(
+                                  discQuestionList: discQuestionList,
+                                  discQuestionModel:
+                                      discQuestionList?[index! + 1],
+                                  index: index! + 1,
+                                  listLength: listLength,
+                                  tapIndex: onTapIndex,
+                                ),
+                                //  DISCQuestionPage(
+                                //       discQuestionList: discQuestionList,
+                                //       discQuestionModel:
+                                //           discQuestionList?[index! + 1],
+                                //       index: index! + 1,
+                                //       listLength: listLength,
+                                //       tapIndex: onTapIndex,
+                                //     )
+                              ));
                         }
                       },
                       text: 'Next',
@@ -135,9 +160,9 @@ class DISCQuestionPage extends StatelessWidget {
                               width: 150.w,
                               onTap: () {
                                 selectIndex == null
-                                    ? discQuestionModel?.selectQuestion =
-                                        discQuestionList![index!].selectQuestion
-                                    : discQuestionModel?.selectQuestion =
+                                    ? discQuestionModel?.selectIndex =
+                                        discQuestionList![index!].selectIndex
+                                    : discQuestionModel?.selectIndex =
                                         selectIndex;
                                 Navigator.pushReplacement(
                                     context,
@@ -171,19 +196,20 @@ class DISCQuestionPage extends StatelessWidget {
                               width: 150.w,
                               onTap: () {
                                 if (selectIndex == null &&
-                                    discQuestionModel?.selectQuestion == null) {
+                                    discQuestionModel?.selectIndex == null) {
                                   CustomFunction.flushBar(
                                       'Please select one of the answers!',
                                       context,
                                       msgColor: AppTheme.red);
                                 } else {
                                   selectIndex == null
-                                      ? discQuestionModel?.selectQuestion =
-                                          discQuestionList![index!]
-                                              .selectQuestion
-                                      : discQuestionModel?.selectQuestion =
+                                      ? discQuestionModel?.selectIndex =
+                                          discQuestionList![index!].selectIndex
+                                      : discQuestionModel?.selectIndex =
                                           selectIndex;
-                                  log(discQuestionList.toString());
+                                  retrieveAnswerList(discQuestionList, context);
+
+                                  // log(discQuestionList.toString());
                                 }
                               },
                               text: 'Submit',
@@ -201,9 +227,9 @@ class DISCQuestionPage extends StatelessWidget {
                               width: 150.w,
                               onTap: () {
                                 selectIndex == null
-                                    ? discQuestionModel?.selectQuestion =
-                                        discQuestionList![index!].selectQuestion
-                                    : discQuestionModel?.selectQuestion =
+                                    ? discQuestionModel?.selectIndex =
+                                        discQuestionList![index!].selectIndex
+                                    : discQuestionModel?.selectIndex =
                                         selectIndex;
                                 Navigator.pushReplacement(
                                     context,
@@ -238,17 +264,16 @@ class DISCQuestionPage extends StatelessWidget {
                               width: 150.w,
                               onTap: () {
                                 if (selectIndex == null &&
-                                    discQuestionModel?.selectQuestion == null) {
+                                    discQuestionModel?.selectIndex == null) {
                                   CustomFunction.flushBar(
                                       'Please select one of the answers!',
                                       context,
                                       msgColor: AppTheme.red);
                                 } else {
                                   selectIndex == null
-                                      ? discQuestionModel?.selectQuestion =
-                                          discQuestionList![index!]
-                                              .selectQuestion
-                                      : discQuestionModel?.selectQuestion =
+                                      ? discQuestionModel?.selectIndex =
+                                          discQuestionList![index!].selectIndex
+                                      : discQuestionModel?.selectIndex =
                                           selectIndex;
 
                                   Navigator.pushReplacement(
@@ -290,5 +315,19 @@ class DISCQuestionPage extends StatelessWidget {
         );
       },
     );
+  }
+
+  retrieveAnswerList(
+      List<DiscQuestion>? discQuestionList, BuildContext context) {
+    DISCQuestionModel discQuestionModel = DISCQuestionModel();
+    answerList.clear();
+    for (int i = 0; i < discQuestionList!.length; i++) {
+      int j = discQuestionList[i].selectIndex!;
+      var index1 = discQuestionList[i].questions!.elementAt(j);
+      log(index1.toString());
+      answerList.add(index1.type.toString());
+    }
+    discQuestionModel.answerList = answerList;
+    context.read<DISCBloc>().add(SendDISCAnswerList(discQuestionModel));
   }
 }

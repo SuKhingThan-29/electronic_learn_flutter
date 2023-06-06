@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:coursia/Model/competency_question_model.dart';
-import 'package:coursia/Model/disc_question_model.dart';
 import 'package:coursia/Model/iq_question_model.dart';
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/assessment_card.dart';
@@ -13,6 +12,7 @@ import 'package:coursia/View/Case_Study/Page/case_study_question_page.dart';
 import 'package:coursia/View/Competency/Page/competency_question_page.dart';
 import 'package:coursia/View/Competency/bloc/competency_bloc.dart';
 import 'package:coursia/View/DISC/Page/disc_question_page.dart';
+import 'package:coursia/View/DISC/Page/disc_result_page.dart';
 import 'package:coursia/View/DISC/bloc/disc_bloc.dart';
 import 'package:coursia/View/Evaluation/Page/evaluation_question_page.dart';
 import 'package:coursia/View/IQ/Page/iq_question_page.dart';
@@ -25,7 +25,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AssessmentPage extends StatelessWidget {
   AssessmentPage({super.key});
-  List<DISCQuestionModel> discQuestionList = [];
+
   List<IQQuestionModel> iqQuestionList = [];
   List<CompetencyQuestionModel> competencyQuestionList = [];
 
@@ -40,23 +40,40 @@ class AssessmentPage extends StatelessWidget {
             BlocConsumer<DISCBloc, DISCState>(
               listener: (context, state) {
                 if (state is GetDISCQuestionListFailed) {
-                  CustomFunction.flushBar(state.message.toString(), context);
+                  CustomFunction.flushBar(state.message.toString(), context,
+                      msgColor: AppTheme.red);
                 }
               },
               builder: (context, state) {
+                if (state is GetDISCQuestionListLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(color: AppTheme.orange),
+                  );
+                }
                 if (state is GetDISCQuestionListSuccess) {
-                  discQuestionList = state.discQuestionList;
-                  Future.delayed(Duration.zero, () {
-                    CustomFunction.navigatePage(
-                        DISCQuestionPage(
-                          discQuestionList: discQuestionList,
-                          discQuestionModel: discQuestionList[0],
-                          index: 0,
-                          listLength: discQuestionList.length,
-                          tapIndex: -1,
-                        ),
-                        context);
-                  });
+                  if (state.discQuestionModel.result == null) {
+                    Future.delayed(Duration.zero, () {
+                      CustomFunction.navigatePage(
+                          DISCQuestionPage(
+                            discQuestionList:
+                                state.discQuestionModel.discQuestionList,
+                            discQuestionModel:
+                                state.discQuestionModel.discQuestionList?[0],
+                            index: 0,
+                            listLength: state
+                                .discQuestionModel.discQuestionList?.length,
+                            tapIndex: -1,
+                          ),
+                          context);
+                    });
+                  } else {
+                    Future.delayed(Duration.zero, () {
+                      CustomFunction.navigatePage(
+                          DISCResultPage(
+                              result: state.discQuestionModel.result),
+                          context);
+                    });
+                  }
                 }
                 return AssessmentCard(
                   isDISC: true,

@@ -1,5 +1,8 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:coursia/Model/account_register_model.dart';
 import 'package:coursia/Model/competency_question_model.dart';
 import 'package:coursia/Model/competency_type_model.dart';
@@ -9,14 +12,16 @@ import 'package:coursia/Model/email_verify_response_model.dart';
 import 'package:coursia/Model/iq_question_model.dart';
 import 'package:coursia/Model/iq_type_model.dart';
 import 'package:coursia/Model/job_level_model.dart';
+import 'package:coursia/Model/login_response_model.dart';
 import 'package:coursia/Model/otp_verify_response_model.dart';
 import 'package:coursia/Model/quiz_question_model.dart';
 import 'package:coursia/Model/quiz_type_model.dart';
 import 'package:coursia/Model/reset_password_response_model.dart';
+import 'package:coursia/Model/static_data.dart';
 import 'package:coursia/Utils/api_service.dart';
 import 'package:coursia/Utils/customexception.dart';
-import 'package:coursia/View/Auth/Page/reset_password_page.dart';
 import 'package:dio/dio.dart';
+import 'package:hive/hive.dart';
 
 class CoursiaApiClient {
   final _dio = Dio();
@@ -28,14 +33,17 @@ class CoursiaApiClient {
     _dio.options.receiveTimeout = const Duration(seconds: 20000);
     _dio.options.sendTimeout = const Duration(seconds: 20000);
 
-    _dio.options.headers['Content-Type'] = 'text/plain';
-    //_dio.options.headers['Content-Type'] = 'application/json; charset=UTF-8';
-    //_dio.options.headers['Accept'] = 'application/json; charset=UTF-8';
+    // _dio.options.headers['Content-Type'] = '*/*';
+    _dio.options.headers['Content-Type'] = 'application/json; charset=UTF-8';
+    _dio.options.headers['Accept'] = 'application/json; charset=UTF-8';
     _dio.interceptors.add(
         LogInterceptor(requestBody: true, responseBody: true, request: true));
+    init();
+  }
 
-    const token =
-        'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZWI5MDFlNGEzODhmZWI4ZDE2MjdjOTg5MDY0NDMwZDNlNmE2MjIwNzI5YzFiZTUwMWI3NTNiNzIxOTJhZjVkMGM5NmY0NjQ2ZmFjNTY1NDIiLCJpYXQiOjE2ODQ1NTE1MjEuMzk3ODY4LCJuYmYiOjE2ODQ1NTE1MjEuMzk3ODc1LCJleHAiOjE3MTYxNzM5MjEuMzI0MzY1LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.EmCIAysiN6iPVgcF6VyLtyjcpTUFUO7wW5OH0X1Tg-L9DnoNDhaJRxrvpJYnkFt8yIfv0Doq7UqgCPYiSiYOt7tgRuzrVJ82cePGayZQU-H_oiowGBwPqdIVLZYkVxrVNIlJO2xNyKHFJLs5mVzQpWbaGFmd8ZPfUIY_1UcayfCvIB4402V0mIO3SaBGRBj3zRZoiF3JwuhbGTWAzS5geA3vWsjZdskR4nGBOBIQvg01KYyGv2jSO3d6jADZnRarWxsBhFngrwDT19jDOjyGfGh5cL3qJB3PWSp9n5ZqsuB1awjj_GIaEhVFL5qgh_QnZAYukhJnf31czVMPYdGTz9BJBwE7VJXgzcqNzTMOX4STpnrJkbR-GHPwDaSje7Z2VIFx20iKdU9JLkBZOC5XheXtZZDRFqOZgKLcvO5E44mb8o4uTauBICcX6vvLqt4PuuZ-aLWUHXVn61t251nqT0AeATbnozolOuQ-bJ6zVH99kU56x7H7ExT3P1QrjpVSvVLPrxbi--vXAUjHH3vBfirmSoNAh5NXR7KP9G1aHEuw5PayBKJkGrgvltUe4_OaJKViIYnI6CtQ94CLkcy8XjLe0EbNuRW0s0PKjJ2FHvCsm4E0jeSFrTmC2XQPllt-quXh31jeq9mPD-p5xc6a_uZYP32sLqBl2eJNs9DF1HA';
+  init() async {
+    var token = StaticData.loginResponseModel?.data?.token;
+
     if (token != null) {
       _dio.options.headers['Authorization'] = 'Bearer $token';
     }
@@ -107,18 +115,21 @@ class CoursiaApiClient {
     }
   }
 
-  Future<List<DISCQuestionModel>> getDISCQuestionList() async {
+  Future<DISCQuestionModel> getDISCQuestionList() async {
     try {
+      init();
       final response = await _dio.get('frontend/v1/disc_question');
       if (response.statusCode == 200) {
-        final discQuestionList = response.data['data'] as List;
-        return discQuestionList
-            .map((item) => DISCQuestionModel.fromJson(item))
-            .toList();
+        return DISCQuestionModel.fromJson(response.data['data']);
       }
-      throw Exception('Something went wrong');
+      throw CustomException(response.data['message']);
     } on DioError catch (e) {
-      throw Exception(e.response?.data?['message'] ?? e.message);
+      if (e.type == DioErrorType.badResponse) {
+        throw CustomException(
+            "Received invalid status code: ${e.response?.statusCode}");
+      }
+      throw CustomException(
+          e.response!.data['message'] ?? "Something went wrong");
     } catch (e) {
       throw UnimplementedError("Something went wrong");
     }
@@ -358,7 +369,63 @@ class CoursiaApiClient {
           response.data['success'] == false) {
         return ResetPasswordResponseModel.fromJson(response.data);
       }
+      throw CustomException(response.data['message']);
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.badResponse) {
+        throw CustomException(
+            "Received invalid status code: ${e.response?.statusCode}");
+      }
+      throw CustomException(
+          e.response!.data['message'] ?? "Something went wrong");
+    } catch (e) {
+      throw UnimplementedError("Something went wrong");
+    }
+  }
 
+  Future<LoginResponseModel> login(String? email, String? password) async {
+    try {
+      final data = FormData.fromMap({"email": email, "password": password});
+      final response = await _dio.post('frontend/v1/login', data: data);
+      if (response.statusCode == 200 && response.data['success'] == true) {
+        var box = Hive.box("library_db");
+        box.put("user", response.data);
+        StaticData.loginResponseModel =
+            LoginResponseModel.fromJson(response.data);
+
+        ///To retrieve data from box
+
+        final userData = await box.get('user');
+        log('Token - ${userData?['data']['token']}');
+        _dio.options.headers['Authorization'] =
+            'Bearer ${userData?['data']['token']}';
+
+        return LoginResponseModel.fromJson(response.data);
+      } else if (response.statusCode == 200 &&
+          response.data['success'] == false) {
+        return LoginResponseModel.fromJson(response.data);
+      }
+      throw CustomException(response.data['message']);
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.badResponse) {
+        throw CustomException(
+            "Received invalid status code: ${e.response?.statusCode}");
+      }
+      throw CustomException(
+          e.response!.data['message'] ?? "Something went wrong");
+    } catch (e) {
+      throw UnimplementedError("Something went wrong");
+    }
+  }
+
+  Future<Result> sendDISCAnswerList(DISCQuestionModel discQuestionModel) async {
+    try {
+      init();
+      final data = jsonEncode(discQuestionModel.sendDISCResult());
+      final response =
+          await _dio.post('frontend/v1/send_disc_answer', data: data);
+      if (response.statusCode == 200) {
+        return Result.fromJson(response.data['data']);
+      }
       throw CustomException(response.data['message']);
     } on DioError catch (e) {
       if (e.type == DioErrorType.badResponse) {

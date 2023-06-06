@@ -1,9 +1,13 @@
+// ignore_for_file: must_be_immutable, override_on_non_overriding_member
+
+import 'package:coursia/Model/static_data.dart';
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/custom_button.dart';
 import 'package:coursia/UIDesign/custom_card.dart';
 import 'package:coursia/UIDesign/custom_profile_card.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/UIDesign/function.dart';
+import 'package:coursia/View/Auth/Page/login_page.dart';
 import 'package:coursia/View/Cart/Page/cart_page.dart';
 import 'package:coursia/View/Profile/Page/edit_profile_page.dart';
 import 'package:coursia/View/Profile/Page/myachievement_page.dart';
@@ -15,8 +19,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  ProfilePage({super.key});
 
+  /*getData() async {
+    var box = Hive.box("library_db");
+    final userData = await box.get('user');
+    name = userData?['data']['user']['name'];
+    log('Token - ${userData?['data']['user']['name']}');
+  }*/
+
+  String? name;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,13 +49,13 @@ class ProfilePage extends StatelessWidget {
         children: [
           CustomFunction.customSpace(height: 40),
           CustomText(
-            text: 'Arkar Min Myat',
+            text: StaticData.loginResponseModel?.data?.user?.name ?? "",
             textColor: AppTheme.black,
             size: 17.sp,
           ),
           CustomFunction.customSpace(height: 10),
           CustomText(
-            text: 'dev_op@apple.tv',
+            text: StaticData.loginResponseModel?.data?.user?.email ?? "",
             textColor: AppTheme.blackLight,
             size: 12.sp,
           ),
@@ -149,7 +161,14 @@ class ProfilePage extends StatelessWidget {
               surffixIcon: Icons.keyboard_arrow_right_outlined),
           CustomFunction.customSpace(height: 15),
           CustomProfileCard(
-              onTap: () {},
+              onTap: () {
+                StaticData.loginResponseModel?.data?.token = null;
+                // CustomFunction.navigatePage(LoginPage(), context);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    ModalRoute.withName("/Login"));
+              },
               prefixIcon: Icons.logout,
               text: 'Sign Out',
               surffixIcon: Icons.keyboard_arrow_right_outlined),

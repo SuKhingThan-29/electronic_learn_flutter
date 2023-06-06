@@ -9,6 +9,7 @@ import 'package:coursia/View/Courses/Page/courses_page.dart';
 import 'package:coursia/View/Gift/Page/gift_page.dart';
 import 'package:coursia/View/Home/bloc/home_bloc.dart';
 import 'package:coursia/View/Profile/Page/profile_page.dart';
+import 'package:coursia/View/Trainer/trainer_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,13 +21,15 @@ class HomePage extends StatelessWidget {
     _BottomTab('Feature', Icon(Icons.home)),
     _BottomTab('Browse', Icon(Icons.menu)),
     _BottomTab('Assessment', Icon(Icons.assignment)),
-    _BottomTab('Gift', Icon(Icons.card_giftcard_outlined))
+    _BottomTab('Gift', Icon(Icons.card_giftcard_outlined)),
+    _BottomTab('Trainer', Icon(Icons.person))
   ];
   List<Widget> destinations = <Widget>[
     const FeaturePage(),
     CoursesPage(),
     AssessmentPage(),
-    GiftPage()
+    GiftPage(),
+    const TrainerListPage()
     //const GiftEmptyPage()
   ];
   @override
@@ -42,7 +45,7 @@ class HomePage extends StatelessWidget {
           appBar: CustomAppBar(
             username: 'Arkar',
             onTap: () {
-              CustomFunction.navigatePage(const ProfilePage(), context);
+              CustomFunction.navigatePage(ProfilePage(), context);
             },
           ),
           body: SafeArea(

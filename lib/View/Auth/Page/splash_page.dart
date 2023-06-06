@@ -38,7 +38,9 @@ class SplashPage extends StatelessWidget {
                 child: CustomButton(
                     text: 'Get Started',
                     onTap: () {
-                      CustomFunction.navigatePage(LoginPage(), context);
+                      // CustomFunction.navigatePage(LoginPage(), context);
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => LoginPage()));
                     }),
               ),
             ),

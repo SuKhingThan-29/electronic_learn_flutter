@@ -21,3 +21,11 @@ class GetDISCTypeEvent extends DISCEvent {
 class GetDISCQuestionListEvent extends DISCEvent {
   const GetDISCQuestionListEvent();
 }
+
+class SendDISCAnswerList extends DISCEvent {
+  final DISCQuestionModel discQuestionModel;
+  const SendDISCAnswerList(this.discQuestionModel);
+
+  @override
+  List<Object> get props => [discQuestionModel];
+}

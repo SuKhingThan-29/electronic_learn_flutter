@@ -25,6 +25,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:hive_flutter/adapters.dart';
 
 Future<void> main() async {
   //WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -52,6 +53,9 @@ Future<void> main() async {
 
   initialization();
   FlutterNativeSplash.remove();
+  await Hive.initFlutter();
+  await Hive.openBox('library_db');
+
   runApp(const MyApp());
 }
 

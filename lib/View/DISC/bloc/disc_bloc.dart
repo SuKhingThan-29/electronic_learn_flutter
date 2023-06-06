@@ -12,8 +12,9 @@ class DISCBloc extends Bloc<DISCEvent, DISCState> {
   CoursiaRepository coursiaRepository = CoursiaRepository();
   DISCBloc() : super(DiscInitial()) {
     on<OnTapEvent>(_onTapEvent);
-    on<GetDISCTypeEvent>(getDISCTypeEvent);
-    on<GetDISCQuestionListEvent>(getDISCQuestionListEvent);
+    on<GetDISCTypeEvent>(_getDISCTypeEvent);
+    on<GetDISCQuestionListEvent>(_getDISCQuestionListEvent);
+    on<SendDISCAnswerList>(_sendDISCAnswerList);
   }
 
   _onTapEvent(OnTapEvent event, Emitter<DISCState> emit) {
@@ -21,7 +22,7 @@ class DISCBloc extends Bloc<DISCEvent, DISCState> {
     emit(OnTapSuccess(onTapIndex: event.onTapIndex));
   }
 
-  getDISCTypeEvent(GetDISCTypeEvent event, Emitter<DISCState> emit) async {
+  _getDISCTypeEvent(GetDISCTypeEvent event, Emitter<DISCState> emit) async {
     emit(GetDISCTypeLoading());
     if (!await Functions.getNetworkStatus()) {
       emit(const GetDISCTypeFailed("No Network Connection!"));
@@ -36,18 +37,34 @@ class DISCBloc extends Bloc<DISCEvent, DISCState> {
     }
   }
 
-  getDISCQuestionListEvent(
+  _getDISCQuestionListEvent(
       GetDISCQuestionListEvent event, Emitter<DISCState> emit) async {
     emit(GetDISCQuestionListLoading());
     if (!await Functions.getNetworkStatus()) {
       emit(const GetDISCQuestionListFailed("No Network Connection!"));
     } else {
       try {
-        List<DISCQuestionModel> discQuestionList;
-        discQuestionList = await coursiaRepository.getDISCQuestionList();
-        emit(GetDISCQuestionListSuccess(discQuestionList: discQuestionList));
+        DISCQuestionModel discQuestionModel;
+        discQuestionModel = await coursiaRepository.getDISCQuestionList();
+        emit(GetDISCQuestionListSuccess(discQuestionModel: discQuestionModel));
       } catch (e) {
-        emit(GetDISCTypeFailed(e.toString()));
+        emit(GetDISCQuestionListFailed(e.toString()));
+      }
+    }
+  }
+
+  _sendDISCAnswerList(SendDISCAnswerList event, Emitter<DISCState> emit) async {
+    emit(SendDISCAnswerListLoading());
+    if (!await Functions.getNetworkStatus()) {
+      emit(const SendDISCAnswerListFailed("No Network Connection!"));
+    } else {
+      try {
+        Result result;
+        result =
+            await coursiaRepository.sendDISCAnswerList(event.discQuestionModel);
+        emit(SendDISCAnswerListSuccess(result: result));
+      } catch (e) {
+        emit(SendDISCAnswerListFailed(e.toString()));
       }
     }
   }

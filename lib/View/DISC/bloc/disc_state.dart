@@ -41,16 +41,34 @@ class GetDISCTypeFailed extends DISCState {
 class GetDISCQuestionListLoading extends DISCState {}
 
 class GetDISCQuestionListSuccess extends DISCState {
-  final List<DISCQuestionModel> discQuestionList;
-  const GetDISCQuestionListSuccess({required this.discQuestionList});
+  final DISCQuestionModel discQuestionModel;
+  const GetDISCQuestionListSuccess({required this.discQuestionModel});
 
   @override
-  List<Object> get props => [discQuestionList];
+  List<Object> get props => [discQuestionModel];
 }
 
 class GetDISCQuestionListFailed extends DISCState {
   final String? message;
   const GetDISCQuestionListFailed(this.message);
+
+  @override
+  List<Object> get props => [message!];
+}
+
+class SendDISCAnswerListLoading extends DISCState {}
+
+class SendDISCAnswerListSuccess extends DISCState {
+  final Result result;
+  const SendDISCAnswerListSuccess({required this.result});
+
+  @override
+  List<Object> get props => [result];
+}
+
+class SendDISCAnswerListFailed extends DISCState {
+  final String? message;
+  const SendDISCAnswerListFailed(this.message);
 
   @override
   List<Object> get props => [message!];

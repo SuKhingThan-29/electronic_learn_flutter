@@ -154,3 +154,21 @@ class ResetPasswordFailed extends AuthState {
   @override
   List<Object> get props => [message!];
 }
+
+class LoginLoading extends AuthState {}
+
+class LoginSuccess extends AuthState {
+  final LoginResponseModel? loginResponseModel;
+  const LoginSuccess({this.loginResponseModel});
+
+  @override
+  List<Object> get props => [loginResponseModel!];
+}
+
+class LoginFailed extends AuthState {
+  final String? message;
+  const LoginFailed(this.message);
+
+  @override
+  List<Object> get props => [message!];
+}

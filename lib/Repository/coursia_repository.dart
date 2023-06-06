@@ -6,6 +6,7 @@ import 'package:coursia/Model/disc_type_model.dart';
 import 'package:coursia/Model/iq_question_model.dart';
 import 'package:coursia/Model/iq_type_model.dart';
 import 'package:coursia/Model/job_level_model.dart';
+import 'package:coursia/Model/login_response_model.dart';
 import 'package:coursia/Model/otp_verify_response_model.dart';
 import 'package:coursia/Model/quiz_question_model.dart';
 import 'package:coursia/Model/quiz_type_model.dart';
@@ -32,7 +33,7 @@ class CoursiaRepository {
     return await coursiaApiClient.getQuizTypeList();
   }
 
-  Future<List<DISCQuestionModel>> getDISCQuestionList() async {
+  Future<DISCQuestionModel> getDISCQuestionList() async {
     return await coursiaApiClient.getDISCQuestionList();
   }
 
@@ -82,5 +83,13 @@ class CoursiaRepository {
       String? email, String? password, String? confirmPassword) async {
     return await coursiaApiClient.resetPassword(
         email, password, confirmPassword);
+  }
+
+  Future<LoginResponseModel> login(String? email, String? password) async {
+    return await coursiaApiClient.login(email, password);
+  }
+
+  Future<Result> sendDISCAnswerList(DISCQuestionModel discQuestionModel) async {
+    return await coursiaApiClient.sendDISCAnswerList(discQuestionModel);
   }
 }
