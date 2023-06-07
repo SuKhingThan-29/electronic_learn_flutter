@@ -61,9 +61,7 @@ class CompetencyQuestionPage extends StatelessWidget {
         }
         return Padding(
             padding: EdgeInsets.all(15.w),
-            child: ListView(
-              shrinkWrap: true,
-              physics: const ScrollPhysics(),
+            child: Column(
               children: [
                 CustomText(
                   text: 'Question $no/$listLength',
@@ -79,37 +77,39 @@ class CompetencyQuestionPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
                 CustomFunction.customSpace(height: 30.h),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const ScrollPhysics(),
-                  itemCount: answerList.length,
-                  itemBuilder: (context, j) {
-                    return Column(
-                      children: [
-                        CustomAnswerContainer(
-                          text: answerList[j]["name"],
-                          index: j,
-                          currentIndex: onTapIndex,
-                          boxColor: onTapIndex == 0 || onTapIndex == 1
-                              ? AppTheme.green
-                              : onTapIndex == 2
-                                  ? AppTheme.grey
-                                  : onTapIndex == 3 || onTapIndex == 4
-                                      ? AppTheme.red
-                                      : AppTheme.greyLight,
-                          onTap: () {
-                            selectIndex = j;
-                            context
-                                .read<CompetencyBloc>()
-                                .add(OnTapEvent(onTapIndex: j));
-                          },
-                        ),
-                        CustomFunction.customSpace(height: 10.h)
-                      ],
-                    );
-                  },
+                Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const ScrollPhysics(),
+                    itemCount: answerList.length,
+                    itemBuilder: (context, j) {
+                      return Column(
+                        children: [
+                          CustomAnswerContainer(
+                            text: answerList[j]["name"],
+                            index: j,
+                            currentIndex: onTapIndex,
+                            boxColor: onTapIndex == 0 || onTapIndex == 1
+                                ? AppTheme.green
+                                : onTapIndex == 2
+                                    ? AppTheme.grey
+                                    : onTapIndex == 3 || onTapIndex == 4
+                                        ? AppTheme.red
+                                        : AppTheme.greyLight,
+                            onTap: () {
+                              selectIndex = j;
+                              context
+                                  .read<CompetencyBloc>()
+                                  .add(OnTapEvent(onTapIndex: j));
+                            },
+                          ),
+                          CustomFunction.customSpace(height: 10.h)
+                        ],
+                      );
+                    },
+                  ),
                 ),
-                CustomFunction.customSpace(height: 20.h),
+                // CustomFunction.customSpace(height: 20.h),
                 index == 0
                     ? CustomButton(
                         onTap: () {

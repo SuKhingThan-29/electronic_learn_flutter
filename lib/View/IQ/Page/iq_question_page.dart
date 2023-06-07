@@ -54,9 +54,9 @@ class IqQuestionPage extends StatelessWidget {
         }
         return Padding(
             padding: EdgeInsets.all(15.w),
-            child: ListView(
-              shrinkWrap: true,
-              physics: const ScrollPhysics(),
+            child: Column(
+              // shrinkWrap: true,
+              // physics: const ScrollPhysics(),
               children: [
                 CustomText(
                   text: 'Question $no/$listLength',
@@ -79,30 +79,32 @@ class IqQuestionPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
                 CustomFunction.customSpace(height: 30.h),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const ScrollPhysics(),
-                  itemCount: iqQuestionModel?.iqAnswer?.length,
-                  itemBuilder: (context, j) {
-                    return Column(
-                      children: [
-                        CustomAnswerContainer(
-                          text: iqQuestionModel?.iqAnswer?[j].answer ?? "",
-                          index: j,
-                          currentIndex: onTapIndex,
-                          boxColor: AppTheme.orange,
-                          onTap: () {
-                            log(j.toString());
-                            selectIndex = j;
-                            context
-                                .read<IqBloc>()
-                                .add(OnTapEvent(onTapIndex: j));
-                          },
-                        ),
-                        CustomFunction.customSpace(height: 10)
-                      ],
-                    );
-                  },
+                Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const ScrollPhysics(),
+                    itemCount: iqQuestionModel?.iqAnswer?.length,
+                    itemBuilder: (context, j) {
+                      return Column(
+                        children: [
+                          CustomAnswerContainer(
+                            text: iqQuestionModel?.iqAnswer?[j].answer ?? "",
+                            index: j,
+                            currentIndex: onTapIndex,
+                            boxColor: AppTheme.orange,
+                            onTap: () {
+                              log(j.toString());
+                              selectIndex = j;
+                              context
+                                  .read<IqBloc>()
+                                  .add(OnTapEvent(onTapIndex: j));
+                            },
+                          ),
+                          CustomFunction.customSpace(height: 10)
+                        ],
+                      );
+                    },
+                  ),
                 ),
                 CustomFunction.customSpace(height: 20.h),
                 index == 0

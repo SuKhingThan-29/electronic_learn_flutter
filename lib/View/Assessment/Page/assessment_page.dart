@@ -46,8 +46,11 @@ class AssessmentPage extends StatelessWidget {
               },
               builder: (context, state) {
                 if (state is GetDISCQuestionListLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(color: AppTheme.orange),
+                  return SizedBox(
+                    height: 140.h,
+                    child: const Center(
+                      child: CircularProgressIndicator(color: AppTheme.orange),
+                    ),
                   );
                 }
                 if (state is GetDISCQuestionListSuccess) {
@@ -97,6 +100,14 @@ class AssessmentPage extends StatelessWidget {
                 }
               },
               builder: (context, state) {
+                if (state is GetCompetencyQuestionListLoading) {
+                  return SizedBox(
+                    height: 140.h,
+                    child: const Center(
+                      child: CircularProgressIndicator(color: AppTheme.orange),
+                    ),
+                  );
+                }
                 if (state is GetCompetencyQuestionListSuccess) {
                   competencyQuestionList = state.competencyQuestionList;
                   Future.delayed(Duration.zero, () {
@@ -133,6 +144,14 @@ class AssessmentPage extends StatelessWidget {
                 }
               },
               builder: (context, state) {
+                if (state is GetIQQuestionListLoading) {
+                  return SizedBox(
+                    height: 140.h,
+                    child: const Center(
+                      child: CircularProgressIndicator(color: AppTheme.orange),
+                    ),
+                  );
+                }
                 if (state is GetIQQuestionListSuccess) {
                   iqQuestionList = state.iqQuestionList;
                   Future.delayed(Duration.zero, () {
@@ -167,17 +186,17 @@ class AssessmentPage extends StatelessWidget {
                 CustomFunction.navigatePage(QuizMainPage(), context);
               },
             ),
-            CustomFunction.customSpace(height: 10.h),
-            CustomButton(
-                bgcolor: AppTheme.orange,
-                text: 'Blog',
-                fontSize: 12.sp,
-                onTap: () {
-                  CustomFunction.navigatePage(BlogDetailPage(), context);
-                },
-                width: 90.w,
-                height: 25.h,
-                borderRadius: 20.r),
+            // CustomFunction.customSpace(height: 10.h),
+            // CustomButton(
+            //     bgcolor: AppTheme.orange,
+            //     text: 'Blog',
+            //     fontSize: 12.sp,
+            //     onTap: () {
+            //       CustomFunction.navigatePage(BlogDetailPage(), context);
+            //     },
+            //     width: 90.w,
+            //     height: 25.h,
+            //     borderRadius: 20.r),
             CustomFunction.customSpace(height: 10.h),
             CustomButton(
                 bgcolor: AppTheme.orange,

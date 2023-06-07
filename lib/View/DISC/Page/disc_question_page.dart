@@ -110,7 +110,7 @@ class DISCQuestionPage extends StatelessWidget {
                   },
                 ),
               ),
-              CustomFunction.customSpace(height: 20),
+              // CustomFunction.customSpace(height: 50),
               index == 0
                   ? CustomButton(
                       onTap: () {
