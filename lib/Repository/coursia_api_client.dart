@@ -18,6 +18,7 @@ import 'package:coursia/Model/quiz_question_model.dart';
 import 'package:coursia/Model/quiz_type_model.dart';
 import 'package:coursia/Model/reset_password_response_model.dart';
 import 'package:coursia/Model/static_data.dart';
+import 'package:coursia/Model/subcategory_model.dart';
 import 'package:coursia/Utils/api_service.dart';
 import 'package:coursia/Utils/customexception.dart';
 import 'package:dio/dio.dart';
@@ -425,6 +426,30 @@ class CoursiaApiClient {
           await _dio.post('frontend/v1/send_disc_answer', data: data);
       if (response.statusCode == 200) {
         return Result.fromJson(response.data['data']);
+      }
+      throw CustomException(response.data['message']);
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.badResponse) {
+        throw CustomException(
+            "Received invalid status code: ${e.response?.statusCode}");
+      }
+      throw CustomException(
+          e.response!.data['message'] ?? "Something went wrong");
+    } catch (e) {
+      throw UnimplementedError("Something went wrong");
+    }
+  }
+
+  Future<List<SubCategoryModel>> getSubCategoryList(String? mainSubName) async {
+    try {
+      final data = FormData.fromMap({"main_category_name": mainSubName});
+      final response =
+          await _dio.post('frontend/v1/get_course_subcategory', data: data);
+      if (response.statusCode == 200 && response.data['success'] == true) {
+        final subCategoryList = response.data['data'] as List;
+        return subCategoryList
+            .map((item) => SubCategoryModel.fromJson(item))
+            .toList();
       }
       throw CustomException(response.data['message']);
     } on DioError catch (e) {

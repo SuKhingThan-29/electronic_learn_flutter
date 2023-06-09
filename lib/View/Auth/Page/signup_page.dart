@@ -84,27 +84,7 @@ class SignUpPage extends StatelessWidget {
           if (state is GetJobLevelSuccess) {
             jobLevelList = state.jobLevelList!;
           }
-          if (state is GetJobLevelFailed) {
-            return Center(
-              child: Column(
-                children: [
-                  CustomFunction.customSpace(height: 200.h),
-                  CustomText(
-                    text: state.message,
-                    textColor: AppTheme.white,
-                  ),
-                  CustomFunction.customSpace(height: 10.h),
-                  CustomButton(
-                    width: 100.w,
-                    text: 'Reload',
-                    onTap: () {
-                      context.read<AuthBloc>().add(const GetJobLevel());
-                    },
-                  ),
-                ],
-              ),
-            );
-          }
+
           if (state is RegisterAccountLoading) {
             return const Center(
               child: CircularProgressIndicator(color: AppTheme.orange),

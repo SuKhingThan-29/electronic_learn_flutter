@@ -21,3 +21,11 @@ class OnTapLessonReviewEvent extends CoursesEvent {
   final String? lessonOrReview;
   const OnTapLessonReviewEvent({required this.lessonOrReview});
 }
+
+class GetSubCategoryList extends CoursesEvent {
+  final String? mainSubName;
+  const GetSubCategoryList({this.mainSubName});
+
+  @override
+  List<Object> get props => [mainSubName!];
+}

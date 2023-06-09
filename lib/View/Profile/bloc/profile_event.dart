@@ -16,7 +16,8 @@ class GetSelectedDate extends ProfileEvent {
 }
 
 class GetDropDownValue extends ProfileEvent {
-  final String value;
+  final dynamic value;
+
   const GetDropDownValue({required this.value});
 
   @override

@@ -1,9 +1,8 @@
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/function.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
-import 'package:coursia/View/Assessment/Page/assessment_page.dart';
 import 'package:coursia/View/Blog/Page/blog_list_page.dart';
-import 'package:coursia/View/Courses/Page/courses_page.dart';
+import 'package:coursia/View/Courses/Page/techanical_courses_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -25,7 +24,11 @@ class FeaturePage extends StatelessWidget {
                   bottom: 250.h,
                   child: InkWell(
                     onTap: () {
-                      // CustomFunction.navigatePage(CoursesPage(), context);
+                      CustomFunction.navigatePage(
+                          TechanicalCoursesPage(
+                            isFromFeature: true,
+                          ),
+                          context);
                     },
                     child: CustomFunction.assetImage(
                         image: 'images/blog1.png', height: 50.h, width: 330.w),

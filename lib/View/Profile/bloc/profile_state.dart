@@ -20,7 +20,8 @@ class GetDateSuccess extends ProfileState {
 class GetDropDownValueLoading extends ProfileState {}
 
 class GetDropDownValueSuccess extends ProfileState {
-  final String value;
+  final dynamic value;
+
   const GetDropDownValueSuccess({required this.value});
 
   @override

@@ -2,4 +2,7 @@
 
 class APIService {
   static const String API_URL = 'http://192.168.2.164:8000/api/'; //localhost
+
+  // static const String API_URL =
+  //     'https://coursia-demo-api.coursia.ai/api/'; //server
 }

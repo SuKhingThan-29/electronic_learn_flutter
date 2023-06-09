@@ -87,7 +87,7 @@ class CustomDropDown extends StatelessWidget {
                           ? AppTheme.black
                           : isSignUp!
                               ? AppTheme.white
-                              : AppTheme.grey),
+                              : AppTheme.black),
                 ),
               ))
           .toList(),
@@ -98,8 +98,23 @@ class CustomDropDown extends StatelessWidget {
         return null;
       },
       onChanged: (value) {
-        // onChange;
-        context.read<ProfileBloc>().add(GetDropDownValue(value: value!.name));
+        context.read<ProfileBloc>().add(GetDropDownValue(value: value));
+        // if (value.isGender == true) {
+        //   context.read<ProfileBloc>().add(GetDropDownValue(value: value));
+        // }
+        // if (value.isJobLevel == true) {
+        //   context.read<ProfileBloc>().add(GetDropDownValue(value: value));
+        // }
+        // if (value.isTopic == true) {
+        //   context.read<ProfileBloc>().add(GetDropDownValue(value: value));
+        // }
+        // if (value.isCost == true) {
+        //   context.read<ProfileBloc>().add(GetDropDownValue(value: value));
+        // }
+        // if (value.isUserLevel == true) {
+        //   context.read<ProfileBloc>().add(GetDropDownValue(value: value));
+        // }
+
         // log(value.toString());
       },
       onSaved: (value) {},

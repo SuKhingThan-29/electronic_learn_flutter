@@ -1,5 +1,8 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:coursia/Model/gender_model.dart';
+import 'package:coursia/Model/job_level_model.dart';
+import 'package:coursia/Model/static_data.dart';
 import 'package:coursia/UIDesign/app_theme.dart';
 import 'package:coursia/UIDesign/custom_scaffold.dart';
 import 'package:coursia/UIDesign/custom_button.dart';
@@ -13,6 +16,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../Auth/bloc/auth_bloc.dart';
+
 class EditProfilePage extends StatelessWidget {
   EditProfilePage({super.key});
 
@@ -25,23 +30,55 @@ class EditProfilePage extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
 
   String? date;
-  String? selectedGender;
-  final List<String> genderList = ['Male', 'Female'];
+  GenderModel? selectedGender;
+
+  List<JobLevelModel> jobLevelList = [];
+  List<GenderModel> genderList = [];
+  JobLevelModel? jobLevel;
+
+  getGenderList() {
+    for (int i = 0; i < StaticData.mapGenderList.length; i++) {
+      GenderModel genderModel = GenderModel(
+          id: StaticData.mapGenderList[i]['id'],
+          name: StaticData.mapGenderList[i]['name']);
+      genderList.add(genderModel);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    getGenderList();
+    context.read<AuthBloc>().add(const GetJobLevel());
     return CusotmScaffold(text: 'Edit Profile', data: bodyData(context));
   }
 
   bodyData(BuildContext context) {
     return BlocConsumer<ProfileBloc, ProfileState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is GetDropDownValueSuccess) {
+          if (state.value.isGender == true) {
+            selectedGender = state.value;
+            // log("Gender${selectedGender?.id}");
+          }
+          if (state.value.isJobLevel == true) {
+            jobLevel = state.value;
+            // log("Job Level${jobLevel?.id}");
+          }
+        }
+      },
       builder: (context, state) {
         if (state is GetDateSuccess) {
           date = state.date;
         }
-        if (state is GetDropDownValueSuccess) {
-          selectedGender = state.value;
+
+        if (state is GetDropDownValueLoading) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: AppTheme.orange,
+            ),
+          );
         }
+
         return Form(
           key: formKey,
           child: Padding(
@@ -122,19 +159,57 @@ class EditProfilePage extends StatelessWidget {
                   CustomFunction.customSpace(height: 20),
                   CustomDatePicker(date: date),
                   CustomDropDown(
-                    isCourses: false,
                     items: genderList,
                     hintText: 'Gender',
-                    isSignUp: false,
-                  ),
-                  CustomFunction.customSpace(height: 20),
-                  CustomDropDown(
                     isCourses: false,
-                    items: genderList,
-                    hintText: 'Job Level',
                     isSignUp: false,
                   ),
-                  CustomFunction.customSpace(height: 20),
+                  CustomFunction.customSpace(height: 30),
+                  BlocConsumer<AuthBloc, AuthState>(
+                    listener: (context, state) {},
+                    builder: (context, state) {
+                      if (state is GetJobLevelLoading) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: AppTheme.orange,
+                          ),
+                        );
+                      }
+                      if (state is GetJobLevelSuccess) {
+                        jobLevelList = state.jobLevelList!;
+                      }
+                      if (state is GetJobLevelFailed) {
+                        return Center(
+                          child: Column(
+                            children: [
+                              CustomFunction.customSpace(height: 200.h),
+                              CustomText(
+                                text: state.message,
+                                textColor: AppTheme.white,
+                              ),
+                              CustomFunction.customSpace(height: 10.h),
+                              CustomButton(
+                                width: 100.w,
+                                text: 'Reload',
+                                onTap: () {
+                                  context
+                                      .read<AuthBloc>()
+                                      .add(const GetJobLevel());
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                      return CustomDropDown(
+                        items: jobLevelList,
+                        hintText: 'Job Level',
+                        isCourses: false,
+                        isSignUp: false,
+                      );
+                    },
+                  ),
+                  CustomFunction.customSpace(height: 25),
                   CustomTextFormField(
                       isProfile: true,
                       controller: phNoController,

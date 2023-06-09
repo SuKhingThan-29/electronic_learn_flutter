@@ -32,3 +32,21 @@ class OnTapLessonReviewSuccess extends CoursesState {
   @override
   List<Object> get props => [lessonOrReview!];
 }
+
+class GetSubCategoryListLoading extends CoursesState {}
+
+class GetSubCategoryListSuccess extends CoursesState {
+  final List<SubCategoryModel> subCategoryList;
+  const GetSubCategoryListSuccess({required this.subCategoryList});
+
+  @override
+  List<Object> get props => [subCategoryList];
+}
+
+class GetSubCategoryListFailed extends CoursesState {
+  final String? message;
+  const GetSubCategoryListFailed(this.message);
+
+  @override
+  List<Object> get props => [message!];
+}

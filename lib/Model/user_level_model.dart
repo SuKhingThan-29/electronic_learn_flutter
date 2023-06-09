@@ -1,6 +1,6 @@
 // ignore_for_file: must_be_immutable
 
-class JobLevelModel {
+class UserLevelModel {
   int? id;
   String? name;
   bool? isGender;
@@ -9,23 +9,23 @@ class JobLevelModel {
   bool? isCost;
   bool? isUserLevel;
 
-  JobLevelModel(
+  UserLevelModel(
       {this.id,
       this.name,
       this.isGender = false,
-      this.isJobLevel = true,
+      this.isJobLevel = false,
       this.isTopic = false,
       this.isCost = false,
-      this.isUserLevel = false});
+      this.isUserLevel = true});
 
-  JobLevelModel.fromJson(Map<String, dynamic> json) {
+  UserLevelModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     isGender = false;
-    isJobLevel = true;
+    isJobLevel = false;
     isTopic = false;
     isCost = false;
-    isUserLevel = false;
+    isUserLevel = true;
   }
 
   Map<String, dynamic> toJson() {

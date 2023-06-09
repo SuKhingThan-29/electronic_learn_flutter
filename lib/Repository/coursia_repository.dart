@@ -12,6 +12,7 @@ import 'package:coursia/Model/quiz_question_model.dart';
 import 'package:coursia/Model/quiz_type_model.dart';
 import 'package:coursia/Model/email_verify_response_model.dart';
 import 'package:coursia/Model/reset_password_response_model.dart';
+import 'package:coursia/Model/subcategory_model.dart';
 import 'package:coursia/Repository/coursia_api_client.dart';
 
 class CoursiaRepository {
@@ -91,5 +92,9 @@ class CoursiaRepository {
 
   Future<Result> sendDISCAnswerList(DISCQuestionModel discQuestionModel) async {
     return await coursiaApiClient.sendDISCAnswerList(discQuestionModel);
+  }
+
+  Future<List<SubCategoryModel>> getSubCategoryList(String? mainSubName) async {
+    return await coursiaApiClient.getSubCategoryList(mainSubName);
   }
 }

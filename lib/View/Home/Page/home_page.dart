@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable, library_private_types_in_public_api
 
+import 'package:coursia/Model/static_data.dart';
 import 'package:coursia/UIDesign/custom_appbar.dart';
 import 'package:coursia/View//Home/Page/feature_page.dart';
 import 'package:coursia/UIDesign/app_theme.dart';
@@ -43,7 +44,7 @@ class HomePage extends StatelessWidget {
         }
         return Scaffold(
           appBar: CustomAppBar(
-            username: 'Arkar',
+            username: StaticData.loginResponseModel?.data?.user?.name ?? "",
             onTap: () {
               CustomFunction.navigatePage(ProfilePage(), context);
             },
