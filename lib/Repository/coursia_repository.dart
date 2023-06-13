@@ -1,6 +1,7 @@
 import 'package:coursia/Model/account_register_model.dart';
 import 'package:coursia/Model/competency_question_model.dart';
 import 'package:coursia/Model/competency_type_model.dart';
+import 'package:coursia/Model/courses_model.dart';
 import 'package:coursia/Model/disc_question_model.dart';
 import 'package:coursia/Model/disc_type_model.dart';
 import 'package:coursia/Model/iq_question_model.dart';
@@ -96,5 +97,11 @@ class CoursiaRepository {
 
   Future<List<SubCategoryModel>> getSubCategoryList(String? mainSubName) async {
     return await coursiaApiClient.getSubCategoryList(mainSubName);
+  }
+
+  Future<List<CoursesModel>> getCoursesList(
+      String? mainCategoryName, int? topic, int? cost, String? level) async {
+    return await coursiaApiClient.getCoursesList(
+        mainCategoryName, topic, cost, level);
   }
 }

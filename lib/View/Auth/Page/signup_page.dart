@@ -39,7 +39,7 @@ class SignUpPage extends StatelessWidget {
   bool obscuretext1 = true;
   List<JobLevelModel> jobLevelList = [];
 
-  String? jobLevel;
+  dynamic jobLevelModel;
 
   @override
   Widget build(BuildContext context) {
@@ -134,10 +134,10 @@ class SignUpPage extends StatelessWidget {
                   CustomFunction.customSpace(height: 10),
                   BlocConsumer<ProfileBloc, ProfileState>(
                     listener: (context, state) {
-                      if (state is GetDropDownValueSuccess) {
-                        jobLevel = state.value;
-                        log(jobLevel.toString());
-                      }
+                      // if (state is GetDropDownValueSuccess) {
+                      //   jobLevelModel = state.value;
+                      //   log(jobLevelModel!.id.toString());
+                      // }
                     },
                     builder: (context, state) {
                       if (state is GetDropDownValueLoading) {
@@ -148,8 +148,8 @@ class SignUpPage extends StatelessWidget {
                         );
                       }
                       if (state is GetDropDownValueSuccess) {
-                        jobLevel = state.value;
-                        log(jobLevel.toString());
+                        jobLevelModel = state.value;
+                        log(jobLevelModel!.id.toString());
                       }
                       return CustomDropDown(
                         items: jobLevelList,
@@ -237,7 +237,7 @@ class SignUpPage extends StatelessWidget {
                               email: email,
                               password: pwController.text,
                               confirmPassword: confirmPwController.text,
-                              joblevel: jobLevel));
+                              joblevel: jobLevelModel!.name));
                         } else {
                           CustomFunction.flushBar(
                               'Your password and confirm password are not match!',

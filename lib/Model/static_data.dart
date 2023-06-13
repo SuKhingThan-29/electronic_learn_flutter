@@ -13,8 +13,8 @@ class StaticData {
 
   ///For Cost DropDown
   static List<Map<String, dynamic>> costList = [
-    {'id': 0, 'name': 'UnPaid'},
-    {'id': 1, 'name': 'Paid'}
+    {'id': 1, 'name': 'UnPaid'},
+    {'id': 2, 'name': 'Paid'}
   ];
 
   ///For user Level DropDown

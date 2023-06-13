@@ -3,7 +3,9 @@ import 'package:coursia/UIDesign/function.dart';
 import 'package:coursia/UIDesign/custom_text.dart';
 import 'package:coursia/View/Blog/Page/blog_list_page.dart';
 import 'package:coursia/View/Courses/Page/techanical_courses_page.dart';
+import 'package:coursia/View/Courses/bloc/courses_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FeaturePage extends StatelessWidget {
@@ -24,6 +26,8 @@ class FeaturePage extends StatelessWidget {
                   bottom: 250.h,
                   child: InkWell(
                     onTap: () {
+                      context.read<CoursesBloc>().add(const GetCoursesList(
+                          mainCategoryName: 'Technical', filterList: []));
                       CustomFunction.navigatePage(
                           TechanicalCoursesPage(
                             isFromFeature: true,

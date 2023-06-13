@@ -6,6 +6,7 @@ import 'dart:developer';
 import 'package:coursia/Model/account_register_model.dart';
 import 'package:coursia/Model/competency_question_model.dart';
 import 'package:coursia/Model/competency_type_model.dart';
+import 'package:coursia/Model/courses_model.dart';
 import 'package:coursia/Model/disc_question_model.dart';
 import 'package:coursia/Model/disc_type_model.dart';
 import 'package:coursia/Model/email_verify_response_model.dart';
@@ -411,6 +412,9 @@ class CoursiaApiClient {
         throw CustomException(
             "Received invalid status code: ${e.response?.statusCode}");
       }
+      if (e.type == DioErrorType.unknown) {
+        throw CustomException(e.error.toString());
+      }
       throw CustomException(
           e.response!.data['message'] ?? "Something went wrong");
     } catch (e) {
@@ -450,6 +454,33 @@ class CoursiaApiClient {
         return subCategoryList
             .map((item) => SubCategoryModel.fromJson(item))
             .toList();
+      }
+      throw CustomException(response.data['message']);
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.badResponse) {
+        throw CustomException(
+            "Received invalid status code: ${e.response?.statusCode}");
+      }
+      throw CustomException(
+          e.response!.data['message'] ?? "Something went wrong");
+    } catch (e) {
+      throw UnimplementedError("Something went wrong");
+    }
+  }
+
+  Future<List<CoursesModel>> getCoursesList(
+      String? mainCategoryName, int? topic, int? cost, String? level) async {
+    try {
+      final data = FormData.fromMap({
+        "main_category_name": mainCategoryName,
+        "topic": topic,
+        "cost": cost,
+        "level": level
+      });
+      final response = await _dio.post('frontend/v1/get_courses', data: data);
+      if (response.statusCode == 200 && response.data['success'] == true) {
+        final coursesList = response.data['data'] as List;
+        return coursesList.map((item) => CoursesModel.fromJson(item)).toList();
       }
       throw CustomException(response.data['message']);
     } on DioError catch (e) {

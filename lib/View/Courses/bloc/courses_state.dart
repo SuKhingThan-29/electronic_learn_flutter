@@ -50,3 +50,23 @@ class GetSubCategoryListFailed extends CoursesState {
   @override
   List<Object> get props => [message!];
 }
+
+class GetCoursesListLoading extends CoursesState {}
+
+class GetCoursesListSuccess extends CoursesState {
+  final List<CoursesModel> coursesList;
+  final List<String> filterList;
+  const GetCoursesListSuccess(
+      {required this.coursesList, required this.filterList});
+
+  @override
+  List<Object> get props => [coursesList];
+}
+
+class GetCoursesListFailed extends CoursesState {
+  final String? message;
+  const GetCoursesListFailed(this.message);
+
+  @override
+  List<Object> get props => [message!];
+}

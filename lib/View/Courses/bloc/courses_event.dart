@@ -29,3 +29,22 @@ class GetSubCategoryList extends CoursesEvent {
   @override
   List<Object> get props => [mainSubName!];
 }
+
+class GetCoursesList extends CoursesEvent {
+  final String? mainCategoryName;
+  final int? topic;
+  final int? cost;
+  final String? level;
+  final List<String>? filterList;
+
+  const GetCoursesList(
+      {this.mainCategoryName,
+      this.topic,
+      this.cost,
+      this.level,
+      this.filterList});
+
+  @override
+  List<Object> get props =>
+      [mainCategoryName!, topic!, cost!, level!, filterList!];
+}

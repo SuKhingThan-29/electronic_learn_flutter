@@ -1,3 +1,4 @@
+import 'package:coursia/Model/courses_model.dart';
 import 'package:coursia/Model/subcategory_model.dart';
 import 'package:coursia/Repository/coursia_repository.dart';
 import 'package:coursia/Utils/functions.dart';
@@ -13,6 +14,7 @@ class CoursesBloc extends Bloc<CoursesEvent, CoursesState> {
     on<IconTap>(_onIconTap);
     on<OnTapLessonReviewEvent>(_onTapLessonReviewEvent);
     on<GetSubCategoryList>(_getSubCategoryList);
+    on<GetCoursesList>(_getCoursesList);
   }
 
   _onTapEvent(OnTapEvent event, Emitter<CoursesState> emit) {
@@ -41,6 +43,23 @@ class CoursesBloc extends Bloc<CoursesEvent, CoursesState> {
         emit(GetSubCategoryListSuccess(subCategoryList: subCategoryList));
       } catch (e) {
         emit(GetSubCategoryListFailed(e.toString()));
+      }
+    }
+  }
+
+  _getCoursesList(GetCoursesList event, Emitter<CoursesState> emit) async {
+    emit(GetCoursesListLoading());
+    if (!await Functions.getNetworkStatus()) {
+      emit(const GetCoursesListFailed("No Network Connection!"));
+    } else {
+      try {
+        List<CoursesModel> coursesList;
+        coursesList = await coursiaRepository.getCoursesList(
+            event.mainCategoryName, event.topic, event.cost, event.level);
+        emit(GetCoursesListSuccess(
+            coursesList: coursesList, filterList: event.filterList!));
+      } catch (e) {
+        emit(GetCoursesListFailed(e.toString()));
       }
     }
   }

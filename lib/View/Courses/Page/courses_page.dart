@@ -20,12 +20,15 @@ class CoursesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<CoursesBloc>().add(const OnTapEvent(type: 'Technical'));
+
     return Scaffold(
       body: BlocConsumer<CoursesBloc, CoursesState>(
         listener: (context, state) {},
         builder: (context, state) {
           if (state is OnTapSuccess) {
             tapTitle = state.type;
+            context.read<CoursesBloc>().add(const GetCoursesList(
+                mainCategoryName: 'Technical', filterList: []));
           }
           return Padding(
             padding: const EdgeInsets.all(15.0).w,
